@@ -21,8 +21,10 @@ import com.projectgalen.lib.utils.stream.iterators.*;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Set;
 import java.util.Spliterators;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
@@ -39,6 +41,11 @@ public final class Streams {
         Stream.Builder<T> b = Stream.builder();
         builder.accept(b);
         return b.build();
+    }
+
+    public static <T> @NotNull Stream<T> intersection(@NotNull Stream<T> a, @NotNull Stream<T> b) {
+        Set<T> set = a.collect(Collectors.toSet());
+        return b.filter(set::contains);
     }
 
     @Contract("_ -> new") public static <T> @NotNull Stream<ArrayIterator.Item<T>> indexStream(T @NotNull [] array) { return indexStream(array, 0, array.length); }
