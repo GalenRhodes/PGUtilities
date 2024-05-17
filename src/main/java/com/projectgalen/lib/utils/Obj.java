@@ -17,9 +17,11 @@ package com.projectgalen.lib.utils;
 // NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 // ================================================================================================================================
 
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Comparator;
+import java.util.Objects;
 import java.util.function.Supplier;
 
 @SuppressWarnings("unused")
@@ -38,5 +40,20 @@ public final class Obj {
     public static <T, E extends Exception> @NotNull T requireNonNull(T obj, Supplier<E> supplier) throws E {
         if(obj == null) throw supplier.get();
         return obj;
+    }
+
+    @Contract(pure = true) public static boolean allEquals(Object object, Object @NotNull ... others) {
+        for(Object other : others) if(!Objects.equals(object, other)) return false;
+        return true;
+    }
+
+    @Contract(pure = true) public static boolean noneEquals(Object object, Object @NotNull ... others) {
+        for(Object other : others) if(Objects.equals(object, other)) return false;
+        return true;
+    }
+
+    @Contract(pure = true) public static boolean anyEquals(Object object, Object @NotNull ... others) {
+        for(Object other : others) if(Objects.equals(object, other)) return true;
+        return false;
     }
 }
