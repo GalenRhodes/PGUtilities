@@ -83,6 +83,47 @@ public final class Reflect {
         throw new IllegalArgumentException(msgs.getString("msg.err.ao_not_field_or_getter").formatted(ao.toString()));
     }
 
+    public static @NotNull Class<?> getNonPrimitiveType(@NotNull Class<?> cls) {
+        if(!cls.isPrimitive()) return cls;
+        if(cls == boolean.class) return Boolean.class;
+        if(cls == char.class) return Character.class;
+        if(cls == byte.class) return Byte.class;
+        if(cls == short.class) return Short.class;
+        if(cls == int.class) return Integer.class;
+        if(cls == long.class) return Long.class;
+        if(cls == float.class) return Float.class;
+        if(cls == double.class) return Double.class;
+        return cls;
+    }
+
+    public static @NotNull Class<?> getPrimitiveType(@NotNull Class<?> cls) {
+        if(cls.isPrimitive()) return cls;
+        if(cls == Boolean.class) return boolean.class;
+        if(cls == Character.class) return char.class;
+        if(cls == Byte.class) return byte.class;
+        if(cls == Short.class) return short.class;
+        if(cls == Integer.class) return int.class;
+        if(cls == Long.class) return long.class;
+        if(cls == Float.class) return float.class;
+        if(cls == Double.class) return double.class;
+        return cls;
+    }
+
+    public static boolean isAssignable(@NotNull Class<?> target, @NotNull Class<?> source) {
+        if((target == source) || target.isAssignableFrom(source)) return true;
+        Class<?> pTarget = getPrimitiveType(target);
+        Class<?> pSource = getPrimitiveType(source);
+
+        if(!(pTarget.isPrimitive() && pSource.isPrimitive())) return false;
+        if((pTarget == pSource) || ((pTarget == double.class) && (pSource != boolean.class))) return true;
+        if(pTarget == float.class) return ((pSource == long.class) || (pSource == int.class) || (pSource == short.class) || (pSource == byte.class) || (pSource == char.class));
+        if(pTarget == long.class) return ((pSource == int.class) || (pSource == short.class) || (pSource == byte.class) || (pSource == char.class));
+        if(pTarget == int.class) return ((pSource == short.class) || (pSource == byte.class) || (pSource == char.class));
+        if(pTarget == short.class) return (pSource == byte.class);
+
+        return false;
+    }
+
     public static boolean isGetter(@NotNull Method m) {
         return ((m.getReturnType() != void.class) && (m.getParameterCount() == 0));
     }
