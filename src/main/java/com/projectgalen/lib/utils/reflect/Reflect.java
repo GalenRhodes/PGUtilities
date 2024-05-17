@@ -111,7 +111,11 @@ public final class Reflect {
 
     public static boolean isNumeric(@NotNull Class<?> cls) {
         Class<?> c = getPrimitiveType(cls);
-        return ((c == char.class) || (c == byte.class) || (c == short.class) || (c == int.class) || (c == long.class) || (c == float.class) || (c == double.class));
+        return ((c == byte.class) || (c == short.class) || (c == int.class) || (c == long.class) || (c == float.class) || (c == double.class));
+    }
+
+    public static boolean isNumericOrChar(@NotNull Class<?> cls) {
+        return ((cls == char.class) || (cls == Character.class) || isNumeric(cls));
     }
 
     public static boolean isAssignable(@NotNull Class<?> target, @NotNull Class<?> source) {
