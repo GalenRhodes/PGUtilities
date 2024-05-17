@@ -104,7 +104,7 @@ public final class Reflect {
         return ao;
     }
 
-    public static void setTo(@NotNull AccessibleObject ao, @NotNull Object obj, Object value) throws IllegalAccessException, InvocationTargetException {
+    public static void setTo(@NotNull AccessibleObject ao, Object obj, Object value) throws IllegalAccessException, InvocationTargetException {
         ao.setAccessible(true);
         if(ao instanceof Field f) f.set(obj, value);
         if((ao instanceof Method m) && (m.getReturnType() == void.class) && (m.getParameterCount() == 1)) m.invoke(obj, value);
