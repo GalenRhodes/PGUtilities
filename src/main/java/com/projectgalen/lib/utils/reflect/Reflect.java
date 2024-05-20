@@ -109,15 +109,6 @@ public final class Reflect {
         return cls;
     }
 
-    public static boolean isNumeric(@NotNull Class<?> cls) {
-        Class<?> c = getPrimitiveType(cls);
-        return ((c == byte.class) || (c == short.class) || (c == int.class) || (c == long.class) || (c == float.class) || (c == double.class));
-    }
-
-    public static boolean isNumericOrChar(@NotNull Class<?> cls) {
-        return ((cls == char.class) || (cls == Character.class) || isNumeric(cls));
-    }
-
     public static boolean isAssignable(@NotNull Class<?> target, @NotNull Class<?> source) {
         if((target == source) || target.isAssignableFrom(source)) return true;
         Class<?> pTarget = getPrimitiveType(target);
@@ -133,6 +124,10 @@ public final class Reflect {
         return false;
     }
 
+    public static boolean isBoolean(@NotNull Class<?> cls) {
+        return ((cls == Boolean.class) || (cls == boolean.class));
+    }
+
     public static boolean isGetter(@NotNull Method m) {
         return ((m.getReturnType() != void.class) && (m.getParameterCount() == 0));
     }
@@ -143,6 +138,25 @@ public final class Reflect {
 
     public static boolean isNamedSetter(@NotNull Method m) {
         return (isSetter(m) && m.getName().startsWith(SET));
+    }
+
+    public static boolean isNumeric(@NotNull Class<?> cls) {
+        return ((cls == int.class)
+                || (cls == Integer.class)
+                || (cls == long.class)
+                || (cls == Long.class)
+                || (cls == double.class)
+                || (cls == Double.class)
+                || (cls == byte.class)
+                || (cls == Byte.class)
+                || (cls == short.class)
+                || (cls == Short.class)
+                || (cls == float.class)
+                || (cls == Float.class));
+    }
+
+    public static boolean isNumericOrChar(@NotNull Class<?> cls) {
+        return ((cls == char.class) || (cls == Character.class) || isNumeric(cls));
     }
 
     public static boolean isSetter(@NotNull Method m) {
