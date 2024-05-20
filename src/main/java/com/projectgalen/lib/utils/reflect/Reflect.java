@@ -156,7 +156,11 @@ public final class Reflect {
     }
 
     public static boolean isNumericOrChar(@NotNull Class<?> cls) {
-        return ((cls == char.class) || (cls == Character.class) || isNumeric(cls));
+        return (isCharacter(cls) || isNumeric(cls));
+    }
+
+    private static boolean isCharacter(@NotNull Class<?> cls) {
+        return ((cls == char.class) || (cls == Character.class));
     }
 
     public static boolean isSetter(@NotNull Method m) {
