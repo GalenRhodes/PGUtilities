@@ -128,6 +128,10 @@ public final class Reflect {
         return ((cls == Boolean.class) || (cls == boolean.class));
     }
 
+    public static boolean isCharacter(@NotNull Class<?> cls) {
+        return ((cls == char.class) || (cls == Character.class));
+    }
+
     public static boolean isGetter(@NotNull Method m) {
         return ((m.getReturnType() != void.class) && (m.getParameterCount() == 0));
     }
@@ -157,10 +161,6 @@ public final class Reflect {
 
     public static boolean isNumericOrChar(@NotNull Class<?> cls) {
         return (isCharacter(cls) || isNumeric(cls));
-    }
-
-    private static boolean isCharacter(@NotNull Class<?> cls) {
-        return ((cls == char.class) || (cls == Character.class));
     }
 
     public static boolean isSetter(@NotNull Method m) {
