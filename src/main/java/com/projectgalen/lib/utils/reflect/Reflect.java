@@ -27,9 +27,13 @@ import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.*;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.stream.Stream;
 import java.util.stream.Stream.Builder;
+
+import static com.projectgalen.lib.utils.PGArrays.getFirst;
+import static java.util.Optional.ofNullable;
 
 @SuppressWarnings("unused")
 public final class Reflect {
@@ -157,6 +161,18 @@ public final class Reflect {
                 || (cls == Short.class)
                 || (cls == float.class)
                 || (cls == Float.class));
+    }
+
+    public static Optional<Class<?>> getAccessibleObjectTypeForSet(@NotNull AccessibleObject ao) {
+        return ofNullable((ao instanceof Field f) ? f.getType() : ((ao instanceof Method m) ? getFirst(m.getParameters()).map(Parameter::getType).orElse(null) : null));
+    }
+
+    public static Optional<Class<?>> getAccessibleObjectTypeForGet(@NotNull AccessibleObject ao) {
+        return ofNullable((ao instanceof Field f) ? f.getType() : ((ao instanceof Method m) ? m.getReturnType() : null));
+    }
+
+    public static <T, U extends T> @NotNull Optional<T> safeCast(@NotNull Class<T> cls, U obj) {
+        return ofNullable(obj).filter(o -> cls.isInstance(obj)).map(cls::cast);
     }
 
     public static boolean isNumericOrChar(@NotNull Class<?> cls) {
