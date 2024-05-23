@@ -17,15 +17,17 @@ package com.projectgalen.lib.utils;
 // NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 // ================================================================================================================================
 
+import com.projectgalen.lib.utils.text.Macros;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
-import java.util.TreeMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -39,11 +41,10 @@ public class PGProperties extends Properties {
 
     private static final PGResourceBundle                msgs           = new PGResourceBundle("com.projectgalen.lib.utils.messages");
     private static final Function<PGProperties, Boolean> DEFAULT_LOADER = p -> true;
-
-    private final Function<PGProperties, Boolean> loader;
-    private final long                            reloadPeriod;
-    private final TimeUnit                        timeUnit;
-    private final ScheduledExecutorService        executor;
+    private final        Function<PGProperties, Boolean> loader;
+    private final        long                            reloadPeriod;
+    private final        TimeUnit                        timeUnit;
+    private final        ScheduledExecutorService        executor;
 
     public PGProperties(Properties defaults) {
         this(DEFAULT_LOADER, -1, null, defaults);
@@ -64,13 +65,14 @@ public class PGProperties extends Properties {
     private PGProperties(@NotNull Function<PGProperties, Boolean> loader, long reloadPeriod, TimeUnit timeUnit, Properties defaults) {
         super(defaults);
         if(!loader.apply(this)) throw new RuntimeException(msgs.getString("msg.err.prop_load_failure"));
+        expandMacros();
 
         if(reloadPeriod > 0) {
             this.loader       = loader;
             this.reloadPeriod = reloadPeriod;
             this.timeUnit     = ofNullable(timeUnit).orElse(TimeUnit.MILLISECONDS);
             this.executor     = Executors.newSingleThreadScheduledExecutor();
-            this.executor.scheduleAtFixedRate(() -> { }, this.reloadPeriod, this.reloadPeriod, this.timeUnit);
+            this.executor.scheduleAtFixedRate(this::reload, this.reloadPeriod, this.reloadPeriod, this.timeUnit);
         }
         else {
             this.loader       = null;
@@ -88,6 +90,18 @@ public class PGProperties extends Properties {
         return timeUnit;
     }
 
+    private void expandMacros() {
+        entrySet().stream().filter(this::isStringEntry).forEach(this::expandMacro);
+    }
+
+    private void expandMacro(@NotNull Entry<Object, Object> e) {
+        e.setValue(Macros.expand(e.getValue().toString(), this::getProperty));
+    }
+
+    private boolean isStringEntry(@NotNull Entry<Object, Object> e) {
+        return ((e.getKey() instanceof String) && (e.getValue() instanceof String));
+    }
+
     private boolean loadFromInputStream(@NotNull InputStream inputStream) {
         try(inputStream) {
             load(inputStream);
@@ -99,11 +113,16 @@ public class PGProperties extends Properties {
         }
     }
 
-    private void reload() {
-        Map<Object, Object> t = new TreeMap<>(this);
+    private synchronized void reload() {
+        Map<Object, Object> t = new LinkedHashMap<>(this);
         clear();
         try {
-            if(!loader.apply(this)) restore(t);
+            if(loader.apply(this)) {
+                expandMacros();
+            }
+            else {
+                restore(t);
+            }
         }
         catch(Exception e) {
             restore(t);

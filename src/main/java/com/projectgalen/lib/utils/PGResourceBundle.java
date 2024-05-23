@@ -17,16 +17,15 @@ package com.projectgalen.lib.utils;
 // NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 // ================================================================================================================================
 
+import com.projectgalen.lib.utils.text.Macros;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Enumeration;
-import java.util.Locale;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class PGResourceBundle extends ResourceBundle {
 
-    private final ResourceBundle bundle;
+    private final Map<String, String> cache = Collections.synchronizedMap(new TreeMap<>());
+    private final ResourceBundle      bundle;
 
     public PGResourceBundle(@NotNull String baseName) {
         bundle = ResourceBundle.getBundle(baseName);
@@ -75,6 +74,10 @@ public class PGResourceBundle extends ResourceBundle {
      * @throws NullPointerException if {@code key} is {@code null}
      */
     protected @Override Object handleGetObject(@NotNull String key) {
-        try { return bundle.getString(key); } catch(MissingResourceException e) { return null; }
+        return _getObject(key).map(v -> cache.computeIfAbsent(key, __ -> Macros.expand2(v, this::_getObject))).orElse(null);
+    }
+
+    private @NotNull Optional<String> _getObject(@NotNull String key) {
+        try { return Optional.of(bundle.getString(key)); } catch(MissingResourceException e) { return Optional.empty(); }
     }
 }

@@ -21,29 +21,46 @@ import org.intellij.lang.annotations.RegExp;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.Function;
-import java.util.regex.MatchResult;
+
+import static java.util.Optional.ofNullable;
 
 public final class Macros {
 
-    private static final @NotNull @NonNls @RegExp String macroRegex = "(?<!\\\\)\\$\\{([^}]+)}";
+    private static final @NotNull @NonNls @RegExp String                             macroRegex = "(?<!\\\\)\\$\\{([^}]+)}";
+    private static final                          String                             X          = "\\\\";
+    private static final                          String                             Y          = "2️⃣1️⃣1️⃣2️⃣🕑🕐🕐🕑";
+    private final @NotNull                        Set<String>                        _nested    = new TreeSet<>();
+    private final @NotNull                        Function<String, Optional<String>> _func;
+    private final @NotNull                        CharSequence                       _input;
 
-    private Macros() { }
+    private Macros() {
+        _func  = (__) -> Optional.empty();
+        _input = "";
+    }
+
+    private Macros(@NotNull CharSequence input, @NotNull Function<String, Optional<String>> func) {
+        _func  = func;
+        _input = input.toString().replace(X, Y);
+    }
+
+    private @NotNull String expand() {
+        return Regex.getMatcher(macroRegex, _input).replaceAll(m -> _func.apply(m.group(1)).filter(s -> !_nested.contains(s)).map(this::foo).orElseGet(m::group)).replace(Y, X);
+    }
 
     public static @NotNull String expand(@NotNull CharSequence input, @NotNull Function<String, String> func) {
-        return expand(input, func, new TreeSet<>());
+        return new Macros(input, s -> ofNullable(func.apply(s))).expand();
     }
 
-    private static @NotNull String expand(@NotNull CharSequence input, @NotNull Function<String, String> func, Set<String> nested) {
-        return Regex.getMatcher(macroRegex, input).replaceAll(m -> getExpansion(m, func, nested));
+    public static @NotNull String expand2(@NotNull CharSequence input, @NotNull Function<String, Optional<String>> func) {
+        return new Macros(input, func).expand();
     }
 
-    private static @NotNull String getExpansion(@NotNull MatchResult m, @NotNull Function<String, String> func, @NotNull Set<String> nested) {
-        String rep = func.apply(m.group(1));
-        if(nested.contains(rep)) return m.group();
-        nested.add(rep);
-        try { return expand(rep, func, nested); } finally { nested.remove(rep); }
+    private @NotNull String foo(String r) {
+        _nested.add(r);
+        try { return expand(r, _func, _nested); } finally { _nested.remove(r); }
     }
 }
