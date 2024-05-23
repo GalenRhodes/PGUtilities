@@ -1,0 +1,37 @@
+    // ${template_start_beda43b6-be23-4e4a-97af-1ac5d3e8e783}
+    //!
+    //!public static ${t_primitive} @NotNull [] append(${t_primitive} src, ${t_primitive} @NotNull [] dest) {
+    //!    ${t_primitive}[] array = Arrays.copyOf(dest, dest.length + 1);
+    //!    array[dest.length] = src;
+    //!    return array;
+    //!}
+    //!
+    //!public static ${t_primitive} @NotNull [] concat(${t_primitive} @NotNull [] a1, ${t_primitive} @NotNull [] a2) {
+    //!    return copy(a2, 0, Arrays.copyOf(a1, a1.length + a2.length), a1.length, a2.length);
+    //!}
+    //!
+    //!public static @Contract("_, _, _, _, _ -> param3") ${t_primitive} @NotNull [] copy(${t_primitive} @NotNull [] src, int srcPos, ${t_primitive} @NotNull [] dest, int destPos, int length) {
+    //!    if(length > 0) arraycopy(src, srcPos, dest, destPos, length);
+    //!    return dest;
+    //!}
+    //!
+    //!public static @NotNull Optional<${t_object}> get(${t_primitive} @NotNull [] array, @Range(from = 0, to = Integer.MAX_VALUE) int index) {
+    //!    return ofNullable((index < array.length) ? array[index] : null);
+    //!}
+    //!
+    //!public static @NotNull Optional<${t_object}> getFirst(${t_primitive} @NotNull [] array) {
+    //!    return get(array, 0);
+    //!}
+    //!
+    //!public static ${t_primitive} @NotNull [] newFilled(int length, ${t_primitive} fill) {
+    //!    ${t_primitive}[] array = new ${t_primitive}[length];
+    //!    if(length > 0) Arrays.fill(array, fill);
+    //!    return array;
+    //!}
+    //!
+    //!public static ${t_primitive} @NotNull [] prepend(${t_primitive} src, ${t_primitive} @NotNull [] dest) {
+    //!    ${t_primitive}[] cp = new ${t_primitive}[dest.length + 1];
+    //!    cp[0] = src;
+    //!    return copy(dest, 0, cp, 1, dest.length);
+    //!}
+    // ${template_end_beda43b6-be23-4e4a-97af-1ac5d3e8e783}

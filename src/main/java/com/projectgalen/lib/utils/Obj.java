@@ -29,6 +29,26 @@ public final class Obj {
 
     private Obj() { }
 
+    @Contract(pure = true) public static boolean allEquals(Object object, Object @NotNull ... others) {
+        for(Object other : others) if(!Objects.equals(object, other)) return false;
+        return true;
+    }
+
+    @Contract(pure = true) public static boolean allEqualsIgnoreCase(String object, String @NotNull ... others) {
+        for(String s : others) if(!object.equalsIgnoreCase(s)) return false;
+        return true;
+    }
+
+    @Contract(pure = true) public static boolean anyEquals(Object object, Object @NotNull ... others) {
+        for(Object other : others) if(Objects.equals(object, other)) return true;
+        return false;
+    }
+
+    @Contract(pure = true) public static boolean anyEqualsIgnoreCase(String object, String @NotNull ... others) {
+        for(String s : others) if(object.equalsIgnoreCase(s)) return true;
+        return false;
+    }
+
     public static <T> int compare(T a, T b, Comparator<T> comparator) {
         return ((a == b) ? 0 : ((a == null) ? -1 : ((b == null) ? 1 : comparator.compare(a, b))));
     }
@@ -37,23 +57,18 @@ public final class Obj {
         return compare(a, b, Comparator.naturalOrder());
     }
 
-    public static <T, E extends Exception> @NotNull T requireNonNull(T obj, Supplier<E> supplier) throws E {
-        if(obj == null) throw supplier.get();
-        return obj;
-    }
-
-    @Contract(pure = true) public static boolean allEquals(Object object, Object @NotNull ... others) {
-        for(Object other : others) if(!Objects.equals(object, other)) return false;
-        return true;
-    }
-
     @Contract(pure = true) public static boolean noneEquals(Object object, Object @NotNull ... others) {
         for(Object other : others) if(Objects.equals(object, other)) return false;
         return true;
     }
 
-    @Contract(pure = true) public static boolean anyEquals(Object object, Object @NotNull ... others) {
-        for(Object other : others) if(Objects.equals(object, other)) return true;
-        return false;
+    @Contract(pure = true) public static boolean noneEqualsIgnoreCase(String object, String @NotNull ... others) {
+        for(String s : others) if(object.equalsIgnoreCase(s)) return false;
+        return true;
+    }
+
+    public static <T, E extends Exception> @NotNull T requireNonNull(T obj, Supplier<E> supplier) throws E {
+        if(obj == null) throw supplier.get();
+        return obj;
     }
 }

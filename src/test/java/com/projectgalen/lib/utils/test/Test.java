@@ -17,63 +17,75 @@ package com.projectgalen.lib.utils.test;
 // NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 // ================================================================================================================================
 
-import com.projectgalen.lib.utils.annotations.Equals;
 import com.projectgalen.lib.utils.reflect.TypeInfo;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.*;
 import java.math.BigDecimal;
-import java.net.URL;
 import java.util.List;
+import java.util.Map;
 import java.util.Stack;
+import java.util.stream.Stream;
+
+import static com.projectgalen.lib.utils.reflect.TypeInfo.getMethodTypes;
 
 public class Test<Q, P> {
 
-    public List<? extends CharSequence> list1;
-    public List<? super CharSequence>   list2;
-    public List<BigDecimal>             list3;
-    public List<?>                      list4;
-    public List<Q>                      list5;
-    public List<Test<Q, P>>             list6;
-    public List<Test<URL, Equals>>      list7;
-    public String                       name1 = "Galen";
+    public List<? extends CharSequence>                    field1;
+    public List<? super CharSequence>                      field2;
+    public List<BigDecimal>                                field3;
+    public List<?>                                         field4;
+    public List<Q>                                         field5;
+    public List<Test<Q, P>>                                field6;
+    public List<String[]>                                  field7;
+    public String                                          field8 = "Galen";
+    public Map<String, Map<Q, List<Map<String, List<P>>>>> field9;
 
-    public Test()                                      { }
+    public Test()                                                                                                                                { }
 
-    public <T extends Number & Comparable<T>> T foo1() { return null; }
+    public <T extends Number & Comparable<T>> T foo1()                                                                                           { return null; }
 
-    public <T extends Comparable<T>> T foo2()          { return null; }
+    public <T extends Comparable<T>> T foo2()                                                                                                    { return null; }
 
-    public <T> T foo3()                                { return null; }
+    public <T> T foo3()                                                                                                                          { return null; }
 
-    public <T extends Runnable> List<T> foo4()         { return null; }
+    public <T extends Runnable> T[] foo4()                                                                                                       { return null; }
+
+    public <T extends Runnable, U> void foo5(T param1, List<T[]> param2, U param3, List<U[]> param4, Map<String, ? extends CharSequence> param5) { }
 
     public int run(String... args) throws Exception {
-        TypeInfo info1 = new TypeInfo(Test.class.getDeclaredField("list1"));
-        TypeInfo info2 = new TypeInfo(Test.class.getDeclaredField("list2"));
-        TypeInfo info3 = new TypeInfo(Test.class.getDeclaredField("list3"));
-        TypeInfo info4 = new TypeInfo(Test.class.getDeclaredField("list4"));
-        TypeInfo info5 = new TypeInfo(Test.class.getDeclaredField("list5"));
-        TypeInfo info6 = new TypeInfo(Test.class.getDeclaredField("list6"));
-        TypeInfo info7 = new TypeInfo(Test.class.getDeclaredField("list7"));
-        TypeInfo info8 = new TypeInfo(Test.class.getDeclaredField("name1"));
-        TypeInfo info9 = new TypeInfo(Test.class.getDeclaredMethod("foo1"));
-        TypeInfo info10 = new TypeInfo(Test.class.getDeclaredMethod("foo2"));
-        TypeInfo info11 = new TypeInfo(Test.class.getDeclaredMethod("foo3"));
-        TypeInfo info12 = new TypeInfo(Test.class.getDeclaredMethod("foo4"));
-//        debug(Test.class.getDeclaredField("list1"));
-//        debug(Test.class.getDeclaredField("list2"));
-//        debug(Test.class.getDeclaredField("list3"));
-//        debug(Test.class.getDeclaredField("list4"));
-//        debug(Test.class.getDeclaredField("list5"));
-//        debug(Test.class.getDeclaredField("list6"));
-//        debug(Test.class.getDeclaredField("list7"));
+        System.out.println();
+        Stream.of(getMethodTypes(Stream.of(Test.class.getDeclaredMethods()).filter(m -> "foo5".equals(m.getName())).findFirst().orElseThrow())).map(TypeInfo::toString).forEach(System.out::println);
+        System.out.println();
+
+        System.out.println(new TypeInfo(Test.class.getDeclaredField("field1")));
+        System.out.println(new TypeInfo(Test.class.getDeclaredField("field2")));
+        System.out.println(new TypeInfo(Test.class.getDeclaredField("field3")));
+        System.out.println(new TypeInfo(Test.class.getDeclaredField("field4")));
+        System.out.println(new TypeInfo(Test.class.getDeclaredField("field5")));
+        System.out.println(new TypeInfo(Test.class.getDeclaredField("field6")));
+        System.out.println(new TypeInfo(Test.class.getDeclaredField("field7")));
+        System.out.println(new TypeInfo(Test.class.getDeclaredField("field8")));
+        System.out.println(new TypeInfo(Test.class.getDeclaredField("field9")));
+        System.out.println(new TypeInfo(Test.class.getDeclaredMethod("foo1")));
+        System.out.println(new TypeInfo(Test.class.getDeclaredMethod("foo2")));
+        System.out.println(new TypeInfo(Test.class.getDeclaredMethod("foo3")));
+        System.out.println(new TypeInfo(Test.class.getDeclaredMethod("foo4")));
+
+//        debug(Test.class.getDeclaredField("field1"));
+//        debug(Test.class.getDeclaredField("field2"));
+//        debug(Test.class.getDeclaredField("field3"));
+//        debug(Test.class.getDeclaredField("field4"));
+//        debug(Test.class.getDeclaredField("field5"));
+//        debug(Test.class.getDeclaredField("field6"));
+//        debug(Test.class.getDeclaredField("field7"));
 //        debug(Test.class.getDeclaredField("name1"));
 //        debug(Test.class.getDeclaredMethod("foo1"));
 //        debug(Test.class.getDeclaredMethod("foo2"));
 //        debug(Test.class.getDeclaredMethod("foo3"));
 //        debug(Test.class.getDeclaredMethod("foo4"));
 
+        System.out.println();
         return 0;
     }
 

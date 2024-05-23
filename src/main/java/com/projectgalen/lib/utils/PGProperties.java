@@ -61,7 +61,7 @@ public class PGProperties extends Properties {
      * @param timeUnit     The units for the value of <code>reloadPeriod</code>. The default is {@link TimeUnit#MILLISECONDS}.
      * @param defaults     The defaults
      */
-    public PGProperties(@NotNull Function<PGProperties, Boolean> loader, long reloadPeriod, TimeUnit timeUnit, Properties defaults) {
+    private PGProperties(@NotNull Function<PGProperties, Boolean> loader, long reloadPeriod, TimeUnit timeUnit, Properties defaults) {
         super(defaults);
         if(!loader.apply(this)) throw new RuntimeException(msgs.getString("msg.err.prop_load_failure"));
 
@@ -78,48 +78,6 @@ public class PGProperties extends Properties {
             this.timeUnit     = null;
             this.executor     = null;
         }
-    }
-
-    public PGProperties(InputStream inputStream, Properties defaults) {
-        this(DEFAULT_LOADER, -1, null, defaults);
-        requireNonNull(inputStream, msgs.getString("msg.err.input_stream_null"));
-        try(inputStream) { load(inputStream); } catch(IOException e) { throw new RuntimeException(e.getMessage(), e); }
-    }
-
-    public PGProperties(InputStream inputStream) {
-        this(inputStream, null);
-    }
-
-    public PGProperties(@NotNull File file, long reloadPeriod, TimeUnit timeUnit, Properties defaults) {
-        this(p -> p.loadFromInputStream(getInputStream(file)), reloadPeriod, timeUnit, defaults);
-    }
-
-    public PGProperties(@NotNull File file, long reloadPeriod, TimeUnit timeUnit) {
-        this(file, reloadPeriod, timeUnit, null);
-    }
-
-    public PGProperties(@NotNull File file, Properties defaults) {
-        this(file, -1, null, defaults);
-    }
-
-    public PGProperties(@NotNull File file) {
-        this(file, -1, null, null);
-    }
-
-    public PGProperties(@NotNull String name, @NotNull Class<?> refClass, long reloadPeriod, TimeUnit timeUnit, Properties defaults) {
-        this(p -> p.loadFromInputStream(getInputStream(name, refClass)), reloadPeriod, timeUnit, defaults);
-    }
-
-    public PGProperties(@NotNull String name, @NotNull Class<?> refClass, long reloadPeriod, TimeUnit timeUnit) {
-        this(name, refClass, reloadPeriod, timeUnit, null);
-    }
-
-    public PGProperties(@NotNull String name, @NotNull Class<?> refClass, Properties defaults) {
-        this(name, refClass, -1, null, defaults);
-    }
-
-    public PGProperties(@NotNull String name, @NotNull Class<?> refClass) {
-        this(name, refClass, -1, null, null);
     }
 
     public long getReloadPeriod() {
@@ -159,6 +117,64 @@ public class PGProperties extends Properties {
     private void restore(Map<Object, Object> t) {
         clear();
         putAll(t);
+    }
+
+    /**
+     * Create a new instance of {@link PGProperties} that reloads it's values at a set interval.
+     *
+     * @param loader       The {@link Function} lambda that will do both the initial load and subsequent reloads.
+     * @param reloadPeriod The interval period. A value less than 1 means the properties will not be reloaded after the initial load.
+     * @param timeUnit     The units for the value of <code>reloadPeriod</code>. The default is {@link TimeUnit#MILLISECONDS}.
+     * @param defaults     The defaults
+     *
+     * @return A new instance of PGProperties.
+     */
+    public static @NotNull PGProperties getProperties(@NotNull Function<PGProperties, Boolean> loader, long reloadPeriod, TimeUnit timeUnit, Properties defaults) {
+        return new PGProperties(loader, reloadPeriod, timeUnit, defaults);
+    }
+
+    public static @NotNull PGProperties getProperties(InputStream inputStream, Properties defaults) {
+        return new PGProperties(p -> {
+            requireNonNull(inputStream, msgs.getString("msg.err.input_stream_null"));
+            try(inputStream) { p.load(inputStream); } catch(IOException e) { throw new RuntimeException(e.getMessage(), e); }
+            return true;
+        }, -1, null, defaults);
+    }
+
+    public static @NotNull PGProperties getProperties(InputStream inputStream) {
+        return getProperties(inputStream, null);
+    }
+
+    public static @NotNull PGProperties getProperties(@NotNull File file, long reloadPeriod, TimeUnit timeUnit, Properties defaults) {
+        return new PGProperties(p -> p.loadFromInputStream(getInputStream(file)), reloadPeriod, timeUnit, defaults);
+    }
+
+    public static @NotNull PGProperties getProperties(@NotNull File file, long reloadPeriod, TimeUnit timeUnit) {
+        return getProperties(file, reloadPeriod, timeUnit, null);
+    }
+
+    public static @NotNull PGProperties getProperties(@NotNull File file, Properties defaults) {
+        return getProperties(file, -1, null, defaults);
+    }
+
+    public static @NotNull PGProperties getProperties(@NotNull File file) {
+        return getProperties(file, -1, null, null);
+    }
+
+    public static @NotNull PGProperties getProperties(@NotNull String name, @NotNull Class<?> refClass, long reloadPeriod, TimeUnit timeUnit, Properties defaults) {
+        return new PGProperties(p -> p.loadFromInputStream(getInputStream(name, refClass)), reloadPeriod, timeUnit, defaults);
+    }
+
+    public static @NotNull PGProperties getProperties(@NotNull String name, @NotNull Class<?> refClass, long reloadPeriod, TimeUnit timeUnit) {
+        return getProperties(name, refClass, reloadPeriod, timeUnit, null);
+    }
+
+    public static @NotNull PGProperties getProperties(@NotNull String name, @NotNull Class<?> refClass, Properties defaults) {
+        return getProperties(name, refClass, -1, null, defaults);
+    }
+
+    public static @NotNull PGProperties getProperties(@NotNull String name, @NotNull Class<?> refClass) {
+        return getProperties(name, refClass, -1, null, null);
     }
 
     private static @NotNull InputStream getInputStream(@NotNull String name, @NotNull Class<?> refClass) {
