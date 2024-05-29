@@ -30,10 +30,10 @@ import static java.util.Optional.ofNullable;
 
 public final class Macros {
 
-    private static final @NotNull @NonNls @RegExp String                             macroRegex = "(?<!\\\\)\\$\\{([^}]+)}";
-    private static final                          String                             X          = "\\\\";
-    private static final                          String                             Y          = "2️⃣1️⃣1️⃣2️⃣🕑🕐🕐🕑";
-    private final @NotNull                        Set<String>                        _nested    = new TreeSet<>();
+    private static final @NotNull @NonNls @RegExp String                             MACRO_REGEX = "(?<!\\\\)\\$\\{([^}]+)}";
+    private static final                          String                             X           = "\\\\";
+    private static final                          String                             Y           = "2️⃣1️⃣1️⃣2️⃣🕑🕐🕐🕑";
+    private final @NotNull                        Set<String>                        _nested     = new TreeSet<>();
     private final @NotNull                        Function<String, Optional<String>> _func;
     private final @NotNull                        CharSequence                       _input;
 
@@ -48,19 +48,19 @@ public final class Macros {
     }
 
     private @NotNull String expand() {
-        return Regex.getMatcher(macroRegex, _input).replaceAll(m -> _func.apply(m.group(1)).filter(s -> !_nested.contains(s)).map(this::foo).orElseGet(m::group)).replace(Y, X);
-    }
-
-    public static @NotNull String expand(@NotNull CharSequence input, @NotNull Function<String, String> func) {
-        return new Macros(input, s -> ofNullable(func.apply(s))).expand();
-    }
-
-    public static @NotNull String expand2(@NotNull CharSequence input, @NotNull Function<String, Optional<String>> func) {
-        return new Macros(input, func).expand();
+        return Regex.getMatcher(MACRO_REGEX, _input).replaceAll(m -> _func.apply(m.group(1)).filter(s -> !_nested.contains(s)).map(this::foo).orElseGet(m::group)).replace(Y, X);
     }
 
     private @NotNull String foo(String r) {
         _nested.add(r);
-        try { return expand(r, _func, _nested); } finally { _nested.remove(r); }
+        try { return expand2(r, _func); } finally { _nested.remove(r); }
+    }
+
+    public static @NotNull String expand(@NotNull CharSequence input, @NotNull Function<String, String> func) {
+        return expand2(input, s -> ofNullable(func.apply(s)));
+    }
+
+    public static @NotNull String expand2(@NotNull CharSequence input, @NotNull Function<String, Optional<String>> func) {
+        return new Macros(input, func).expand();
     }
 }
