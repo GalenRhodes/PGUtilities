@@ -17,7 +17,31 @@ package com.projectgalen.lib.utils;
 // NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 // ================================================================================================================================
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.function.Supplier;
+
 public final class Util {
+
     private Util() { }
 
+    public static void andFinally(@NotNull Runnable before, @NotNull Runnable runnable, @NotNull Runnable then) {
+        before.run();
+        try {
+            runnable.run();
+        }
+        finally {
+            then.run();
+        }
+    }
+
+    public static <R> R getFinally(@NotNull Runnable before, @NotNull Supplier<R> supplier, @NotNull Runnable then) {
+        before.run();
+        try {
+            return supplier.get();
+        }
+        finally {
+            then.run();
+        }
+    }
 }

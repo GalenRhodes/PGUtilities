@@ -17,10 +17,10 @@ package com.projectgalen.lib.utils.text;
 // NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 // ================================================================================================================================
 
-import org.intellij.lang.annotations.RegExp;
-import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
@@ -30,37 +30,115 @@ import static java.util.Optional.ofNullable;
 
 public final class Macros {
 
-    private static final @NotNull @NonNls @RegExp String                             MACRO_REGEX = "(?<!\\\\)\\$\\{([^}]+)}";
-    private static final                          String                             X           = "\\\\";
-    private static final                          String                             Y           = "2️⃣1️⃣1️⃣2️⃣🕑🕐🕐🕑";
-    private final @NotNull                        Set<String>                        _nested     = new TreeSet<>();
-    private final @NotNull                        Function<String, Optional<String>> _func;
-    private final @NotNull                        CharSequence                       _input;
+    private final @NotNull Set<String>                        m = new TreeSet<>();
+    private final @NotNull Function<String, Optional<String>> f;
 
-    private Macros() {
-        _func  = (__) -> Optional.empty();
-        _input = "";
+    private Macros(@NotNull Function<String, Optional<String>> func) {
+        f = func;
     }
 
-    private Macros(@NotNull CharSequence input, @NotNull Function<String, Optional<String>> func) {
-        _func  = func;
-        _input = input.toString().replace(X, Y);
+    private @NotNull String expand(@NotNull CharSequence input) {
+        StringBuilder sb = new StringBuilder();
+        CPIt          it = new CPIt(input);
+        while(it.hasNext()) foo1(sb, it, getNextMarkedCodePoint(it));
+        return sb.toString();
     }
 
-    private @NotNull String expand() {
-        return Regex.getMatcher(MACRO_REGEX, _input).replaceAll(m -> _func.apply(m.group(1)).filter(s -> !_nested.contains(s)).map(this::foo).orElseGet(m::group)).replace(Y, X);
+    private void foo1(StringBuilder sb, CPIt it, int ch) {
+        switch(ch) {
+            case '\\' -> append(sb, (it.hasNext() ? it.next() : ch));
+            case '$' -> { if(!(it.hasNext() && (it.next() == '{') && it.hasNext() && (it.peek() != '}') && foo2(sb, it, getMacroName(it)))) sb.append(it.getMarked()); }
+            default -> append(sb, ch);
+        }
     }
 
-    private @NotNull String foo(String r) {
-        _nested.add(r);
-        try { return expand2(r, _func); } finally { _nested.remove(r); }
+    private boolean foo2(@NotNull StringBuilder sb, @NotNull CPIt it, String name) {
+        if((name == null) || m.contains(name)) return false;
+        m.add(name);
+        sb.append(f.apply(name).map(this::expand).orElseGet(it::getMarked));
+        m.remove(name);
+        return true;
     }
 
-    public static @NotNull String expand(@NotNull CharSequence input, @NotNull Function<String, String> func) {
-        return expand2(input, s -> ofNullable(func.apply(s)));
+    public static @NotNull String expand(@NotNull CharSequence input, @NotNull Function<String, Optional<String>> func) {
+        return new Macros(func).expand(input);
     }
 
-    public static @NotNull String expand2(@NotNull CharSequence input, @NotNull Function<String, Optional<String>> func) {
-        return new Macros(input, func).expand();
+    public static @NotNull String expand2(@NotNull CharSequence input, @NotNull Function<String, String> func) {
+        return expand(input, s -> ofNullable(func.apply(s)));
+    }
+
+    private static void append(@NotNull StringBuilder sb, int codePoint) {
+        sb.append(Character.toChars(codePoint));
+    }
+
+    private static @Nullable String getMacroName(@NotNull CPIt it) {
+        StringBuilder sb = new StringBuilder();
+        while(it.hasNext()) {
+            int ch = it.next();
+            if(ch == '}') return sb.toString();
+            append(sb, ch);
+        }
+        return null;
+    }
+
+    private static int getNextMarkedCodePoint(@NotNull CPIt it) {
+        it.mark();
+        return it.next();
+    }
+
+    private static final class CPIt {
+        private final CharSequence input;
+        private final int          end;
+        private       int          idx;
+        private       int          mark;
+
+        CPIt(@NotNull CharSequence input, int start, int end) {
+            this.input = input;
+            this.idx   = start;
+            this.end   = end;
+        }
+
+        CPIt(@NotNull CharSequence input) {
+            this(input, 0, input.length());
+        }
+
+        @NotNull String getMarked() {
+            return input.subSequence(mark, end).toString();
+        }
+
+        boolean hasNext() {
+            return (idx < end);
+        }
+
+        void mark() {
+            this.mark = this.idx;
+        }
+
+        int next() {
+            if(idx < end) {
+                char c1 = input.charAt(idx++);
+                if(Character.isHighSurrogate(c1) && (idx < end)) {
+                    char c2 = input.charAt(idx);
+                    if(Character.isLowSurrogate(c2)) {
+                        ++idx;
+                        return Character.toCodePoint(c1, c2);
+                    }
+                }
+                return c1;
+            }
+            throw new NoSuchElementException();
+        }
+
+        int peek() {
+            int i = idx;
+            int c = next();
+            idx = i;
+            return c;
+        }
+
+        void reset() {
+            this.idx = this.mark;
+        }
     }
 }

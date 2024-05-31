@@ -95,7 +95,7 @@ public class PGProperties extends Properties {
     }
 
     private void expandMacro(@NotNull Entry<Object, Object> e) {
-        e.setValue(Macros.expand(e.getValue().toString(), this::getProperty));
+        e.setValue(Macros.expand2(e.getValue().toString(), this::getProperty));
     }
 
     private boolean isStringEntry(@NotNull Entry<Object, Object> e) {

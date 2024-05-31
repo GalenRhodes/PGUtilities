@@ -74,7 +74,7 @@ public class PGResourceBundle extends ResourceBundle {
      * @throws NullPointerException if {@code key} is {@code null}
      */
     protected @Override Object handleGetObject(@NotNull String key) {
-        return _getObject(key).map(v -> cache.computeIfAbsent(key, __ -> Macros.expand2(v, this::_getObject))).orElse(null);
+        return _getObject(key).map(v -> cache.computeIfAbsent(key, __ -> Macros.expand(v, this::_getObject))).orElse(null);
     }
 
     private @NotNull Optional<String> _getObject(@NotNull String key) {
