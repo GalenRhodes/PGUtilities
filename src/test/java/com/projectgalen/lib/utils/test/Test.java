@@ -18,12 +18,14 @@ package com.projectgalen.lib.utils.test;
 // ================================================================================================================================
 
 import com.projectgalen.lib.utils.reflect.TypeInfo;
+import com.projectgalen.lib.utils.text.Macros;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.*;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Stack;
 import java.util.stream.Stream;
 
@@ -54,6 +56,17 @@ public class Test<Q, P> {
     public <T extends Runnable, U> void foo5(T param1, List<T[]> param2, U param3, List<U[]> param4, Map<String, ? extends CharSequence> param5) { }
 
     public int run(String... args) throws Exception {
+        String str = "Now is the for all good ${men} to come to the aid of their \\\\${country}.";
+        System.out.println(Macros.expand(str, s -> Optional.ofNullable(switch(s) {
+            case "men" -> "${women}";
+            case "women" -> "programmers";
+            case "country" -> "computers";
+            default -> null;
+        })));
+        return 0;
+    }
+
+    private void test001() throws NoSuchFieldException, NoSuchMethodException {
         System.out.println();
         Stream.of(getMethodTypes(Stream.of(Test.class.getDeclaredMethods()).filter(m -> "foo5".equals(m.getName())).findFirst().orElseThrow())).map(TypeInfo::toString).forEach(System.out::println);
         System.out.println();
@@ -86,7 +99,6 @@ public class Test<Q, P> {
 //        debug(Test.class.getDeclaredMethod("foo4"));
 
         System.out.println();
-        return 0;
     }
 
     private void debug(@NotNull Field f) {
