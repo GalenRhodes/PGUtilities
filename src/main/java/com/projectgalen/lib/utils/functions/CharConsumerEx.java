@@ -1,10 +1,10 @@
 package com.projectgalen.lib.utils.functions;
 // ================================================================================================================================
 //     PROJECT: PGUtilities
-//    FILENAME: TriConsumer.java
+//    FILENAME: CharConsumerEx.java
 //         IDE: IntelliJ IDEA
 //      AUTHOR: Galen Rhodes
-//        DATE: May 07, 2024
+//        DATE: June 04, 2024
 //
 // Copyright © 2024 Project Galen. All rights reserved.
 //
@@ -17,14 +17,15 @@ package com.projectgalen.lib.utils.functions;
 // NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 // ================================================================================================================================
 
-public interface TriConsumer<T, U, V> {
+import org.jetbrains.annotations.NotNull;
 
-    void accept(T t, U u, V v);
+public interface CharConsumerEx<E extends Exception> {
+    void acceptAsChar(char c) throws E;
 
-    default TriConsumer<T, U, V> andThen(TriConsumer<? super T, ? super U, ? super V> after) {
-        return (t, u, v) -> {
-            accept(t, u, v);
-            after.accept(t, u, v);
+    default CharConsumerEx<E> andThen(@NotNull CharConsumerEx<? extends E> after) {
+        return (c) -> {
+            acceptAsChar(c);
+            after.acceptAsChar(c);
         };
     }
 }

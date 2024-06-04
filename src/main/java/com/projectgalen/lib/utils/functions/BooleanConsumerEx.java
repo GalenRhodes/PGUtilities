@@ -1,10 +1,10 @@
 package com.projectgalen.lib.utils.functions;
 // ================================================================================================================================
 //     PROJECT: PGUtilities
-//    FILENAME: TriConsumer.java
+//    FILENAME: BooleanConsumerEx.java
 //         IDE: IntelliJ IDEA
 //      AUTHOR: Galen Rhodes
-//        DATE: May 07, 2024
+//        DATE: June 04, 2024
 //
 // Copyright © 2024 Project Galen. All rights reserved.
 //
@@ -17,14 +17,13 @@ package com.projectgalen.lib.utils.functions;
 // NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 // ================================================================================================================================
 
-public interface TriConsumer<T, U, V> {
+public interface BooleanConsumerEx<E extends Exception> {
+    void acceptAsBoolean(boolean b) throws E;
 
-    void accept(T t, U u, V v);
-
-    default TriConsumer<T, U, V> andThen(TriConsumer<? super T, ? super U, ? super V> after) {
-        return (t, u, v) -> {
-            accept(t, u, v);
-            after.accept(t, u, v);
+    default BooleanConsumerEx<E> andThen(BooleanConsumerEx<? extends E> after) {
+        return (b) -> {
+            acceptAsBoolean(b);
+            after.acceptAsBoolean(b);
         };
     }
 }

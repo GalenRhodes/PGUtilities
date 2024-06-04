@@ -1,10 +1,10 @@
 package com.projectgalen.lib.utils.functions;
 // ================================================================================================================================
 //     PROJECT: PGUtilities
-//    FILENAME: TriConsumer.java
+//    FILENAME: QuadFunctionEx.java
 //         IDE: IntelliJ IDEA
 //      AUTHOR: Galen Rhodes
-//        DATE: May 07, 2024
+//        DATE: June 04, 2024
 //
 // Copyright © 2024 Project Galen. All rights reserved.
 //
@@ -17,14 +17,15 @@ package com.projectgalen.lib.utils.functions;
 // NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 // ================================================================================================================================
 
-public interface TriConsumer<T, U, V> {
+import org.jetbrains.annotations.NotNull;
 
-    void accept(T t, U u, V v);
+import java.util.function.Function;
 
-    default TriConsumer<T, U, V> andThen(TriConsumer<? super T, ? super U, ? super V> after) {
-        return (t, u, v) -> {
-            accept(t, u, v);
-            after.accept(t, u, v);
-        };
+public interface QuadFunctionEx<T, U, V, W, R, E extends Exception> {
+
+    default <R2> QuadFunctionEx<T, U, V, W, R2, E> andThen(@NotNull Function<? super R, ? extends R2> function) {
+        return (T t, U u, V v, W w) -> function.apply(apply(t, u, v, w));
     }
+
+    R apply(T t, U u, V v, W w) throws E;
 }

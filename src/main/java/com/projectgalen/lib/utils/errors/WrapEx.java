@@ -80,7 +80,19 @@ public class WrapEx extends RuntimeException {
         try { return supplier.get(); } catch(Exception e) { throw new WrapEx(e.getMessage(), e); }
     }
 
+    public static <T> T get(@NotNull SupplierEx<T, Exception> supplier, @NotNull Runnable fin) {
+        try { return supplier.get(); } catch(Exception e) { throw new WrapEx(e.getMessage(), e); } finally { fin.run(); }
+    }
+
     public static void run(@NotNull RunnableEx<Exception> runner) {
         try { runner.run(); } catch(Exception e) { throw new WrapEx(e.getMessage(), e); }
+    }
+
+    public static void run(@NotNull RunnableEx<Exception> runner, @NotNull Runnable fin) {
+        try { runner.run(); } catch(Exception e) { throw new WrapEx(e.getMessage(), e); } finally { fin.run(); }
+    }
+
+    public static WrapEx wrap(@NotNull Throwable e) {
+        return ((e instanceof WrapEx we) ? we : new WrapEx(e.getMessage(), e));
     }
 }
