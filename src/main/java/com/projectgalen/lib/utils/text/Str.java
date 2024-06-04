@@ -1,4 +1,4 @@
-package com.projectgalen.lib.utils;
+package com.projectgalen.lib.utils.text;
 // ================================================================================================================================
 //     PROJECT: PGUtilities
 //    FILENAME: Str.java
@@ -17,6 +17,7 @@ package com.projectgalen.lib.utils;
 // NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 // ================================================================================================================================
 
+import com.projectgalen.lib.utils.PGArrays;
 import org.jetbrains.annotations.Contract;
 
 public final class Str {

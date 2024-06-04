@@ -20,7 +20,7 @@ package com.projectgalen.lib.utils.reflect;
 import com.projectgalen.lib.utils.PGArrays;
 import com.projectgalen.lib.utils.PGProperties;
 import com.projectgalen.lib.utils.PGResourceBundle;
-import com.projectgalen.lib.utils.Str;
+import com.projectgalen.lib.utils.text.Str;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.*;
