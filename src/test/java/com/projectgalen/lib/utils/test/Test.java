@@ -23,10 +23,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.*;
 import java.math.BigDecimal;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Stack;
+import java.util.*;
 import java.util.stream.Stream;
 
 import static com.projectgalen.lib.utils.reflect.TypeInfo.getMethodTypes;
@@ -56,49 +53,18 @@ public class Test<Q, P> {
     public <T extends Runnable, U> void foo5(T param1, List<T[]> param2, U param3, List<U[]> param4, Map<String, ? extends CharSequence> param5) { }
 
     public int run(String... args) throws Exception {
-        String str = "Now is the for all good ${men} to come to the aid of their \\\\${country}.";
-        System.out.println(Macros.expand(str, s -> Optional.ofNullable(switch(s) {
-            case "men" -> "${women}";
-            case "women" -> "programmers";
-            case "country" -> "computers";
-            default -> null;
-        })));
+        String              str   = "\\\\Now is the time for all \\${good} ${men} to come to the ${aid} of their ${country}.";
+        Map<String, String> repls = new TreeMap<>();
+
+        repls.put("men", "${women}");
+        repls.put("women", "programmers");
+        repls.put("country", "computers");
+        repls.put("aid", "${faid}");
+        repls.put("faid", "foreign ${aid}");
+        repls.put("good", "bad");
+
+        System.out.printf("\nOriginal: %s\nExpanded: %s\n\n", str, Macros.expand(str, s -> Optional.ofNullable(repls.get(s))));
         return 0;
-    }
-
-    private void test001() throws NoSuchFieldException, NoSuchMethodException {
-        System.out.println();
-        Stream.of(getMethodTypes(Stream.of(Test.class.getDeclaredMethods()).filter(m -> "foo5".equals(m.getName())).findFirst().orElseThrow())).map(TypeInfo::toString).forEach(System.out::println);
-        System.out.println();
-
-        System.out.println(new TypeInfo(Test.class.getDeclaredField("field1")));
-        System.out.println(new TypeInfo(Test.class.getDeclaredField("field2")));
-        System.out.println(new TypeInfo(Test.class.getDeclaredField("field3")));
-        System.out.println(new TypeInfo(Test.class.getDeclaredField("field4")));
-        System.out.println(new TypeInfo(Test.class.getDeclaredField("field5")));
-        System.out.println(new TypeInfo(Test.class.getDeclaredField("field6")));
-        System.out.println(new TypeInfo(Test.class.getDeclaredField("field7")));
-        System.out.println(new TypeInfo(Test.class.getDeclaredField("field8")));
-        System.out.println(new TypeInfo(Test.class.getDeclaredField("field9")));
-        System.out.println(new TypeInfo(Test.class.getDeclaredMethod("foo1")));
-        System.out.println(new TypeInfo(Test.class.getDeclaredMethod("foo2")));
-        System.out.println(new TypeInfo(Test.class.getDeclaredMethod("foo3")));
-        System.out.println(new TypeInfo(Test.class.getDeclaredMethod("foo4")));
-
-//        debug(Test.class.getDeclaredField("field1"));
-//        debug(Test.class.getDeclaredField("field2"));
-//        debug(Test.class.getDeclaredField("field3"));
-//        debug(Test.class.getDeclaredField("field4"));
-//        debug(Test.class.getDeclaredField("field5"));
-//        debug(Test.class.getDeclaredField("field6"));
-//        debug(Test.class.getDeclaredField("field7"));
-//        debug(Test.class.getDeclaredField("name1"));
-//        debug(Test.class.getDeclaredMethod("foo1"));
-//        debug(Test.class.getDeclaredMethod("foo2"));
-//        debug(Test.class.getDeclaredMethod("foo3"));
-//        debug(Test.class.getDeclaredMethod("foo4"));
-
-        System.out.println();
     }
 
     private void debug(@NotNull Field f) {
@@ -162,6 +128,41 @@ public class Test<Q, P> {
                 debug(depth + 1, indent + 22, nestedTypes, "", "", types[i]);
             }
         }
+    }
+
+    private void test001() throws NoSuchFieldException, NoSuchMethodException {
+        System.out.println();
+        Stream.of(getMethodTypes(Stream.of(Test.class.getDeclaredMethods()).filter(m -> "foo5".equals(m.getName())).findFirst().orElseThrow())).map(TypeInfo::toString).forEach(System.out::println);
+        System.out.println();
+
+        System.out.println(new TypeInfo(Test.class.getDeclaredField("field1")));
+        System.out.println(new TypeInfo(Test.class.getDeclaredField("field2")));
+        System.out.println(new TypeInfo(Test.class.getDeclaredField("field3")));
+        System.out.println(new TypeInfo(Test.class.getDeclaredField("field4")));
+        System.out.println(new TypeInfo(Test.class.getDeclaredField("field5")));
+        System.out.println(new TypeInfo(Test.class.getDeclaredField("field6")));
+        System.out.println(new TypeInfo(Test.class.getDeclaredField("field7")));
+        System.out.println(new TypeInfo(Test.class.getDeclaredField("field8")));
+        System.out.println(new TypeInfo(Test.class.getDeclaredField("field9")));
+        System.out.println(new TypeInfo(Test.class.getDeclaredMethod("foo1")));
+        System.out.println(new TypeInfo(Test.class.getDeclaredMethod("foo2")));
+        System.out.println(new TypeInfo(Test.class.getDeclaredMethod("foo3")));
+        System.out.println(new TypeInfo(Test.class.getDeclaredMethod("foo4")));
+
+//        debug(Test.class.getDeclaredField("field1"));
+//        debug(Test.class.getDeclaredField("field2"));
+//        debug(Test.class.getDeclaredField("field3"));
+//        debug(Test.class.getDeclaredField("field4"));
+//        debug(Test.class.getDeclaredField("field5"));
+//        debug(Test.class.getDeclaredField("field6"));
+//        debug(Test.class.getDeclaredField("field7"));
+//        debug(Test.class.getDeclaredField("name1"));
+//        debug(Test.class.getDeclaredMethod("foo1"));
+//        debug(Test.class.getDeclaredMethod("foo2"));
+//        debug(Test.class.getDeclaredMethod("foo3"));
+//        debug(Test.class.getDeclaredMethod("foo4"));
+
+        System.out.println();
     }
 
     public static void main(String... args) {

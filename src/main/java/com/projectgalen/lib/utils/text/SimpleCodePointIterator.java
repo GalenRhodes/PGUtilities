@@ -17,83 +17,104 @@ package com.projectgalen.lib.utils.text;
 // NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 // ================================================================================================================================
 
+import com.projectgalen.lib.utils.PGResourceBundle;
+import com.projectgalen.lib.utils.Peekable;
+import com.projectgalen.lib.utils.collections.MarkableIterator;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public final class SimpleCodePointIterator {
+public final class SimpleCodePointIterator implements Iterator<Integer>, MarkableIterator<String>, Peekable<Integer> {
+
+    private static final PGResourceBundle msgs = new PGResourceBundle("com.projectgalen.lib.utils.messages");
+
     private final CharSequence input;
     private final int          end;
     private       int          idx;
     private       int[]        marks   = new int[5];
     private       int          markIdx = 0;
+    private       int          count   = -1;
 
-    public SimpleCodePointIterator(@NotNull CharSequence input, int start, int end) {
+    public SimpleCodePointIterator(@NotNull CharSequence input, int startIndex, int endIndex) {
         this.input = input;
-        this.idx   = start;
-        this.end   = end;
+
+        if(startIndex != endIndex) {
+            if((startIndex < 0) || (endIndex > input.length()) || (endIndex < startIndex)) throw new IllegalArgumentException(msgs.getString("msg.err.index_oob"));
+            if((startIndex > 0) && Character.isLowSurrogate(input.charAt(startIndex)) && Character.isHighSurrogate(input.charAt(startIndex - 1))) --startIndex;
+            if((endIndex > startIndex) && (endIndex < input.length()) && Character.isLowSurrogate(input.charAt(endIndex)) && Character.isHighSurrogate(input.charAt(endIndex - 1))) --endIndex;
+        }
+
+        this.idx = startIndex;
+        this.end = endIndex;
     }
 
-    public SimpleCodePointIterator(@NotNull CharSequence input, int start) {
-        this(input, start, input.length());
+    public SimpleCodePointIterator(@NotNull CharSequence input, int startIndex) {
+        this(input, startIndex, input.length());
     }
 
     public SimpleCodePointIterator(@NotNull CharSequence input) {
         this(input, 0, input.length());
     }
 
-    public void releaseMark() {
-        if(markIdx == 0) throw new NoSuchElementException();
-        --markIdx;
-        shrinkStack();
+    public synchronized int count() {
+        if(count < 0) count = (int)(input.codePoints().count() & Integer.MAX_VALUE);
+        return count;
     }
 
-    public @NotNull String getMarked() {
-        if(markIdx == 0) throw new NoSuchElementException();
+    public @Override @NotNull String getMarked() {
+        if(markIdx == 0) throw new NoSuchElementException(msgs.getString("msg.err.no_mark_found"));
         return input.subSequence(marks[markIdx - 1], idx).toString();
     }
 
-    public boolean hasNext() {
+    public @Override boolean hasNext() {
         return (idx < end);
     }
 
-    public void mark() {
-        if(markIdx == marks.length) marks = Arrays.copyOf(marks, marks.length * 2);
+    public @Override void mark() {
+        if(markIdx == marks.length) marks = Arrays.copyOf(marks, (marks.length * 2));
         marks[markIdx++] = idx;
     }
 
-    public int next() {
-        if(idx < end) {
-            char c1 = input.charAt(idx++);
-            if(Character.isHighSurrogate(c1) && (idx < end)) {
-                char c2 = input.charAt(idx);
-                if(Character.isLowSurrogate(c2)) {
-                    ++idx;
-                    return Character.toCodePoint(c1, c2);
-                }
-            }
-            return c1;
-        }
-        throw new NoSuchElementException();
+    public @Override @NotNull Integer next() {
+        return nextInt();
     }
 
-    public int peek() {
-        int i = idx;
-        int c = next();
-        idx = i;
-        return c;
+    public int nextInt() {
+        int[] n = _next();
+        idx = n[1];
+        return n[0];
     }
 
-    public void resetMark() {
-        if(markIdx == 0) throw new NoSuchElementException();
+    public @Override @NotNull Integer peek() {
+        return peekInt();
+    }
+
+    public int peekInt() {
+        return _next()[0];
+    }
+
+    public @Override void releaseMark() {
+        if(markIdx == 0) throw new NoSuchElementException(msgs.getString("msg.err.no_mark_found"));
+        --markIdx;
+        if((marks.length > 5) && (markIdx <= (marks.length / 2))) marks = Arrays.copyOf(marks, (marks.length / 2));
+    }
+
+    public @Override void resetMark() {
+        if(markIdx == 0) throw new NoSuchElementException(msgs.getString("msg.err.no_mark_found"));
         idx = marks[--markIdx];
-        shrinkStack();
+        if((marks.length > 5) && (markIdx <= (marks.length / 2))) marks = Arrays.copyOf(marks, (marks.length / 2));
     }
 
-    private void shrinkStack() {
-        int i = 5;
-        while(i < markIdx) i *= 2;
-        marks = Arrays.copyOf(marks, i);
+    private int @NotNull [] _next() {
+        if(!hasNext()) throw new NoSuchElementException();
+        int  i  = idx;
+        char c1 = input.charAt(i++);
+        if(Character.isHighSurrogate(c1) && (i < end)) {
+            char c2 = input.charAt(i);
+            if(Character.isLowSurrogate(c2)) return new int[] { Character.toCodePoint(c1, c2), (i + 1) };
+        }
+        return new int[] { c1, i };
     }
 }

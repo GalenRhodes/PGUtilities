@@ -17,7 +17,6 @@ package com.projectgalen.lib.utils.text;
 // NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 // ================================================================================================================================
 
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
@@ -29,7 +28,8 @@ import static java.util.Optional.ofNullable;
 
 public final class Macros {
 
-    private final @NotNull Set<String>                        m = new TreeSet<>();
+    private static final   String                             VALID = " 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ._-";
+    private final @NotNull Set<String>                        m     = new TreeSet<>();
     private final @NotNull Function<String, Optional<String>> f;
 
     private Macros(@NotNull Function<String, Optional<String>> func) {
@@ -37,44 +37,36 @@ public final class Macros {
     }
 
     private @NotNull String expand(@NotNull CharSequence input) {
-        StringBuilder           sb   = new StringBuilder();
-        SimpleCodePointIterator iter = new SimpleCodePointIterator(input);
-        while(iter.hasNext()) {
+        StringBuilder sb = new StringBuilder();
+        for(SimpleCodePointIterator iter = new SimpleCodePointIterator(input); iter.hasNext(); ) {
             iter.mark();
-            int codePoint = iter.next();
-            switch(codePoint) {/*@f0*/
-                case '\\' -> append(sb, (iter.hasNext() ? iter.next() : codePoint));
-                case '$'  -> sb.append(getMacroName(iter).filter(this::notNested).flatMap(this::getReplacement).orElseGet(iter::getMarked));
-                default   -> append(sb, codePoint);
-            }/*@f1*/
+            int ch = iter.nextInt();
+            sb.append((ch == '$') ? getName(iter).filter(n -> !m.contains(n)).flatMap(this::getRepl).orElseGet(iter::getMarked) : toStr(((ch == '\\') && iter.hasNext()) ? iter.nextInt() : ch));
             iter.releaseMark();
         }
         return sb.toString();
     }
 
-    private @NotNull Optional<String> getMacroName(@NotNull SimpleCodePointIterator iter) {
+    private @NotNull Optional<String> getName(@NotNull SimpleCodePointIterator iter) {
         iter.mark();
-        if(iter.hasNext() && (iter.next() == '{') && iter.hasNext() && (iter.peek() != '}')) {
-            StringBuilder sb = append(new StringBuilder(), iter.next());
-            while(iter.hasNext()) {
-                int codePoint = iter.next();
-                switch(codePoint) {/*@f0*/
-                    case '$', '{' -> { return f1(iter); }
-                    case '}'      -> { return f2(iter, sb); }
-                    default       -> append(sb, codePoint);
-                }/*@f1*/
+        if((iter.hasNext() && (iter.nextInt() == '{') && iter.hasNext() && (iter.peekInt() != '}'))) {
+            int           ch = iter.nextInt();
+            StringBuilder sb = new StringBuilder().append(toStr(ch));
+            while(iter.hasNext() && isValid(ch = iter.nextInt())) sb.append(toStr(ch));
+            if(ch == '}') {
+                iter.releaseMark();
+                return Optional.of(sb.toString());
             }
         }
-        return f1(iter);
+        iter.resetMark();
+        return Optional.empty();
     }
 
-    private @NotNull Optional<String> getReplacement(@NotNull String n) {
+    private @NotNull Optional<String> getRepl(@NotNull String n) {
         m.add(n);
-        try { return f.apply(n).map(this::expand); } finally { m.remove(n); }
-    }
-
-    private boolean notNested(String n) {
-        return !m.contains(n);
+        Optional<String> r = f.apply(n).map(this::expand);
+        m.remove(n);
+        return r;
     }
 
     public static @NotNull String expand(@NotNull CharSequence input, @NotNull Function<String, Optional<String>> func) {
@@ -85,17 +77,11 @@ public final class Macros {
         return expand(input, s -> ofNullable(func.apply(s)));
     }
 
-    @Contract("_, _ -> param1") private static @NotNull StringBuilder append(@NotNull StringBuilder sb, int codePoint) {
-        return sb.append(Character.toChars(codePoint));
+    private static boolean isValid(int ch) {
+        return VALID.codePoints().anyMatch(c -> (c == ch));
     }
 
-    private static @NotNull Optional<String> f1(@NotNull SimpleCodePointIterator iter) {
-        iter.resetMark();
-        return Optional.empty();
-    }
-
-    private static @NotNull Optional<String> f2(@NotNull SimpleCodePointIterator iter, @NotNull StringBuilder sb) {
-        iter.releaseMark();
-        return Optional.of(sb.toString());
+    private static @NotNull String toStr(int ch) {
+        return Character.toString(ch);
     }
 }
