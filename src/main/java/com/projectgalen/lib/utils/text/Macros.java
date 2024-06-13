@@ -40,8 +40,8 @@ public final class Macros {
         StringBuilder sb = new StringBuilder();
         for(SimpleCodePointIterator iter = new SimpleCodePointIterator(input); iter.hasNext(); ) {
             iter.mark();
-            int ch = iter.nextInt();
-            sb.append((ch == '$') ? getName(iter).filter(n -> !m.contains(n)).flatMap(this::getRepl).orElseGet(iter::getMarked) : toStr(((ch == '\\') && iter.hasNext()) ? iter.nextInt() : ch));
+            int ch = iter.nextCodePoint();
+            sb.append((ch == '$') ? getName(iter).filter(n -> !m.contains(n)).flatMap(this::getRepl).orElseGet(iter::getMarked) : toStr(((ch == '\\') && iter.hasNext()) ? iter.nextCodePoint() : ch));
             iter.releaseMark();
         }
         return sb.toString();
@@ -49,10 +49,10 @@ public final class Macros {
 
     private @NotNull Optional<String> getName(@NotNull SimpleCodePointIterator iter) {
         iter.mark();
-        if((iter.hasNext() && (iter.nextInt() == '{') && iter.hasNext() && (iter.peekInt() != '}'))) {
-            int           ch = iter.nextInt();
+        if((iter.hasNext() && (iter.nextCodePoint() == '{') && iter.hasNext() && (iter.peekCodePoint() != '}'))) {
+            int           ch = iter.nextCodePoint();
             StringBuilder sb = new StringBuilder().append(toStr(ch));
-            while(iter.hasNext() && isValid(ch = iter.nextInt())) sb.append(toStr(ch));
+            while(iter.hasNext() && isValid(ch = iter.nextCodePoint())) sb.append(toStr(ch));
             if(ch == '}') {
                 iter.releaseMark();
                 return Optional.of(sb.toString());

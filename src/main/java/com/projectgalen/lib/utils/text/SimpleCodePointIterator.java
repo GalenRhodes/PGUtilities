@@ -82,6 +82,11 @@ public final class SimpleCodePointIterator implements Iterator<Integer>, Markabl
         return input.subSequence((start + startIndex), end);
     }
 
+    public int getMarkedLength() {
+        if(markIdx == 0) throw new NoSuchElementException(msgs.getString("msg.err.no_mark_found"));
+        return (idx - marks[markIdx - 1]);
+    }
+
     public @Override @NotNull String getMarked() {
         return getMarkedSubSequence().toString();
     }
@@ -101,20 +106,20 @@ public final class SimpleCodePointIterator implements Iterator<Integer>, Markabl
     }
 
     public @Override @NotNull Integer next() {
-        return nextInt();
+        return nextCodePoint();
     }
 
-    public int nextInt() {
+    public int nextCodePoint() {
         int[] n = _next();
         idx = n[1];
         return n[0];
     }
 
     public @Override @NotNull Integer peek() {
-        return peekInt();
+        return peekCodePoint();
     }
 
-    public int peekInt() {
+    public int peekCodePoint() {
         return _next()[0];
     }
 
