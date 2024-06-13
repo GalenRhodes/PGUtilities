@@ -30,12 +30,14 @@ public final class SimpleCodePointIterator implements Iterator<Integer>, Markabl
 
     private static final PGResourceBundle msgs = new PGResourceBundle("com.projectgalen.lib.utils.messages");
 
-    private final CharSequence input;
-    private final int          end;
-    private       int          idx;
-    private       int[]        marks   = new int[5];
-    private       int          markIdx = 0;
-    private       int          count   = -1;
+    private final @NotNull CharSequence input;
+    private final          int          start;
+    private final          int          end;
+    private final          int          len;
+    private                int          idx;
+    private                int[]        marks   = new int[5];
+    private                int          markIdx = 0;
+    private                int          count   = -1;
 
     public SimpleCodePointIterator(@NotNull CharSequence input, int startIndex, int endIndex) {
         this.input = input;
@@ -46,8 +48,9 @@ public final class SimpleCodePointIterator implements Iterator<Integer>, Markabl
             if((endIndex > startIndex) && (endIndex < input.length()) && Character.isLowSurrogate(input.charAt(endIndex)) && Character.isHighSurrogate(input.charAt(endIndex - 1))) --endIndex;
         }
 
-        this.idx = startIndex;
+        this.idx = this.start = startIndex;
         this.end = endIndex;
+        this.len = (this.end - this.start);
     }
 
     public SimpleCodePointIterator(@NotNull CharSequence input, int startIndex) {
@@ -59,13 +62,33 @@ public final class SimpleCodePointIterator implements Iterator<Integer>, Markabl
     }
 
     public synchronized int count() {
-        if(count < 0) count = (int)(input.codePoints().count() & Integer.MAX_VALUE);
+        if(count < 0) count = (int)(input.subSequence(start, end).codePoints().count() & Integer.MAX_VALUE);
         return count;
     }
 
+    public int length() {
+        return len;
+    }
+
+    public @NotNull CharSequence getInput() {
+        return input.subSequence(start, end);
+    }
+
+    public @NotNull CharSequence getInput(int startIndex, int endIndex) {
+        return input.subSequence(start + startIndex, start + endIndex);
+    }
+
+    public @NotNull CharSequence getInput(int startIndex) {
+        return input.subSequence((start + startIndex), end);
+    }
+
     public @Override @NotNull String getMarked() {
+        return getMarkedSubSequence().toString();
+    }
+
+    public @NotNull CharSequence getMarkedSubSequence() {
         if(markIdx == 0) throw new NoSuchElementException(msgs.getString("msg.err.no_mark_found"));
-        return input.subSequence(marks[markIdx - 1], idx).toString();
+        return input.subSequence(marks[markIdx - 1], idx);
     }
 
     public @Override boolean hasNext() {

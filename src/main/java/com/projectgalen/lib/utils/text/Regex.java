@@ -17,6 +17,7 @@ package com.projectgalen.lib.utils.text;
 // NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 // ================================================================================================================================
 
+import org.intellij.lang.annotations.Language;
 import org.intellij.lang.annotations.MagicConstant;
 import org.intellij.lang.annotations.RegExp;
 import org.jetbrains.annotations.NonNls;
@@ -33,25 +34,25 @@ public final class Regex {
 
     private Regex() { }
 
-    public static @NotNull Pattern getPattern(@NotNull @NonNls @RegExp String regex) {
+    public static @NotNull Pattern getPattern(@NotNull @NonNls @RegExp @Language("RegExp") String regex) {
         return getPattern(regex, 0);
     }
 
-    public static @NotNull Pattern getPattern(@NotNull String regex, @MagicConstant(flagsFromClass = Pattern.class) int flags) {
+    public static @NotNull Pattern getPattern(@NotNull @NonNls @RegExp @Language("RegExp") String regex, @MagicConstant(flagsFromClass = Pattern.class) int flags) {
         synchronized(CACHE) {
             return CACHE.computeIfAbsent(new CacheKey(regex, flags), k -> Pattern.compile(regex, flags));
         }
     }
 
-    public static @NotNull Matcher getMatcher(@NotNull String regex, @MagicConstant(flagsFromClass = Pattern.class) int flags, @NotNull CharSequence input) {
+    public static @NotNull Matcher getMatcher(@NotNull @NonNls @RegExp @Language("RegExp") String regex, @MagicConstant(flagsFromClass = Pattern.class) int flags, @NotNull CharSequence input) {
         return getPattern(regex, flags).matcher(input);
     }
 
-    public static @NotNull Matcher getMatcher(@NotNull String regex, @NotNull CharSequence input) {
+    public static @NotNull Matcher getMatcher(@NotNull @NonNls @RegExp @Language("RegExp") String regex, @NotNull CharSequence input) {
         return getPattern(regex, 0).matcher(input);
     }
 
-    private record CacheKey(@NotNull String regex, @MagicConstant(flagsFromClass = Pattern.class) int flags) implements Comparable<CacheKey> {
+    private record CacheKey(@NotNull @NonNls @RegExp @Language("RegExp") String regex, @MagicConstant(flagsFromClass = Pattern.class) int flags) implements Comparable<CacheKey> {
         public @Override int compareTo(@NotNull Regex.CacheKey o) {
             int c = regex.compareTo(o.regex);
             return ((c == 0) ? Integer.compare(flags, o.flags) : c);

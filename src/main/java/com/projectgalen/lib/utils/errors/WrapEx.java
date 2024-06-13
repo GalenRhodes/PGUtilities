@@ -21,6 +21,8 @@ import com.projectgalen.lib.utils.functions.RunnableEx;
 import com.projectgalen.lib.utils.functions.SupplierEx;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.function.Supplier;
+
 public class WrapEx extends RuntimeException {
     /**
      * Constructs a new runtime exception with {@code null} as its detail message.  The cause is not initialized, and may subsequently be initialized by a call to {@link #initCause}.
@@ -76,20 +78,36 @@ public class WrapEx extends RuntimeException {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 
-    public static <T> T get(@NotNull SupplierEx<T, Exception> supplier) {
+    public static <T, E extends Exception> @NotNull Supplier<T> xGet(@NotNull SupplierEx<T, ? super E> supplier) {
+        return () -> get(supplier);
+    }
+
+    public static <T, E extends Exception> @NotNull Supplier<T> xGet(@NotNull SupplierEx<T, ? super E> supplier, @NotNull Runnable fin) {
+        return () -> get(supplier, fin);
+    }
+
+    public static <E extends Exception> @NotNull Runnable xRun(@NotNull RunnableEx<? super E> runner) {
+        return () -> run(runner);
+    }
+
+    public static <E extends Exception> @NotNull Runnable xRun(@NotNull RunnableEx<? super E> runner, @NotNull Runnable fin) {
+        return () -> run(runner, fin);
+    }
+
+    public static <T, E extends Exception> @NotNull T get(@NotNull SupplierEx<T, ? super E> supplier) {
         try { return supplier.get(); } catch(Exception e) { throw new WrapEx(e.getMessage(), e); }
     }
 
-    public static <T> T get(@NotNull SupplierEx<T, Exception> supplier, @NotNull Runnable fin) {
+    public static <T, E extends Exception> @NotNull T get(@NotNull SupplierEx<T, ? super E> supplier, @NotNull Runnable fin) {
         try { return supplier.get(); } catch(Exception e) { throw new WrapEx(e.getMessage(), e); } finally { fin.run(); }
     }
 
-    public static void run(@NotNull RunnableEx<Exception> runner) {
-        try { runner.run(); } catch(Exception e) { throw new WrapEx(e.getMessage(), e); }
+    public static <E extends Exception> void run(@NotNull RunnableEx<? super E> runner) {
+        try { runner.run(); } catch(Exception e) { throw wrap(e); }
     }
 
-    public static void run(@NotNull RunnableEx<Exception> runner, @NotNull Runnable fin) {
-        try { runner.run(); } catch(Exception e) { throw new WrapEx(e.getMessage(), e); } finally { fin.run(); }
+    public static <E extends Exception> void run(@NotNull RunnableEx<? super E> runner, @NotNull Runnable fin) {
+        try { runner.run(); } catch(Exception e) { throw wrap(e); } finally { fin.run(); }
     }
 
     public static WrapEx wrap(@NotNull Throwable e) {

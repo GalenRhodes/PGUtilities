@@ -1,0 +1,11 @@
+    // ${template_start_fc99c85b-d51f-47f5-a4a8-d32943e45cb6}
+    //!
+    //!public ${t_primitive} get${t_object}(@NotNull @NonNls String key, ${t_primitive} defaultValue) {
+    //!    try { return ${t_object}.${t_parse}(getProperty(key)); }
+    //!    catch(Exception ignored) { return defaultValue; }
+    //!}
+    //!
+    //!public ${t_primitive} get${t_object}(@NotNull @NonNls String key) {
+    //!    return get${t_object}(key, (${t_primitive})0);
+    //!}
+    // ${template_end_fc99c85b-d51f-47f5-a4a8-d32943e45cb6}

@@ -4,13 +4,29 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.projectgalen.lib</groupId>
-    <artifactId>PGUtilities</artifactId>
-    <version>1.0.0</version>
+    #if (${HAS_PARENT})
+    <parent>
+        <groupId>${PARENT_GROUP_ID}</groupId>
+        <artifactId>${PARENT_ARTIFACT_ID}</artifactId>
+        <version>${PARENT_VERSION}</version>
+        #if (${HAS_RELATIVE_PATH})
+        <relativePath>${PARENT_RELATIVE_PATH}</relativePath>
+        #end
+    </parent>
+
+    #end
+    <groupId>${GROUP_ID}</groupId>
+    <artifactId>${ARTIFACT_ID}</artifactId>
+    <version>${VERSION}</version>
 
     <properties>
+        #if (${SHOULD_SET_LANG_LEVEL})
+        <maven.compiler.source>${COMPILER_LEVEL_SOURCE}</maven.compiler.source>
+        <maven.compiler.target>${COMPILER_LEVEL_TARGET}</maven.compiler.target>
+        #else
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
+        #end
         <intellij.version>233.11799.286</intellij.version>
         <intellij.annotations.version>24.0.1</intellij.annotations.version>
         <jackson.version>2.15.4</jackson.version>
@@ -22,18 +38,18 @@
         <github.owner>GalenRhodes</github.owner>
         <github.mvn.repo>maven-repo</github.mvn.repo>
 
-        <project.build.module.src.dir>${project.basedir}/src/main</project.build.module.src.dir>
-        <project.build.java.dir>${project.build.module.src.dir}/java</project.build.java.dir>
-        <project.build.resources.dir>${project.build.module.src.dir}/resources</project.build.resources.dir>
-        <project.build.jarclasses.dir>${project.build.directory}/jars-classes</project.build.jarclasses.dir>
+        <project.build.module.src.dir>#[[$ {project.basedir}]]#/src/main</project.build.module.src.dir>
+        <project.build.java.dir>#[[$ {project.build.module.src.dir}]]#/java</project.build.java.dir>
+        <project.build.resources.dir>#[[$ {project.build.module.src.dir}]]#/resources</project.build.resources.dir>
+        <project.build.jarclasses.dir>#[[$ {project.build.directory}]]#/jars-classes</project.build.jarclasses.dir>
 
         <app.base.path>com/projectgalen/lib/utils</app.base.path>
         <app.base.package>com.projectgalen.lib.utils</app.base.package>
     </properties>
 
     <name>Project Galen Base Utilities</name>
-    <description>${project.name}</description>
-    <url>https://github.com/${github.owner}/${project.artifactId}</url>
+    <description>#[[$ {project.name}]]#</description>
+    <url>https://github.com/#[[$ {github.owner}]]#/#[[$ {project.artifactId}]]#</url>
 
     <developers>
         <developer>
@@ -45,8 +61,8 @@
 
     <repositories>
         <repository>
-            <id>${github.owner}</id>
-            <url>https://github.com/${github.owner}/${github.mvn.repo}/raw/main/</url>
+            <id>#[[$ {github.owner}]]#</id>
+            <url>https://github.com/#[[$ {github.owner}]]#/#[[$ {github.mvn.repo}]]#/raw/main/</url>
         </repository>
         <repository>
             <id>central</id>
@@ -73,34 +89,34 @@
         <repository>
             <id>internal.repo</id>
             <name>Temporary Staging Repository</name>
-            <url>file://${project.build.directory}/mvn-artifact</url>
+            <url>file://#[[$ {project.build.directory}]]#/mvn-artifact</url>
         </repository>
     </distributionManagement>
 
     <scm>
-        <url>https://github.com/${github.owner}/${project.artifactId}</url>
-        <developerConnection>scm:git:git@github.com:${github.owner}/${project.artifactId}.git</developerConnection>
-        <connection>scm:git:https://github.com/${github.owner}/${project.artifactId}.git</connection>
+        <url>https://github.com/#[[$ {github.owner}]]#/#[[$ {project.artifactId}]]#</url>
+        <developerConnection>scm:git:git@github.com:#[[$ {github.owner}]]#/#[[$ {project.artifactId}]]#.git</developerConnection>
+        <connection>scm:git:https://github.com/#[[$ {github.owner}]]#/#[[$ {project.artifactId}]]#.git</connection>
     </scm>
 
     <dependencies>
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
-            <version>${intellij.annotations.version}</version>
+            <version>#[[$ {intellij.annotations.version}]]#</version>
         </dependency>
 
         <dependency>
             <groupId>com.jetbrains.intellij.java</groupId>
             <artifactId>java-gui-forms-rt</artifactId>
-            <version>${intellij.version}</version>
+            <version>#[[$ {intellij.version}]]#</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>com.jetbrains.intellij.java</groupId>
             <artifactId>java-compiler-ant-tasks</artifactId>
-            <version>${intellij.version}</version>
+            <version>#[[$ {intellij.version}]]#</version>
             <scope>compile</scope>
         </dependency>
 
@@ -131,7 +147,7 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>${jackson.version}</version>
+            <version>#[[$ {jackson.version}]]#</version>
         </dependency>
     </dependencies>
 
@@ -147,7 +163,7 @@
                 <version>3.3.0</version>
                 <configuration>
                     <archive>
-                        <manifestFile>${project.build.module.src.dir}/META-INF/MANIFEST.MF</manifestFile>
+                        <manifestFile>#[[$ {project.build.module.src.dir}]]#/META-INF/MANIFEST.MF</manifestFile>
                     </archive>
                 </configuration>
             </plugin>
@@ -190,7 +206,7 @@
                         <configuration>
                             <target>
                                 <taskdef name="javac2" classpathref="maven.runtime.classpath" classname="com.intellij.ant.Javac2"/>
-                                <javac2 srcdir="${project.build.java.dir}" destdir="${project.build.outputDirectory}" classpathref="maven.compile.classpath" includeantruntime="true"/>
+                                <javac2 srcdir="#[[$ {project.build.java.dir}]]#" destdir="#[[$ {project.build.outputDirectory}]]#" classpathref="maven.compile.classpath" includeantruntime="true"/>
                             </target>
                         </configuration>
                         <goals>
@@ -205,7 +221,7 @@
                 <artifactId>maven-deploy-plugin</artifactId>
                 <version>3.1.1</version>
                 <configuration>
-                    <altDeploymentRepository>internal.repo::file://${project.build.directory}/mvn-artifact</altDeploymentRepository>
+                    <altDeploymentRepository>internal.repo::file://#[[$ {project.build.directory}]]#/mvn-artifact</altDeploymentRepository>
                 </configuration>
             </plugin>
 
@@ -214,14 +230,14 @@
                 <artifactId>site-maven-plugin</artifactId>
                 <version>0.12</version>
                 <configuration>
-                    <message>Maven artifacts for ${project.artifactId}-${project.version}</message>
-                    <outputDirectory>${project.build.directory}/mvn-artifact</outputDirectory>
+                    <message>Maven artifacts for #[[$ {project.artifactId}]]#-#[[$ {project.version}]]#</message>
+                    <outputDirectory>#[[$ {project.build.directory}]]#/mvn-artifact</outputDirectory>
                     <noJekyll>true</noJekyll>
                     <merge>true</merge>
                     <branch>refs/heads/main</branch>
-                    <repositoryName>${github.mvn.repo}</repositoryName>
-                    <repositoryOwner>${github.owner}</repositoryOwner>
-                    <server>${github.global.server}</server>
+                    <repositoryName>#[[$ {github.mvn.repo}]]#</repositoryName>
+                    <repositoryOwner>#[[$ {github.owner}]]#</repositoryOwner>
+                    <server>#[[$ {github.global.server}]]#</server>
                 </configuration>
                 <executions>
                     <execution>

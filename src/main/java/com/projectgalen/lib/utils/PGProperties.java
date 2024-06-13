@@ -18,6 +18,7 @@ package com.projectgalen.lib.utils;
 // ================================================================================================================================
 
 import com.projectgalen.lib.utils.text.Macros;
+import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -82,20 +83,74 @@ public class PGProperties extends Properties {
         }
     }
 
+    public byte getByte(@NotNull @NonNls String key, byte defaultValue) {
+        try { return Byte.parseByte(getProperty(key)); }
+        catch(Exception ignored) { return defaultValue; }
+    }
+
+    public byte getByte(@NotNull @NonNls String key) {
+        return getByte(key, (byte)0);
+    }
+
+    public double getDouble(@NotNull @NonNls String key, double defaultValue) {
+        try { return Double.parseDouble(getProperty(key)); }
+        catch(Exception ignored) { return defaultValue; }
+    }
+
+    public double getDouble(@NotNull @NonNls String key) {
+        return getDouble(key, (double)0);
+    }
+
+    public float getFloat(@NotNull @NonNls String key, float defaultValue) {
+        try { return Float.parseFloat(getProperty(key)); }
+        catch(Exception ignored) { return defaultValue; }
+    }
+
+    public float getFloat(@NotNull @NonNls String key) {
+        return getFloat(key, (float)0);
+    }
+
+    public int getInt(@NotNull @NonNls String key, int defaultValue) {
+        try { return Integer.parseInt(getProperty(key)); }
+        catch(Exception ignored) { return defaultValue; }
+    }
+
+    public int getInt(@NotNull @NonNls String key) {
+        return getInt(key, (int)0);
+    }
+
+    public long getLong(@NotNull @NonNls String key, long defaultValue) {
+        try { return Long.parseLong(getProperty(key)); }
+        catch(Exception ignored) { return defaultValue; }
+    }
+
+    public long getLong(@NotNull @NonNls String key) {
+        return getLong(key, (long)0);
+    }
+
     public long getReloadPeriod() {
         return reloadPeriod;
+    }
+
+    public short getShort(@NotNull @NonNls String key, short defaultValue) {
+        try { return Short.parseShort(getProperty(key)); }
+        catch(Exception ignored) { return defaultValue; }
+    }
+
+    public short getShort(@NotNull @NonNls String key) {
+        return getShort(key, (short)0);
     }
 
     public TimeUnit getTimeUnit() {
         return timeUnit;
     }
 
-    private void expandMacros() {
-        entrySet().stream().filter(this::isStringEntry).forEach(this::expandMacro);
-    }
-
     private void expandMacro(@NotNull Entry<Object, Object> e) {
         e.setValue(Macros.expand2(e.getValue().toString(), this::getProperty));
+    }
+
+    private void expandMacros() {
+        entrySet().stream().filter(this::isStringEntry).forEach(this::expandMacro);
     }
 
     private boolean isStringEntry(@NotNull Entry<Object, Object> e) {
@@ -180,23 +235,23 @@ public class PGProperties extends Properties {
         return getProperties(file, -1, null, null);
     }
 
-    public static @NotNull PGProperties getProperties(@NotNull String name, @NotNull Class<?> refClass, long reloadPeriod, TimeUnit timeUnit, Properties defaults) {
+    public static @NotNull PGProperties getProperties(@NotNull @NonNls String name, @NotNull Class<?> refClass, long reloadPeriod, TimeUnit timeUnit, Properties defaults) {
         return new PGProperties(p -> p.loadFromInputStream(getInputStream(name, refClass)), reloadPeriod, timeUnit, defaults);
     }
 
-    public static @NotNull PGProperties getProperties(@NotNull String name, @NotNull Class<?> refClass, long reloadPeriod, TimeUnit timeUnit) {
+    public static @NotNull PGProperties getProperties(@NotNull @NonNls String name, @NotNull Class<?> refClass, long reloadPeriod, TimeUnit timeUnit) {
         return getProperties(name, refClass, reloadPeriod, timeUnit, null);
     }
 
-    public static @NotNull PGProperties getProperties(@NotNull String name, @NotNull Class<?> refClass, Properties defaults) {
+    public static @NotNull PGProperties getProperties(@NotNull @NonNls String name, @NotNull Class<?> refClass, Properties defaults) {
         return getProperties(name, refClass, -1, null, defaults);
     }
 
-    public static @NotNull PGProperties getProperties(@NotNull String name, @NotNull Class<?> refClass) {
+    public static @NotNull PGProperties getProperties(@NotNull @NonNls String name, @NotNull Class<?> refClass) {
         return getProperties(name, refClass, -1, null, null);
     }
 
-    private static @NotNull InputStream getInputStream(@NotNull String name, @NotNull Class<?> refClass) {
+    private static @NotNull InputStream getInputStream(@NotNull @NonNls String name, @NotNull Class<?> refClass) {
         return requireNonNull(refClass.getResourceAsStream(name), () -> msgs.getString("msg.err.rsrc_not_found").formatted(name));
     }
 

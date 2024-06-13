@@ -19,16 +19,26 @@ package com.projectgalen.lib.utils.text;
 
 import com.projectgalen.lib.utils.PGArrays;
 import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Base64;
 
 public final class Str {
     private Str() { }
+
+    public static byte @NotNull [] base64Decode(@NotNull String src) {
+        return Base64.getDecoder().decode(src);
+    }
 
     public static @Contract("null,_->null;!null,_->!null") String leftStr(String str, int len) {
         return ((str == null) ? null : ((len < 0) ? leftStr(str, Math.max(0, (str.length() + len))) : ((len == 0) ? "" : ((len >= str.length()) ? str : str.substring(0, len)))));
     }
 
-    public static @Contract("null,_->null;!null,_->!null") String rightStr(String str, int len) {
-        return ((str == null) ? null : ((len < 0) ? rightStr(str, Math.max(0, (str.length() + len))) : ((len == 0) ? "" : ((len >= str.length()) ? str : str.substring(str.length() - len)))));
+    public static @Contract("null,_,_->null;!null,_,_->!null") String padCenter(String str, int len, char padding) {
+        if((str == null) || (len <= str.length())) return str;
+        char[] buffer = PGArrays.newFilled(len, padding);
+        str.getChars(0, str.length(), buffer, ((len - str.length()) / 2));
+        return String.valueOf(buffer);
     }
 
     public static @Contract("null,_,_->null;!null,_,_->!null") String padLeft(String str, int len, char padding) {
@@ -45,10 +55,7 @@ public final class Str {
         return String.valueOf(buffer);
     }
 
-    public static @Contract("null,_,_->null;!null,_,_->!null") String padCenter(String str, int len, char padding) {
-        if((str == null) || (len <= str.length())) return str;
-        char[] buffer = PGArrays.newFilled(len, padding);
-        str.getChars(0, str.length(), buffer, ((len - str.length()) / 2));
-        return String.valueOf(buffer);
+    public static @Contract("null,_->null;!null,_->!null") String rightStr(String str, int len) {
+        return ((str == null) ? null : ((len < 0) ? rightStr(str, Math.max(0, (str.length() + len))) : ((len == 0) ? "" : ((len >= str.length()) ? str : str.substring(str.length() - len)))));
     }
 }
