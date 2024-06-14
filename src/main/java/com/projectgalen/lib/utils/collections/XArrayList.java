@@ -21,12 +21,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-import java.util.SequencedCollection;
 import java.util.function.BooleanSupplier;
 import java.util.function.Predicate;
 
-public class XArrayList<E> extends ArrayList<E> implements XList<E>, List<E>, SequencedCollection<E>, Collection<E>, Iterable<E> {
+public class XArrayList<E> extends ArrayList<E> implements XList<E> {
 
     public XArrayList() {
         super();
@@ -40,18 +38,43 @@ public class XArrayList<E> extends ArrayList<E> implements XList<E>, List<E>, Se
         super(initialCapacity);
     }
 
-    public @NotNull XArrayList<E> addThen(@NotNull E e) {
+    public @Override @NotNull XArrayList<E> addThen(@NotNull E e) {
         add(e);
         return this;
     }
 
-    public @NotNull XArrayList<E> addIf(@NotNull E e, @NotNull BooleanSupplier predicate) {
+    public @Override @NotNull XArrayList<E> addIf(@NotNull E e, @NotNull BooleanSupplier predicate) {
         if(predicate.getAsBoolean()) add(e);
         return this;
     }
 
-    public @NotNull XArrayList<E> addWhen(@NotNull E e, @NotNull Predicate<E> predicate) {
+    public @Override @NotNull XArrayList<E> addWhen(@NotNull E e, @NotNull Predicate<E> predicate) {
         if(predicate.test(e)) add(e);
+        return this;
+    }
+
+    public @Override @NotNull XArrayList<E> removeAllIf(@NotNull Collection<? extends E> c, @NotNull BooleanSupplier predicate) {
+        if(predicate.getAsBoolean()) removeAll(c);
+        return this;
+    }
+
+    public @Override @NotNull XArrayList<E> removeAllThen(@NotNull Collection<? extends E> c) {
+        removeAll(c);
+        return this;
+    }
+
+    public @Override @NotNull XArrayList<E> removeIf(@NotNull E e, @NotNull BooleanSupplier predicate) {
+        if(predicate.getAsBoolean()) remove(e);
+        return this;
+    }
+
+    public @Override @NotNull XArrayList<E> removeThen(@NotNull E e) {
+        remove(e);
+        return this;
+    }
+
+    public @Override @NotNull XArrayList<E> removeWhen(@NotNull E e, @NotNull Predicate<E> predicate) {
+        if(predicate.test(e)) remove(e);
         return this;
     }
 }

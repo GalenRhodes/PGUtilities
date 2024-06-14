@@ -32,4 +32,14 @@ public interface XList<E> extends List<E>, SequencedCollection<E>, Collection<E>
     @NotNull XList<E> addThen(@NotNull E e);
 
     @NotNull XList<E> addWhen(@NotNull E e, @NotNull Predicate<E> predicate);
+
+    @NotNull XList<E> removeAllIf(@NotNull Collection<? extends E> c, @NotNull BooleanSupplier predicate);
+
+    @NotNull XList<E> removeAllThen(@NotNull Collection<? extends E> c);
+
+    @NotNull XList<E> removeIf(@NotNull E e, @NotNull BooleanSupplier predicate);
+
+    @NotNull XList<E> removeThen(@NotNull E e);
+
+    @NotNull XList<E> removeWhen(@NotNull E e, @NotNull Predicate<E> predicate);
 }
