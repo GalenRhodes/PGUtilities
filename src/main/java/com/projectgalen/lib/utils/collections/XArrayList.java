@@ -21,10 +21,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.SequencedCollection;
 import java.util.function.BooleanSupplier;
 import java.util.function.Predicate;
 
-public class XArrayList<E> extends ArrayList<E> implements XList<E> {
+public class XArrayList<E> extends ArrayList<E> implements XList<E>, List<E>, SequencedCollection<E>, Collection<E>, Iterable<E> {
 
     public XArrayList() {
         super();
