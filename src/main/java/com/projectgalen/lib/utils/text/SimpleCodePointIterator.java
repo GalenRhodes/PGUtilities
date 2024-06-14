@@ -19,14 +19,14 @@ package com.projectgalen.lib.utils.text;
 
 import com.projectgalen.lib.utils.PGResourceBundle;
 import com.projectgalen.lib.utils.Peekable;
-import com.projectgalen.lib.utils.collections.MarkableIterator;
+import com.projectgalen.lib.utils.collections.Markable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public final class SimpleCodePointIterator implements Iterator<Integer>, MarkableIterator<String>, Peekable<Integer> {
+public final class SimpleCodePointIterator implements Iterator<Integer>, Markable<String>, Peekable<Integer> {
 
     private static final PGResourceBundle msgs = new PGResourceBundle("com.projectgalen.lib.utils.messages");
 

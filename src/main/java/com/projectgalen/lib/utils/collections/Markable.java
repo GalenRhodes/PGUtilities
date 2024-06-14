@@ -1,7 +1,7 @@
 package com.projectgalen.lib.utils.collections;
 // ================================================================================================================================
 //     PROJECT: PGUtilities
-//    FILENAME: MarkableIterator.java
+//    FILENAME: Markable.java
 //         IDE: IntelliJ IDEA
 //      AUTHOR: Galen Rhodes
 //        DATE: June 03, 2024
@@ -17,7 +17,7 @@ package com.projectgalen.lib.utils.collections;
 // NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 // ================================================================================================================================
 
-public interface MarkableIterator<T> {
+public interface Markable<T> {
 
     T getMarked();
 
