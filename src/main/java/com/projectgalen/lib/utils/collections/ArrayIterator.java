@@ -19,6 +19,7 @@ package com.projectgalen.lib.utils.collections;
 
 import com.projectgalen.lib.utils.PGResourceBundle;
 import com.projectgalen.lib.utils.Peekable;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Array;
@@ -51,6 +52,10 @@ public class ArrayIterator<T> implements Markable<T[]>, Peekable<T>, Iterator<T>
 
     public @Override void mark() {
         marks.push(idx);
+    }
+
+    public @Contract("!null->!null") T next(T defaultValue) {
+        return hasNext() ? array[idx++] : defaultValue;
     }
 
     public @Override T next() {
