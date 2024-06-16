@@ -94,11 +94,11 @@ public class WrapEx extends RuntimeException {
         return () -> run(runner, fin);
     }
 
-    public static <T, E extends Exception> @NotNull T get(@NotNull SupplierEx<T, ? super E> supplier) {
+    public static <T, E extends Exception> T get(@NotNull SupplierEx<T, ? super E> supplier) {
         try { return supplier.get(); } catch(Exception e) { throw new WrapEx(e.getMessage(), e); }
     }
 
-    public static <T, E extends Exception> @NotNull T get(@NotNull SupplierEx<T, ? super E> supplier, @NotNull Runnable fin) {
+    public static <T, E extends Exception> T get(@NotNull SupplierEx<T, ? super E> supplier, @NotNull Runnable fin) {
         try { return supplier.get(); } catch(Exception e) { throw new WrapEx(e.getMessage(), e); } finally { fin.run(); }
     }
 
