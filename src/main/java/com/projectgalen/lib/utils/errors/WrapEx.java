@@ -30,14 +30,13 @@ import java.util.function.Supplier;
 @SuppressWarnings("unused")
 public class WrapEx extends RuntimeException {
 
-    public static final @NotNull Runnable                              DEFAULT_FINALLY = () -> { };
-    public static final          Function<Exception, RuntimeException> DEFAULT_WRAPPER = WrapEx::wrap;
+    public static final @NotNull Runnable                                                DEFAULT_FINALLY = () -> { };
+    public static final @NotNull Function<? super Exception, ? extends RuntimeException> DEFAULT_WRAPPER = WrapEx::wrap;
 
     /**
      * Constructs a new runtime exception with {@code null} as its detail message.  The cause is not initialized, and may subsequently be initialized by a call to {@link #initCause}.
      */
-    public WrapEx() {
-    }
+    public WrapEx() { }
 
     /**
      * Constructs a new runtime exception with the specified cause and a detail message of {@code (cause==null ? null : cause.toString())} (which typically contains the class and detail message of
@@ -88,7 +87,7 @@ public class WrapEx extends RuntimeException {
     }
 
     /**
-     * Creates and returns an instance of {@link Consumer} based on the provided instance of {@link ConsumerEx} passed in the parameter {@code consumer}. Any checked exception that is throw in the
+     * Creates and returns an instance of {@link Consumer<T>} based on the provided instance of {@link ConsumerEx} passed in the parameter {@code consumer}. Any checked exception that is throw in the
      * method {@link ConsumerEx#accept(T)} will be wrapped in an instance of the unchecked exception returned by the method {@link Function#apply(Object)} passed in the parameter {@code wrapper}.
      *
      * @param consumer A function the might throw a checked exception.
@@ -98,38 +97,52 @@ public class WrapEx extends RuntimeException {
      * @param <E>      The type of the exception that will be returned from {@code wrapper} if a checked exception is thrown by {@code consumer}.
      *
      * @return a new instance of {@link Consumer} that executes {@link ConsumerEx#accept(T)} catching any thrown checked exceptions and wrapping them in a {@link RuntimeException} or one of it's
-     * subclasses.
      */
-    public static <T, E extends RuntimeException> @NotNull Consumer<T> accept(@NotNull ConsumerEx<T, Exception> consumer, @NotNull Runnable fin, @NotNull Function<Exception, E> wrapper) {
-        return t -> { try { consumer.accept(t); } catch(Exception e) { throw wrapper.apply(e); } finally { fin.run(); } };
+    public static <T, E extends RuntimeException> @NotNull Consumer<T> accept(@NotNull ConsumerEx<T, ? extends Exception> consumer,
+                                                                              @NotNull Runnable fin,
+                                                                              @NotNull Function<? super Exception, ? extends E> wrapper) {
+        return t -> {
+            try {
+                consumer.accept(t);
+            }
+            catch(RuntimeException e) {
+                throw e;
+            }
+            catch(Exception e) {
+                throw wrapper.apply(e);
+            }
+            finally {
+                fin.run();
+            }
+        };
     }
 
     /**
-     * Creates and returns an instance of {@link Consumer} based on the provided instance of {@link ConsumerEx} passed in the parameter {@code consumer}. Any checked exception that is throw in the
-     * method {@link ConsumerEx#accept(T)} will be wrapped in an instance of the unchecked exception {@link WrapEx}.
+     * Creates and returns an instance of {@link Consumer<T>} based on the provided instance of {@link ConsumerEx<T>} passed in the parameter {@code consumer}. Any checked exception that is throw in
+     * the method {@link ConsumerEx#accept(T)} will be wrapped in an instance of the unchecked exception {@link WrapEx}.
      *
      * @param consumer A function the might throw a checked exception.
      * @param fin      An instance of {@link Runnable} that will be run before the execution of {@code consumer} returns.
      * @param <T>      The type of the parameter that will be passed to {@code consumer}.
      *
-     * @return a new instance of {@link Consumer} that executes {@link ConsumerEx#accept(T)} catching any thrown checked exceptions and wrapping them in an instance of the unchecked exception
+     * @return a new instance of {@link Consumer<T>} that executes {@link ConsumerEx#accept(T)} catching any thrown checked exceptions and wrapping them in an instance of the unchecked exception
      * {@link WrapEx}.
      */
-    public static <T> @NotNull Consumer<T> accept(@NotNull ConsumerEx<T, Exception> consumer, @NotNull Runnable fin) {
+    public static <T> @NotNull Consumer<T> accept(@NotNull ConsumerEx<T, ? extends Exception> consumer, @NotNull Runnable fin) {
         return accept(consumer, fin, DEFAULT_WRAPPER);
     }
 
     /**
-     * Creates and returns an instance of {@link Consumer} based on the provided instance of {@link ConsumerEx} passed in the parameter {@code consumer}. Any checked exception that is throw in the
-     * method {@link ConsumerEx#accept(T)} will be wrapped in an instance of the unchecked exception {@link WrapEx}.
+     * Creates and returns an instance of {@link Consumer<T>} based on the provided instance of {@link ConsumerEx<T>} passed in the parameter {@code consumer}. Any checked exception that is throw in
+     * the method {@link ConsumerEx#accept(T)} will be wrapped in an instance of the unchecked exception {@link WrapEx}.
      *
      * @param consumer A function the might throw a checked exception.
      * @param <T>      The type of the parameter that will be passed to {@code consumer}.
      *
-     * @return a new instance of {@link Consumer} that executes {@link ConsumerEx#accept(T)} catching any thrown checked exceptions and wrapping them in an instance of the unchecked exception
+     * @return a new instance of {@link Consumer<T>} that executes {@link ConsumerEx#accept(T)} catching any thrown checked exceptions and wrapping them in an instance of the unchecked exception
      * {@link WrapEx}.
      */
-    public static <T> @NotNull Consumer<T> accept(@NotNull ConsumerEx<T, Exception> consumer) {
+    public static <T> @NotNull Consumer<T> accept(@NotNull ConsumerEx<T, ? extends Exception> consumer) {
         return accept(consumer, DEFAULT_FINALLY, DEFAULT_WRAPPER);
     }
 
@@ -145,7 +158,7 @@ public class WrapEx extends RuntimeException {
      * @return a new instance of {@link Consumer} that executes {@link ConsumerEx#accept(T)} catching any thrown checked exceptions and wrapping them in a {@link RuntimeException} or one of it's
      * subclasses.
      */
-    public static <T, E extends RuntimeException> @NotNull Consumer<T> accept(@NotNull ConsumerEx<T, Exception> consumer, @NotNull Function<Exception, E> wrapper) {
+    public static <T, E extends RuntimeException> @NotNull Consumer<T> accept(@NotNull ConsumerEx<T, ? extends Exception> consumer, @NotNull Function<? super Exception, ? extends E> wrapper) {
         return accept(consumer, DEFAULT_FINALLY, wrapper);
     }
 
@@ -163,8 +176,23 @@ public class WrapEx extends RuntimeException {
      * @return a new instance of {@link Function} that executes {@link FunctionEx#apply(T)} catching any thrown checked exceptions and wrapping them in a {@link RuntimeException} or one of it's
      * subclasses.
      */
-    public static <T, R, E extends RuntimeException> @NotNull Function<T, R> apply(@NotNull FunctionEx<T, R, Exception> func, @NotNull Runnable fin, @NotNull Function<Exception, E> wrapper) {
-        return t -> { try { return func.apply(t); } catch(Exception e) { throw wrapper.apply(e); } finally { fin.run(); } };
+    public static <T, R, E extends RuntimeException> @NotNull Function<T, R> apply(@NotNull FunctionEx<T, R, ? extends Exception> func,
+                                                                                   @NotNull Runnable fin,
+                                                                                   @NotNull Function<? super Exception, ? extends E> wrapper) {
+        return t -> {
+            try {
+                return func.apply(t);
+            }
+            catch(RuntimeException e) {
+                throw e;
+            }
+            catch(Exception e) {
+                throw wrapper.apply(e);
+            }
+            finally {
+                fin.run();
+            }
+        };
     }
 
     /**
@@ -180,7 +208,7 @@ public class WrapEx extends RuntimeException {
      * @return a new instance of {@link Function} that executes {@link FunctionEx#apply(T)} catching any thrown checked exceptions and wrapping them in a {@link RuntimeException} or one of it's
      * subclasses.
      */
-    public static <T, R, E extends RuntimeException> @NotNull Function<T, R> apply(@NotNull FunctionEx<T, R, Exception> func, @NotNull Function<Exception, E> wrapper) {
+    public static <T, R, E extends RuntimeException> @NotNull Function<T, R> apply(@NotNull FunctionEx<T, R, ? extends Exception> func, @NotNull Function<? super Exception, ? extends E> wrapper) {
         return apply(func, DEFAULT_FINALLY, wrapper);
     }
 
@@ -196,7 +224,7 @@ public class WrapEx extends RuntimeException {
      * @return a new instance of {@link Function} that executes {@link FunctionEx#apply(T)} catching any thrown checked exceptions and wrapping them in an instance of the unchecked exception
      * {@link WrapEx}.
      */
-    public static <T, R> @NotNull Function<T, R> apply(@NotNull FunctionEx<T, R, Exception> func, @NotNull Runnable fin) {
+    public static <T, R> @NotNull Function<T, R> apply(@NotNull FunctionEx<T, R, ? extends Exception> func, @NotNull Runnable fin) {
         return apply(func, fin, DEFAULT_WRAPPER);
     }
 
@@ -215,55 +243,21 @@ public class WrapEx extends RuntimeException {
         return apply(func, DEFAULT_FINALLY, DEFAULT_WRAPPER);
     }
 
-    public static <T> T get(@NotNull SupplierEx<T, Exception> supplier) {
-        return get(supplier, DEFAULT_WRAPPER);
+    public static <T> @NotNull Supplier<T> fGet(@NotNull SupplierEx<T, ? extends Exception> supplier) {
+        return () -> get(supplier, DEFAULT_FINALLY, DEFAULT_WRAPPER);
     }
 
-    public static <T, E extends RuntimeException> T get(@NotNull SupplierEx<T, Exception> supplier, @NotNull Function<Exception, E> wrapper) {
-        try { return supplier.get(); } catch(Exception e) { throw wrapper.apply(e); }
+    public static <T> @NotNull Supplier<T> fGet(@NotNull SupplierEx<T, ? extends Exception> supplier, @NotNull Runnable fin) {
+        return () -> get(supplier, fin, DEFAULT_WRAPPER);
     }
 
-    public static <T> T get(@NotNull SupplierEx<T, Exception> supplier, @NotNull Runnable fin) {
-        return get(supplier, fin, DEFAULT_WRAPPER);
+    public static <T, E extends RuntimeException> @NotNull Supplier<T> fGet(@NotNull SupplierEx<T, ? extends Exception> supplier, @NotNull Function<? super Exception, ? extends E> wrapper) {
+        return () -> get(supplier, DEFAULT_FINALLY, wrapper);
     }
 
-    public static <T, E extends RuntimeException> T get(@NotNull SupplierEx<T, Exception> supplier, @NotNull Runnable fin, @NotNull Function<Exception, E> wrapper) {
-        try { return supplier.get(); } catch(Exception e) { throw wrapper.apply(e); } finally { fin.run(); }
-    }
-
-    public static void run(@NotNull RunnableEx<Exception> runner) {
-        run(runner, DEFAULT_WRAPPER);
-    }
-
-    public static <E extends RuntimeException> void run(@NotNull RunnableEx<Exception> runner, @NotNull Function<Exception, E> wrapper) {
-        try { runner.run(); } catch(Exception e) { throw wrap(e); }
-    }
-
-    public static void run(@NotNull RunnableEx<Exception> runner, @NotNull Runnable fin) {
-        run(runner, fin, DEFAULT_WRAPPER);
-    }
-
-    public static <E extends RuntimeException> void run(@NotNull RunnableEx<Exception> runner, @NotNull Runnable fin, @NotNull Function<Exception, E> wrapper) {
-        try { runner.run(); } catch(Exception e) { throw wrap(e); } finally { fin.run(); }
-    }
-
-    public static WrapEx wrap(@NotNull Throwable e) {
-        return ((e instanceof WrapEx we) ? we : new WrapEx(e.getMessage(), e));
-    }
-
-    public static <T> @NotNull Supplier<T> xGet(@NotNull SupplierEx<T, Exception> supplier) {
-        return () -> get(supplier);
-    }
-
-    public static <T> @NotNull Supplier<T> xGet(@NotNull SupplierEx<T, Exception> supplier, @NotNull Runnable fin) {
-        return () -> get(supplier, fin);
-    }
-
-    public static <T, E extends RuntimeException> @NotNull Supplier<T> xGet(@NotNull SupplierEx<T, Exception> supplier, @NotNull Function<Exception, E> wrapper) {
-        return () -> get(supplier, wrapper);
-    }
-
-    public static <T, E extends RuntimeException> @NotNull Supplier<T> xGet(@NotNull SupplierEx<T, Exception> supplier, @NotNull Runnable fin, @NotNull Function<Exception, E> wrapper) {
+    public static <T, E extends RuntimeException> @NotNull Supplier<T> fGet(@NotNull SupplierEx<T, ? extends Exception> supplier,
+                                                                            @NotNull Runnable fin,
+                                                                            @NotNull Function<? super Exception, ? extends E> wrapper) {
         return () -> get(supplier, fin, wrapper);
     }
 
@@ -275,8 +269,8 @@ public class WrapEx extends RuntimeException {
      *
      * @return A new instance of {@link Runnable}.
      */
-    public static @NotNull Runnable xRun(@NotNull RunnableEx<Exception> runner) {
-        return () -> run(runner);
+    public static @NotNull Runnable fRun(@NotNull RunnableEx<? extends Exception> runner) {
+        return () -> run(runner, DEFAULT_FINALLY, DEFAULT_WRAPPER);
     }
 
     /**
@@ -288,8 +282,8 @@ public class WrapEx extends RuntimeException {
      *
      * @return A new instance of {@link Runnable}.
      */
-    public static @NotNull Runnable xRun(@NotNull RunnableEx<Exception> runner, @NotNull Runnable fin) {
-        return () -> run(runner, fin);
+    public static @NotNull Runnable fRun(@NotNull RunnableEx<? extends Exception> runner, @NotNull Runnable fin) {
+        return () -> run(runner, fin, DEFAULT_WRAPPER);
     }
 
     /**
@@ -298,11 +292,12 @@ public class WrapEx extends RuntimeException {
      *
      * @param runner  The instance of {@link RunnableEx<Exception>}.
      * @param wrapper A function that will wrap any caught exception in an instance of {@link RuntimeException} or one of it's subclasses.
+     * @param <E>     The type of the exception that will be used to wrap any checked exception thrown by the lambda.
      *
      * @return A new instance of {@link Runnable}.
      */
-    public static <E extends RuntimeException> @NotNull Runnable xRun(@NotNull RunnableEx<Exception> runner, @NotNull Function<Exception, E> wrapper) {
-        return () -> run(runner, wrapper);
+    public static <E extends RuntimeException> @NotNull Runnable fRun(@NotNull RunnableEx<? extends Exception> runner, @NotNull Function<? super Exception, ? extends E> wrapper) {
+        return () -> run(runner, DEFAULT_FINALLY, wrapper);
     }
 
     /**
@@ -312,10 +307,114 @@ public class WrapEx extends RuntimeException {
      * @param runner  The instance of {@link RunnableEx<Exception>}.
      * @param fin     An instance of {@link Runnable} that will always be executed before {@link RunnableEx#run()} finishes.
      * @param wrapper A function that will wrap any caught exception in an instance of {@link RuntimeException} or one of it's subclasses.
+     * @param <E>     The type of the exception that will be used to wrap any checked exception thrown by the lambda.
      *
      * @return A new instance of {@link Runnable}.
      */
-    public static <E extends RuntimeException> @NotNull Runnable xRun(@NotNull RunnableEx<Exception> runner, @NotNull Runnable fin, @NotNull Function<Exception, E> wrapper) {
+    public static <E extends RuntimeException> @NotNull Runnable fRun(@NotNull RunnableEx<? extends Exception> runner,
+                                                                      @NotNull Runnable fin,
+                                                                      @NotNull Function<? super Exception, ? extends E> wrapper) {
         return () -> run(runner, fin, wrapper);
+    }
+
+    /**
+     * Executes the given lambda {@code supplier} and returns the value returned by that lambda. Also, wraps any checked exception thrown by the lambda {@code supplier} into an instance of
+     * {@link WrapEx}, which is a superclass of {@link RuntimeException} and throws that instead.
+     *
+     * @param supplier The lambda that gets executed.
+     * @param <T>      The type that gets returned from the lambda.
+     *
+     * @return The value returned by the lambda {@code supplier}.
+     */
+    public static <T> T get(@NotNull SupplierEx<T, ? extends Exception> supplier) {
+        return get(supplier, DEFAULT_FINALLY, DEFAULT_WRAPPER);
+    }
+
+    /**
+     * Executes the given lambda {@code supplier} and returns the value returned by that lambda. Also, wraps any checked exception thrown by the lambda into a subclass of {@link RuntimeException} as
+     * determined by the lambda {@code wrapper}.
+     *
+     * @param supplier The lambda that gets executed.
+     * @param wrapper  A lambda that wraps any checked exception thrown by the lambda {@code supplier} into a subclass of {@link RuntimeException}.
+     * @param <T>      The type that gets returned from the lambda {@code supplier}.
+     * @param <E>      The type of the exception that will be used to wrap any checked exception thrown by the lambda {@code supplier}.
+     *
+     * @return The value returned by the lambda {@code supplier}.
+     */
+    public static <T, E extends RuntimeException> T get(@NotNull SupplierEx<T, ? extends Exception> supplier, @NotNull Function<? super Exception, ? extends E> wrapper) {
+        return get(supplier, DEFAULT_FINALLY, wrapper);
+    }
+
+    /**
+     * Executes the given lambda {@code supplier} and returns the value returned by that lambda. Also, wraps any checked exception thrown by the lambda {@code supplier} into an instance of
+     * {@link WrapEx}, which is a superclass of {@link RuntimeException} and throws that instead. Finally, the lambda {@code fin} is executed before this method exits whether or not an exception is
+     * thrown.
+     *
+     * @param supplier The lambda that gets executed.
+     * @param fin      The lambda that gets executed before this method exits.
+     * @param <T>      The type that gets returned from the lambda {@code supplier}.
+     *
+     * @return The value returned by the lambda {@code supplier}.
+     */
+    public static <T> T get(@NotNull SupplierEx<T, ? extends Exception> supplier, @NotNull Runnable fin) {
+        return get(supplier, fin, DEFAULT_WRAPPER);
+    }
+
+    /**
+     * Executes the given lambda {@code supplier} and returns the value returned by that lambda. Also, wraps any checked exception thrown by the lambda into a subclass of {@link RuntimeException} as
+     * determined by the lambda {@code wrapper}. Finally, the lambda {@code fin} is executed before this method exits whether or not an exception is thrown.
+     *
+     * @param supplier The lambda that gets executed.
+     * @param fin      The lambda that gets executed before this method exits.
+     * @param wrapper  A lambda that wraps any checked exception thrown by the lambda {@code supplier} into a subclass of {@link RuntimeException}.
+     * @param <T>      The type that gets returned from the lambda {@code supplier}.
+     * @param <E>      The type of the exception that will be used to wrap any checked exception thrown by the lambda {@code supplier}.
+     *
+     * @return The value returned by the lambda {@code supplier}.
+     */
+    public static <T, E extends RuntimeException> T get(@NotNull SupplierEx<T, ? extends Exception> supplier, @NotNull Runnable fin, @NotNull Function<? super Exception, ? extends E> wrapper) {
+        try {
+            return supplier.get();
+        }
+        catch(RuntimeException e) {
+            throw e;
+        }
+        catch(Exception e) {
+            throw wrapper.apply(e);
+        }
+        finally {
+            fin.run();
+        }
+    }
+
+    public static void run(@NotNull RunnableEx<? extends Exception> runner) {
+        run(runner, DEFAULT_FINALLY, DEFAULT_WRAPPER);
+    }
+
+    public static <E extends RuntimeException> void run(@NotNull RunnableEx<? extends Exception> runner, @NotNull Function<? super Exception, ? extends E> wrapper) {
+        run(runner, DEFAULT_FINALLY, wrapper);
+    }
+
+    public static void run(@NotNull RunnableEx<? extends Exception> runner, @NotNull Runnable fin) {
+        run(runner, fin, DEFAULT_WRAPPER);
+    }
+
+    public static <E extends RuntimeException> void run(@NotNull RunnableEx<? extends Exception> runner, @NotNull Runnable fin, @NotNull Function<? super Exception, ? extends E> wrapper) {
+        try {
+            runner.run();
+        }
+        catch(RuntimeException e) {
+            throw e;
+        }
+        catch(Exception e) {
+            throw wrap(e);
+        }
+        finally {
+            fin.run();
+        }
+    }
+
+    public static WrapEx wrap(@NotNull Throwable t) {
+        return ((t instanceof WrapEx ex) ? ex : new WrapEx(t.getMessage(), t));
     }
 }
