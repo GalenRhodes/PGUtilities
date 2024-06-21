@@ -24,8 +24,10 @@ import com.projectgalen.lib.utils.functions.BiConsumerEx;
 import com.projectgalen.lib.utils.ref.BooleanRef;
 import com.projectgalen.lib.utils.stream.Streams;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.*;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.BiConsumer;
@@ -79,12 +81,52 @@ public final class Reflect {
         }
     }
 
+    public static Optional<Class<?>> getAccessibleObjectTypeForGet(@NotNull AccessibleObject ao) {
+        return ofNullable((ao instanceof Field f) ? f.getType() : ((ao instanceof Method m) ? m.getReturnType() : null));
+    }
+
+    public static Optional<Class<?>> getAccessibleObjectTypeForSet(@NotNull AccessibleObject ao) {
+        return ofNullable((ao instanceof Field f) ? f.getType() : ((ao instanceof Method m) ? getFirst(m.getParameters()).map(Parameter::getType).orElse(null) : null));
+    }
+
     public static Object getFrom(@NotNull AccessibleObject ao, Object obj) throws IllegalAccessException, InvocationTargetException {
         if(obj == null) return null;
         ao.setAccessible(true);
         if(ao instanceof Field f) return f.get(obj);
         if((ao instanceof Method m) && isGetter(m)) return m.invoke(obj);
         throw new IllegalArgumentException(msgs.getString("msg.err.ao_not_field_or_getter").formatted(ao.toString()));
+    }
+
+    /**
+     * This method is similar to {@link Class#getDeclaredMethod(String, Class[])} except that <b><i>1)</i></b> it also looks at inherited methods as well as declared methods and <b><i>2)</i></b> if a
+     * method is not found that matches then this method simply returns {@code null} rather than throwing a {@link NoSuchMethodException}.
+     *
+     * @param cls            The class to search for the method.
+     * @param name           The name of the method to search for.
+     * @param parameterTypes The parameters types.
+     *
+     * @return The matching method or {@code null} if no match is found.
+     */
+    public static @Nullable Method getMethod(@NotNull Class<?> cls, @NotNull String name, Class<?> @NotNull ... parameterTypes) { return getMethod(cls, false, name, parameterTypes); }
+
+    /**
+     * This method is similar to {@link Class#getDeclaredMethod(String, Class[])} except that <b><i>1)</i></b> it also looks at inherited methods as well as declared methods and <b><i>2)</i></b> if a
+     * method is not found that matches then this method simply returns {@code null} rather than throwing a {@link NoSuchMethodException}.
+     *
+     * @param cls            The class to search for the method.
+     * @param staticOnly     If {@code true}, only static methods will be searched for.
+     * @param name           The name of the method to search for.
+     * @param parameterTypes The parameters types.
+     *
+     * @return The matching method or {@code null} if no match is found.
+     */
+    public static @Nullable Method getMethod(@NotNull Class<?> cls, boolean staticOnly, @NotNull String name, Class<?> @NotNull ... parameterTypes) {
+        return streamSupers(cls).flatMap(cs -> Arrays.stream(cs.getDeclaredMethods()))
+                                .filter(m -> staticCompare(staticOnly, m))
+                                .filter(m -> compareNames(name, m))
+                                .filter(m -> compareMethodParams(parameterTypes, m))
+                                .findFirst()
+                                .orElse(null);
     }
 
     public static @NotNull Class<?> getNonPrimitiveType(@NotNull Class<?> cls) {
@@ -113,20 +155,30 @@ public final class Reflect {
         return cls;
     }
 
+    public static boolean isAbstract(@NotNull Member m) {
+        return Modifier.isStatic(m.getModifiers());
+    }
+
+    /**
+     * This method tests to see if a field or parameter of type {@code target} is assignable with a value of type {@code source}. This method also takes into account numeric values that can be
+     * assigned without having to cast the values. For example, a value of type {@code int} can be assigned to a field or parameter of type {@code long} but not visa-versa.
+     *
+     * @param target The type of the target (i.e. a field or a parameter).
+     * @param source The type of the source.
+     *
+     * @return {@code true} if source can be assigned to target. {@code false} otherwise.
+     */
     public static boolean isAssignable(@NotNull Class<?> target, @NotNull Class<?> source) {
         if((target == source) || target.isAssignableFrom(source)) return true;
         Class<?> pTarget = getPrimitiveType(target);
         Class<?> pSource = getPrimitiveType(source);
-
-        if(!(pTarget.isPrimitive() && pSource.isPrimitive())) return false;
-        if((pTarget == pSource) || ((pTarget == double.class) && (pSource != boolean.class))) return true;
-        if(pTarget == float.class) return ((pSource == long.class) || (pSource == int.class) || (pSource == short.class) || (pSource == byte.class) || (pSource == char.class));
-        if(pTarget == long.class) return ((pSource == int.class) || (pSource == short.class) || (pSource == byte.class) || (pSource == char.class));
-        if(pTarget == int.class) return ((pSource == short.class) || (pSource == byte.class) || (pSource == char.class));
-        if(pTarget == short.class) return (pSource == byte.class);
-
-        return false;
-    }
+        /*@f0*/
+        return (pTarget.isPrimitive() && pSource.isPrimitive() && (((pTarget == pSource) || ((pTarget == double.class) && (pSource != boolean.class)))
+                || ((pTarget == float.class) && ((pSource == long.class)  || (pSource == int.class)   || (pSource == short.class) || (pSource == byte.class) || (pSource == char.class)))
+                || ((pTarget == long.class)  && ((pSource == int.class)   || (pSource == short.class) || (pSource == byte.class)  || (pSource == char.class)))
+                || ((pTarget == int.class)   && ((pSource == short.class) || (pSource == byte.class)  || (pSource == char.class)))
+                || ((pTarget == short.class) && (pSource == byte.class))));
+    }/*@f1*/
 
     public static boolean isBoolean(@NotNull Class<?> cls) {
         return ((cls == Boolean.class) || (cls == boolean.class));
@@ -136,8 +188,16 @@ public final class Reflect {
         return ((cls == char.class) || (cls == Character.class));
     }
 
+    public static boolean isFinal(@NotNull Member m) {
+        return Modifier.isStatic(m.getModifiers());
+    }
+
     public static boolean isGetter(@NotNull Method m) {
         return ((m.getReturnType() != void.class) && (m.getParameterCount() == 0));
+    }
+
+    public static boolean isInterface(@NotNull Member m) {
+        return Modifier.isStatic(m.getModifiers());
     }
 
     public static boolean isNamedGetter(@NotNull Method m) {
@@ -148,6 +208,10 @@ public final class Reflect {
         return (isSetter(m) && m.getName().startsWith(SET));
     }
 
+    public static boolean isNative(@NotNull Member m) {
+        return Modifier.isStatic(m.getModifiers());
+    }
+
     public static boolean isNumeric(@NotNull Class<?> cls) {
         return ((cls == int.class)
                 || (cls == Integer.class)
@@ -156,36 +220,61 @@ public final class Reflect {
                 || (cls == double.class)
                 || (cls == Double.class)
                 || (cls == byte.class)
-                || (cls == Byte.class)
+                || (cls
+                    == Byte.class)
                 || (cls == short.class)
                 || (cls == Short.class)
                 || (cls == float.class)
                 || (cls == Float.class));
     }
 
-    public static Optional<Class<?>> getAccessibleObjectTypeForSet(@NotNull AccessibleObject ao) {
-        return ofNullable((ao instanceof Field f) ? f.getType() : ((ao instanceof Method m) ? getFirst(m.getParameters()).map(Parameter::getType).orElse(null) : null));
-    }
-
-    public static Optional<Class<?>> getAccessibleObjectTypeForGet(@NotNull AccessibleObject ao) {
-        return ofNullable((ao instanceof Field f) ? f.getType() : ((ao instanceof Method m) ? m.getReturnType() : null));
-    }
-
-    public static <T, U extends T> @NotNull Optional<T> safeCast(@NotNull Class<T> cls, U obj) {
-        return ofNullable(obj).filter(o -> cls.isInstance(obj)).map(cls::cast);
-    }
-
     public static boolean isNumericOrChar(@NotNull Class<?> cls) {
         return (isCharacter(cls) || isNumeric(cls));
+    }
+
+    public static boolean isPrivate(@NotNull Member m) {
+        return Modifier.isStatic(m.getModifiers());
+    }
+
+    public static boolean isProtected(@NotNull Member m) {
+        return Modifier.isStatic(m.getModifiers());
+    }
+
+    public static boolean isPublic(@NotNull Member m) {
+        return Modifier.isStatic(m.getModifiers());
     }
 
     public static boolean isSetter(@NotNull Method m) {
         return ((m.getReturnType() == void.class) && (m.getParameterCount() == 1));
     }
 
+    public static boolean isStatic(@NotNull Member m) {
+        return Modifier.isStatic(m.getModifiers());
+    }
+
+    public static boolean isStrict(@NotNull Member m) {
+        return Modifier.isStatic(m.getModifiers());
+    }
+
+    public static boolean isSynchronized(@NotNull Member m) {
+        return Modifier.isStatic(m.getModifiers());
+    }
+
+    public static boolean isTransient(@NotNull Member m) {
+        return Modifier.isStatic(m.getModifiers());
+    }
+
+    public static boolean isVolatile(@NotNull Member m) {
+        return Modifier.isStatic(m.getModifiers());
+    }
+
     public static <T extends AccessibleObject> T makeAccessible(T ao) {
         if(ao != null) ao.setAccessible(true);
         return ao;
+    }
+
+    public static <T, U extends T> @NotNull Optional<T> safeCast(@NotNull Class<T> cls, U obj) {
+        return ofNullable(obj).filter(o -> cls.isInstance(obj)).map(cls::cast);
     }
 
     public static void setTo(@NotNull AccessibleObject ao, Object obj, Object value) throws IllegalAccessException, InvocationTargetException {
@@ -271,5 +360,25 @@ public final class Reflect {
         }
 
         return true;
+    }
+
+    private static boolean compareMethodParams(Class<?> @NotNull [] parameterTypes, @NotNull Method m) {
+        return compareTypes(parameterTypes, m.getParameterTypes());
+    }
+
+    private static boolean compareNames(@NotNull String name, @NotNull Member m) {
+        return name.equals(m.getName());
+    }
+
+    private static boolean compareTypes(Class<?>[] types1, Class<?>[] types2) {
+        if(types1 == null) return (types2 == null || types2.length == 0);
+        if(types2 == null) return (types1.length == 0);
+        if(types1.length != types2.length) return false;
+        for(int i = 0; i < types1.length; ++i) if(types2[i] != types1[i]) return false;
+        return true;
+    }
+
+    private static boolean staticCompare(boolean staticOnly, @NotNull Member m) {
+        return ((!staticOnly) || isStatic(m));
     }
 }
