@@ -1,7 +1,7 @@
-package com.projectgalen.lib.utils.functions.primitives.tox;
+package com.projectgalen.lib.utils.functions.primitives.consumers;
 // ================================================================================================================================
 //     PROJECT: PGUtilities
-//    FILENAME: ToByteFunction.java
+//    FILENAME: ObjShortConsumer.java
 //         IDE: IntelliJ IDEA
 //      AUTHOR: Galen Rhodes
 //        DATE: June 26, 2024
@@ -18,23 +18,23 @@ package com.projectgalen.lib.utils.functions.primitives.tox;
 // ================================================================================================================================
 
 /**
- * Represents a function that produces an byte-valued result.  This is the {@code byte}-producing primitive specialization for {@link java.util.function.Function}.
+ * Represents an operation that accepts an object-valued and a {@code short}-valued argument, and returns no result.  This is the {@code (reference, short)} specialization of
+ * {@link java.util.function.BiConsumer}. Unlike most other functional interfaces, {@code ObjShortConsumer} is expected to operate via side-effects.
  *
- * <p>This is a functional interface whose functional method is {@link #applyAsByte(Object)}.
+ * <p>This is a functional interface whose functional method is {@link #accept(Object, short)}.
  *
- * @param <T> the type of the input to the function
+ * @param <T> the type of the object argument to the operation
  *
- * @see java.util.function.Function
+ * @see java.util.function.BiConsumer
  */
 @FunctionalInterface
-public interface ToByteFunction<T> {
+public interface ObjShortConsumer<T> {
 
     /**
-     * Applies this function to the given argument.
+     * Performs this operation on the given arguments.
      *
-     * @param value the function argument
-     *
-     * @return the function result
+     * @param t     the first input argument
+     * @param value the second input argument
      */
-    byte applyAsByte(T value);
+    void accept(T t, short value);
 }

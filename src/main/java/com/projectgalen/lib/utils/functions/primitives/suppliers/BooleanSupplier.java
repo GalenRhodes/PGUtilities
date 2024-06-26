@@ -18,8 +18,7 @@ package com.projectgalen.lib.utils.functions.primitives.suppliers;
 // ================================================================================================================================
 
 /**
- * Represents a supplier of {@code boolean}-valued results.  This is the
- * {@code boolean}-producing primitive specialization of {@link java.util.function.Supplier}.
+ * Represents a supplier of {@code boolean}-valued results.  This is the {@code boolean}-producing primitive specialization of {@link java.util.function.Supplier}.
  *
  * <p>There is no requirement that a distinct result be returned each time the supplier is invoked.
  *

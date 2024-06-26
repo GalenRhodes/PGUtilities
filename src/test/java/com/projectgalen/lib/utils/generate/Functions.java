@@ -88,7 +88,7 @@ public class Functions {
         foo(getPath("xbinaryop"), "Xbinaryop", "%sBinaryOperator");
         foo(getPath("consumers"), "consumer", "%sConsumer");
         foo(getPath("suppliers"), "supplier", "%sSupplier");
-
+        foo(getPath("consumers"), "objXconsumer", "Obj%sConsumer");
         return 0;
     }
 

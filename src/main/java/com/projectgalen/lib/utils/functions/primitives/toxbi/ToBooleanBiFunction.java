@@ -18,9 +18,7 @@ package com.projectgalen.lib.utils.functions.primitives.toxbi;
 // ================================================================================================================================
 
 /**
- * Represents a function that accepts two arguments and produces an boolean-valued
- * result.  This is the {@code boolean}-producing primitive specialization for
- * {@link java.util.function.BiFunction}.
+ * Represents a function that accepts two arguments and produces an boolean-valued result.  This is the {@code boolean}-producing primitive specialization for {@link java.util.function.BiFunction}.
  *
  * <p>This is a whose functional method is {@link #applyAsBoolean(Object, Object)}.
  *
@@ -37,7 +35,8 @@ public interface ToBooleanBiFunction<T, U> {
      *
      * @param t the first function argument
      * @param u the second function argument
+     *
      * @return the function result
      */
-     boolean applyAsBoolean(T t, U u);
+    boolean applyAsBoolean(T t, U u);
 }

@@ -18,8 +18,7 @@ package com.projectgalen.lib.utils.functions.primitives.tox;
 // ================================================================================================================================
 
 /**
- * Represents a function that produces an short-valued result.  This is the
- * {@code short}-producing primitive specialization for {@link java.util.function.Function}.
+ * Represents a function that produces an short-valued result.  This is the {@code short}-producing primitive specialization for {@link java.util.function.Function}.
  *
  * <p>This is a functional interface whose functional method is {@link #applyAsShort(Object)}.
  *
@@ -34,7 +33,8 @@ public interface ToShortFunction<T> {
      * Applies this function to the given argument.
      *
      * @param value the function argument
+     *
      * @return the function result
      */
-   short applyAsShort(T value);
+    short applyAsShort(T value);
 }
