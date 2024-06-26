@@ -87,6 +87,7 @@ public class Functions {
         foo(getPath("toxbi"), "toXbi", "To%sBiFunction");
         foo(getPath("xbinaryop"), "Xbinaryop", "%sBinaryOperator");
         foo(getPath("consumers"), "consumer", "%sConsumer");
+        foo(getPath("suppliers"), "supplier", "%sSupplier");
 
         return 0;
     }
