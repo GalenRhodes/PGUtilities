@@ -81,22 +81,31 @@ public class Functions {
         props.stringPropertyNames().stream().filter(n -> n.startsWith(pfx)).forEach(n -> _context.put(n.substring(pfx.length()), props.getProperty(n)));
     }
 
-    public int run(String... args) throws Exception {
-        x2y(getPath("x2y"));
-        foo(getPath("tox"), "toX", "To%sFunction");
-        foo(getPath("toxbi"), "toXbi", "To%sBiFunction");
-        foo(getPath("xbinaryop"), "Xbinaryop", "%sBinaryOperator");
-        foo(getPath("consumers"), "consumer", "%sConsumer");
-        foo(getPath("suppliers"), "supplier", "%sSupplier");
+    public int run(String... args) throws Exception {/*@f0*/
+        x2y(getPath("x2y"),       "XtoY",         "%sTo%sFunction", "%sUnaryOperator");
+        foo(getPath("tox"),       "toX",          "To%sFunction");
+        foo(getPath("toxbi"),     "toXbi",        "To%sBiFunction");
+        foo(getPath("xbinaryop"), "Xbinaryop",    "%sBinaryOperator");
+        foo(getPath("consumers"), "consumer",     "%sConsumer");
+        foo(getPath("suppliers"), "supplier",     "%sSupplier");
         foo(getPath("consumers"), "objXconsumer", "Obj%sConsumer");
+
+        x2y(getPath("x2y"),       "XtoY-ex",         "%sTo%sFunctionEx", "%sUnaryOperatorEx");
+        foo(getPath("tox"),       "toX-ex",          "To%sFunctionEx");
+        foo(getPath("toxbi"),     "toXbi-ex",        "To%sBiFunctionEx");
+        foo(getPath("xbinaryop"), "Xbinaryop-ex",    "%sBinaryOperatorEx");
+        foo(getPath("consumers"), "consumer-ex",     "%sConsumerEx");
+        foo(getPath("suppliers"), "supplier-ex",     "%sSupplierEx");
+        foo(getPath("consumers"), "objXconsumer-ex", "Obj%sConsumerEx");
+/*@f1*/
         return 0;
     }
 
-    private void foo(String path, String vmFilename, String nameTemplate) throws IOException {
+    private void foo(String path, String vmFilename, String classNameTemplate) throws IOException {
         for(int i = 0; i < data.length; ++i) {
             if(!special[i]) {
                 String[] type      = data[i];
-                String   className = setClassName(nameTemplate.formatted(type[1]));
+                String   className = setClassName(classNameTemplate.formatted(type[1]));
                 File     file      = getFile(path, className);
 
                 _context.put("type", type[0]);
@@ -134,13 +143,13 @@ public class Functions {
         return className;
     }
 
-    private void x2y(@NotNull String path) throws IOException {
+    private void x2y(@NotNull String path, @NotNull String vmFilename, @NotNull String classNameTemplate, @NotNull String altClassNameTemplate) throws IOException {
         for(int i = 0; i < data.length; ++i) {
             for(int j = 0; j < data.length; ++j) {
                 if(!(special[i] && special[j])) {
                     String[] from      = data[i];
                     String[] to        = data[j];
-                    String   className = setClassName((i == j) ? "%sUnaryOperator".formatted(from[1]) : "%sTo%sFunction".formatted(from[1], to[1]));
+                    String   className = setClassName(((i == j) ? altClassNameTemplate : classNameTemplate).formatted(from[1], to[1]));
                     File     file      = getFile(path, className);
 
                     _context.put("toType", to[0]);
@@ -150,7 +159,7 @@ public class Functions {
                     _context.put("toTypeWrap", to[2]);
                     _context.put("fromTypeWrap", from[2]);
 
-                    merge(file, "%s/%s.vm".formatted(TEMPLATE_PATH, "XtoY"));
+                    merge(file, "%s/%s.vm".formatted(TEMPLATE_PATH, vmFilename));
                 }
             }
         }
