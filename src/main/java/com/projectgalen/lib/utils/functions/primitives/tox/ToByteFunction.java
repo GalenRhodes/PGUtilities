@@ -1,10 +1,10 @@
-package com.projectgalen.lib.apple;
+package com.projectgalen.lib.utils.functions.primitives.tox;
 // ================================================================================================================================
-//     PROJECT: PGFleaMarket
-//    FILENAME: FullScreenListener.java
+//     PROJECT: PGUtilities
+//    FILENAME: ToByteFunction.java
 //         IDE: IntelliJ IDEA
 //      AUTHOR: Galen Rhodes
-//        DATE: June 16, 2024
+//        DATE: June 26, 2024
 //
 // Copyright © 2024 Project Galen. All rights reserved.
 //
@@ -17,15 +17,24 @@ package com.projectgalen.lib.apple;
 // NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 // ================================================================================================================================
 
-import java.util.EventListener;
+/**
+ * Represents a function that produces an byte-valued result.  This is the {@code byte}-producing primitive specialization for {@link java.util.function.Function}.
+ *
+ * <p>This is a functional interface whose functional method is {@link #applyAsByte(Object)}.
+ *
+ * @param <T> the type of the input to the function
+ *
+ * @see java.util.function.Function
+ */
+@FunctionalInterface
+public interface ToByteFunction<T> {
 
-public interface FullScreenListener extends EventListener {
-
-    public  void windowEnteringFullScreen(FullScreenEvent arg0);
-
-    public  void windowEnteredFullScreen(FullScreenEvent arg0);
-
-    public  void windowExitingFullScreen(FullScreenEvent arg0);
-
-    public  void windowExitedFullScreen(FullScreenEvent arg0);
+    /**
+     * Applies this function to the given argument.
+     *
+     * @param value the function argument
+     *
+     * @return the function result
+     */
+    byte applyAsByte(T value);
 }

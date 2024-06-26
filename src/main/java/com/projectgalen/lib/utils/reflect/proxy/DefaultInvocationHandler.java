@@ -1,4 +1,4 @@
-package com.projectgalen.lib.utils.reflect;
+package com.projectgalen.lib.utils.reflect.proxy;
 // ================================================================================================================================
 //     PROJECT: PGFleaMarket
 //    FILENAME: DefaultInvocationHandler.java
@@ -27,29 +27,24 @@ import java.lang.reflect.Method;
 import static com.projectgalen.lib.utils.reflect.Reflect.getMethod;
 import static java.util.Optional.ofNullable;
 
-public final class DefaultInvocationHandler<T> implements InvocationHandler {
+public final class DefaultInvocationHandler implements InvocationHandler {
 
     private static final PGResourceBundle msgs = new PGResourceBundle("com.projectgalen.lib.utils.messages");
 
-    private final @NotNull T        instance;
-    private final @NotNull Class<T> instanceClass;
+    private final @NotNull Object instance;
 
-    public DefaultInvocationHandler(@NotNull T app, @NotNull Class<T> cls) {
-        this.instance      = app;
-        this.instanceClass = cls;
+    public DefaultInvocationHandler(@NotNull Object instance) {
+        this.instance = instance;
     }
 
-    public @NotNull T getInstance() {
+    public @NotNull Object getInstance() {
         return instance;
     }
 
-    public @NotNull Class<T> getInstanceClass() {
-        return instanceClass;
-    }
-
     public @Override @Nullable Object invoke(Object p, @NotNull Method m, Object... a) throws Throwable {
-        return ofNullable(getMethod(instanceClass, m.getName(), m.getParameterTypes()))
-                .orElseThrow(() -> new IllegalArgumentException(msgs.getString("msg.err.no_such_method").formatted(m)))
+
+        return ofNullable(getMethod(instance.getClass(), m.getName(), m.getParameterTypes()))
+                .orElseThrow(() -> new NoSuchMethodException(msgs.getString("msg.err.no_such_method").formatted(m)))
                 .invoke(instance, a);
     }
 }

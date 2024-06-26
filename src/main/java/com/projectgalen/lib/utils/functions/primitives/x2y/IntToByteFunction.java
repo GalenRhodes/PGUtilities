@@ -1,10 +1,10 @@
-package com.projectgalen.lib.apple;
+package com.projectgalen.lib.utils.functions.primitives.x2y;
 // ================================================================================================================================
-//     PROJECT: PGFleaMarket
-//    FILENAME: FullScreenUtilities.java
+//     PROJECT: PGUtilities
+//    FILENAME: IntToByteFunction.java
 //         IDE: IntelliJ IDEA
 //      AUTHOR: Galen Rhodes
-//        DATE: June 16, 2024
+//        DATE: June 26, 2024
 //
 // Copyright © 2024 Project Galen. All rights reserved.
 //
@@ -17,23 +17,23 @@ package com.projectgalen.lib.apple;
 // NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 // ================================================================================================================================
 
-import com.projectgalen.lib.utils.errors.WrapEx;
+/**
+ * Represents a function that accepts an int-valued argument and produces a byte-valued result.  This is the {@code int}-to-{@code byte} primitive specialization for
+ * {@link java.util.function.Function}.
+ *
+ * <p>This is a functional interface whose functional method is {@link #applyAsByte(int)}.
+ *
+ * @see java.util.function.Function
+ */
+@FunctionalInterface
+public interface IntToByteFunction {
 
-import java.awt.*;
-
-public final class FullScreenUtilities {
-
-    private static final Class<?> _cls_ = WrapEx.get(() -> Class.forName("com.apple.eawt.FullScreenUtilities"));
-
-    public static  void addFullScreenListenerTo(Window arg0, FullScreenListener arg1) {
-        throw new UnsupportedOperationException();
-    }
-
-    public static  void removeFullScreenListenerFrom(Window arg0, FullScreenListener arg1) {
-        throw new UnsupportedOperationException();
-    }
-
-    public static  void setWindowCanFullScreen(Window arg0, boolean arg1) {
-        throw new UnsupportedOperationException();
-    }
+    /**
+     * Applies this function to the given argument.
+     *
+     * @param value the function argument
+     *
+     * @return the function result
+     */
+    byte applyAsByte(int value);
 }

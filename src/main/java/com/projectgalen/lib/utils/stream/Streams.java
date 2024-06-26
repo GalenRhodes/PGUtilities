@@ -37,62 +37,78 @@ public final class Streams {
 
     private Streams() { }
 
-    public static <T> Stream<T> build(@NotNull Consumer<Stream.Builder<T>> builder) {
+    public static <T> @NotNull Stream<T> build(@NotNull Consumer<Stream.Builder<T>> builder) {
         Stream.Builder<T> b = Stream.builder();
         builder.accept(b);
         return b.build();
     }
 
-    public static <T> @NotNull Stream<T> intersection(@NotNull Stream<T> a, @NotNull Stream<T> b) {
-        Set<T> set = a.collect(Collectors.toSet());
-        return b.filter(set::contains);
+    @Contract("_ -> new") public static <T> @NotNull Stream<ArrayIterator.Item<T>> indexStream(T @NotNull [] array) {
+        return indexStream(array, 0, array.length);
     }
-
-    @Contract("_ -> new") public static <T> @NotNull Stream<ArrayIterator.Item<T>> indexStream(T @NotNull [] array) { return indexStream(array, 0, array.length); }
 
     @Contract("_, _, _ -> new") public static <T> @NotNull Stream<ArrayIterator.Item<T>> indexStream(T @NotNull [] array, int pos, int length) {
         return StreamSupport.stream(Spliterators.spliterator(new ArrayIterator<>(array, pos, length), length, CH), false);
     }
 
-    @Contract("_ -> new") public static @NotNull Stream<BooleanArrayIterator.Item> indexStream(boolean @NotNull [] array) { return indexStream(array, 0, array.length); }
+    @Contract("_ -> new") public static @NotNull Stream<BooleanArrayIterator.Item> indexStream(boolean @NotNull [] array) {
+        return indexStream(array, 0, array.length);
+    }
 
     @Contract("_, _, _ -> new") public static @NotNull Stream<BooleanArrayIterator.Item> indexStream(boolean @NotNull [] array, int pos, int length) {
         return StreamSupport.stream(Spliterators.spliterator(new BooleanArrayIterator(array, pos, length), length, CH), false);
     }
 
-    @Contract("_ -> new") public static @NotNull Stream<CharArrayIterator.Item> indexStream(char @NotNull [] array) { return indexStream(array, 0, array.length); }
+    @Contract("_ -> new") public static @NotNull Stream<CharArrayIterator.Item> indexStream(char @NotNull [] array) {
+        return indexStream(array, 0, array.length);
+    }
 
     @Contract("_, _, _ -> new") public static @NotNull Stream<CharArrayIterator.Item> indexStream(char @NotNull [] array, int pos, int length) {
         return StreamSupport.stream(Spliterators.spliterator(new CharArrayIterator(array, pos, length), length, CH), false);
     }
 
-    @Contract("_ -> new") public static @NotNull Stream<DoubleArrayIterator.Item> indexStream(double @NotNull [] array) { return indexStream(array, 0, array.length); }
+    @Contract("_ -> new") public static @NotNull Stream<DoubleArrayIterator.Item> indexStream(double @NotNull [] array) {
+        return indexStream(array, 0, array.length);
+    }
 
     @Contract("_, _, _ -> new") public static @NotNull Stream<DoubleArrayIterator.Item> indexStream(double @NotNull [] array, int pos, int length) {
         return StreamSupport.stream(Spliterators.spliterator(new DoubleArrayIterator(array, pos, length), length, CH), false);
     }
 
-    @Contract("_ -> new") public static @NotNull Stream<FloatArrayIterator.Item> indexStream(float @NotNull [] array) { return indexStream(array, 0, array.length); }
+    @Contract("_ -> new") public static @NotNull Stream<FloatArrayIterator.Item> indexStream(float @NotNull [] array) {
+        return indexStream(array, 0, array.length);
+    }
 
     @Contract("_, _, _ -> new") public static @NotNull Stream<FloatArrayIterator.Item> indexStream(float @NotNull [] array, int pos, int length) {
         return StreamSupport.stream(Spliterators.spliterator(new FloatArrayIterator(array, pos, length), length, CH), false);
     }
 
-    @Contract("_ -> new") public static @NotNull Stream<IntArrayIterator.Item> indexStream(int @NotNull [] array) { return indexStream(array, 0, array.length); }
+    @Contract("_ -> new") public static @NotNull Stream<IntArrayIterator.Item> indexStream(int @NotNull [] array) {
+        return indexStream(array, 0, array.length);
+    }
 
     @Contract("_, _, _ -> new") public static @NotNull Stream<IntArrayIterator.Item> indexStream(int @NotNull [] array, int pos, int length) {
         return StreamSupport.stream(Spliterators.spliterator(new IntArrayIterator(array, pos, length), length, CH), false);
     }
 
-    @Contract("_ -> new") public static @NotNull Stream<LongArrayIterator.Item> indexStream(long @NotNull [] array) { return indexStream(array, 0, array.length); }
+    @Contract("_ -> new") public static @NotNull Stream<LongArrayIterator.Item> indexStream(long @NotNull [] array) {
+        return indexStream(array, 0, array.length);
+    }
 
     @Contract("_, _, _ -> new") public static @NotNull Stream<LongArrayIterator.Item> indexStream(long @NotNull [] array, int pos, int length) {
         return StreamSupport.stream(Spliterators.spliterator(new LongArrayIterator(array, pos, length), length, CH), false);
     }
 
-    @Contract("_ -> new") public static @NotNull Stream<ShortArrayIterator.Item> indexStream(short @NotNull [] array) { return indexStream(array, 0, array.length); }
+    @Contract("_ -> new") public static @NotNull Stream<ShortArrayIterator.Item> indexStream(short @NotNull [] array) {
+        return indexStream(array, 0, array.length);
+    }
 
     @Contract("_, _, _ -> new") public static @NotNull Stream<ShortArrayIterator.Item> indexStream(short @NotNull [] array, int pos, int length) {
         return StreamSupport.stream(Spliterators.spliterator(new ShortArrayIterator(array, pos, length), length, CH), false);
+    }
+
+    public static <T> @NotNull Stream<T> intersection(@NotNull Stream<T> a, @NotNull Stream<T> b) {
+        Set<T> set = a.collect(Collectors.toSet());
+        return b.filter(set::contains);
     }
 }

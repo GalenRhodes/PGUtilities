@@ -42,10 +42,11 @@ public class PGProperties extends Properties {
 
     private static final PGResourceBundle                msgs           = new PGResourceBundle("com.projectgalen.lib.utils.messages");
     private static final Function<PGProperties, Boolean> DEFAULT_LOADER = p -> true;
-    private final        Function<PGProperties, Boolean> loader;
-    private final        long                            reloadPeriod;
-    private final        TimeUnit                        timeUnit;
-    private final        ScheduledExecutorService        executor;
+
+    private final Function<PGProperties, Boolean> loader;
+    private final long                            reloadPeriod;
+    private final TimeUnit                        timeUnit;
+    private final ScheduledExecutorService        executor;
 
     public PGProperties(Properties defaults) {
         this(DEFAULT_LOADER, -1, null, defaults);
@@ -208,11 +209,7 @@ public class PGProperties extends Properties {
     }
 
     public static @NotNull PGProperties getProperties(InputStream inputStream, Properties defaults) {
-        return new PGProperties(p -> {
-            requireNonNull(inputStream, msgs.getString("msg.err.input_stream_null"));
-            try(inputStream) { p.load(inputStream); } catch(IOException e) { throw new RuntimeException(e.getMessage(), e); }
-            return true;
-        }, -1, null, defaults);
+        return new PGProperties(p -> _getProperties(inputStream, p), -1, null, defaults);
     }
 
     public static @NotNull PGProperties getProperties(InputStream inputStream) {
@@ -251,11 +248,17 @@ public class PGProperties extends Properties {
         return getProperties(name, refClass, -1, null, null);
     }
 
+    private static boolean _getProperties(InputStream inputStream, @NotNull PGProperties p) {
+        requireNonNull(inputStream, msgs.getString("msg.err.input_stream_null"));
+        try(inputStream) { p.load(inputStream); } catch(IOException e) { throw new RuntimeException(e.toString(), e); }
+        return true;
+    }
+
     private static @NotNull InputStream getInputStream(@NotNull @NonNls String name, @NotNull Class<?> refClass) {
         return requireNonNull(refClass.getResourceAsStream(name), () -> msgs.getString("msg.err.rsrc_not_found").formatted(name));
     }
 
     private static @NotNull InputStream getInputStream(@NotNull File file) {
-        try { return new FileInputStream(file); } catch(IOException e) { throw new RuntimeException(e.getMessage(), e); }
+        try { return new FileInputStream(file); } catch(IOException e) { throw new RuntimeException(e.toString(), e); }
     }
 }

@@ -11,9 +11,9 @@
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
-        <intellij.version>233.11799.286</intellij.version>
-        <intellij.annotations.version>24.0.1</intellij.annotations.version>
-        <jackson.version>2.15.4</jackson.version>
+        <intellij.version>241.18034.62</intellij.version>
+        <intellij.annotations.version>24.0.0</intellij.annotations.version>
+        <jackson.version>2.17.1</jackson.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -59,6 +59,10 @@
         <repository>
             <id>jetbrains.3rdparty</id>
             <url>https://cache-redirector.jetbrains.com/intellij-dependencies</url>
+        </repository>
+        <repository>
+            <id>uji.es</id>
+            <url>http://devel.uji.es/nexus/content/repositories/releases/</url>
         </repository>
     </repositories>
 
@@ -134,38 +138,12 @@
             <version>${jackson.version}</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-javadoc-plugin -->
-        <!--suppress VulnerableLibrariesLocal -->
         <dependency>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-javadoc-plugin</artifactId>
-            <version>3.7.0</version>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity-engine-core</artifactId>
+            <version>2.3</version>
         </dependency>
     </dependencies>
-
-    <reporting>
-        <excludeDefaults>true</excludeDefaults>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.7.0</version>
-                <configuration>
-                    <show>public</show>
-                    <detectJavaApiLink>true</detectJavaApiLink>
-                    <detectLinks>true</detectLinks>
-                    <failOnWarnings>false</failOnWarnings>
-                    <quiet>true</quiet>
-                </configuration>
-                <reportSets>
-                    <reportSet>
-                        <reports>
-                        </reports>
-                    </reportSet>
-                </reportSets>
-            </plugin>
-        </plugins>
-    </reporting>
 
     <packaging>jar</packaging>
 
@@ -188,6 +166,12 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.11.0</version>
+                <configuration>
+                    <compilerArgs>
+                        <arg>--add-exports</arg>
+                        <arg>java.desktop/com.apple.eawt=ALL-UNNAMED</arg>
+                    </compilerArgs>
+                </configuration>
             </plugin>
 
             <plugin>
@@ -261,7 +245,38 @@
                             <goal>site</goal>
                         </goals>
                         <phase>site</phase>
-                        <!-- <phase>deploy</phase> -->
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.7.0</version>
+                <configuration>
+                    <additionalJOptions>
+                        <additionalJOption>-J--add-exports=java.desktop/com.apple.eawt=ALL-UNNAMED</additionalJOption>
+                    </additionalJOptions>
+                    <links>
+                        <link>https://javadoc.io/doc/org.jetbrains/annotations/${intellij.annotations.version}/index.html</link>
+                        <link>https://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-core/${jackson.version}/index.html</link>
+                        <link>https://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/${jackson.version}/index.html</link>
+                        <link>https://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-annotations/${jackson.version}/index.html</link>
+                        <link>https://downloads.bouncycastle.org/java/docs/bcprov-jdk18on-javadoc/</link>
+                    </links>
+                    <show>public</show>
+                    <detectJavaApiLink>true</detectJavaApiLink>
+                    <detectLinks>false</detectLinks>
+                    <failOnWarnings>false</failOnWarnings>
+                    <quiet>true</quiet>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>javadoc-jar</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>

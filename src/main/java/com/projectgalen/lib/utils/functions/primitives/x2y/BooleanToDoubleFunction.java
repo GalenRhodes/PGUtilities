@@ -1,10 +1,10 @@
-package com.projectgalen.lib.apple;
+package com.projectgalen.lib.utils.functions.primitives.x2y;
 // ================================================================================================================================
-//     PROJECT: PGFleaMarket
-//    FILENAME: FullScreenEvent.java
+//     PROJECT: PGUtilities
+//    FILENAME: BooleanToDoubleFunction.java
 //         IDE: IntelliJ IDEA
 //      AUTHOR: Galen Rhodes
-//        DATE: June 16, 2024
+//        DATE: June 26, 2024
 //
 // Copyright © 2024 Project Galen. All rights reserved.
 //
@@ -17,24 +17,23 @@ package com.projectgalen.lib.apple;
 // NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 // ================================================================================================================================
 
-import com.projectgalen.lib.utils.errors.WrapEx;
+/**
+ * Represents a function that accepts an boolean-valued argument and produces a double-valued result.  This is the {@code boolean}-to-{@code double} primitive specialization for
+ * {@link java.util.function.Function}.
+ *
+ * <p>This is a functional interface whose functional method is {@link #applyAsDouble(boolean)}.
+ *
+ * @see java.util.function.Function
+ */
+@FunctionalInterface
+public interface BooleanToDoubleFunction {
 
-import java.awt.*;
-import java.util.EventObject;
-
-public class FullScreenEvent extends EventObject {
-
-    private static final Class<?> _cls_ = WrapEx.get(() -> Class.forName("com.apple.eawt.event.FullScreenEvent"));
-
-    private final @SuppressWarnings("FieldCanBeLocal") Object _proxy_ = null;
-    private final                                      Object _instance_;
-
-    public FullScreenEvent(Object source) {
-        super(source);
-        _instance_ = WrapEx.get(() -> _cls_.getConstructor(Object.class).newInstance(source));
-    }
-
-    public Window getWindow() {
-        return (Window)WrapEx.get(() -> _cls_.getDeclaredMethod("getWindow").invoke(_instance_));
-    }
+    /**
+     * Applies this function to the given argument.
+     *
+     * @param value the function argument
+     *
+     * @return the function result
+     */
+    double applyAsDouble(boolean value);
 }

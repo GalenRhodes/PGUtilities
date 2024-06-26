@@ -30,6 +30,10 @@ public final class Str {
         return Base64.getDecoder().decode(src);
     }
 
+    public static @NotNull String base64Encode(byte @NotNull [] data) {
+        return Base64.getEncoder().encodeToString(data);
+    }
+
     public static @Contract("null,_->null;!null,_->!null") String leftStr(String str, int len) {
         return ((str == null) ? null : ((len < 0) ? leftStr(str, Math.max(0, (str.length() + len))) : ((len == 0) ? "" : ((len >= str.length()) ? str : str.substring(0, len)))));
     }

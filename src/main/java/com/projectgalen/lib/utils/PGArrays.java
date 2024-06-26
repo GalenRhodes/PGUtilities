@@ -17,12 +17,15 @@ package com.projectgalen.lib.utils;
 // NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 // ================================================================================================================================
 
+import com.projectgalen.lib.utils.functions.predicates.*;
+import com.projectgalen.lib.utils.functions.primitives.x2y.*;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Range;
 
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.function.*;
 
 import static java.lang.System.arraycopy;
 import static java.lang.reflect.Array.newInstance;
@@ -165,6 +168,69 @@ public final class PGArrays {
     public static @Contract("_, _, _, _, _ -> param3") double @NotNull [] copy(double @NotNull [] src, int srcPos, double @NotNull [] dest, int destPos, int length) {
         if(length > 0) arraycopy(src, srcPos, dest, destPos, length);
         return dest;
+    }
+
+    public static <T> boolean equals(T[] a1, T[] a2, @NotNull BiPredicate<T, T> predicate) {
+        if(a1 == a2) return true;
+        if((a1 == null) || (a2 == null) || (a1.length != a2.length)) return false;
+        for(int i = 0; i < a1.length; ++i) if(!predicate.test(a1[i], a2[i])) return false;
+        return true;
+    }
+
+    public static boolean equals(boolean[] a1, boolean[] a2, @NotNull BiBooleanPredicate predicate) {
+        if(a1 == a2) return true;
+        if((a1 == null) || (a2 == null) || (a1.length != a2.length)) return false;
+        for(int i = 0; i < a1.length; ++i) if(!predicate.test(a1[i], a2[i])) return false;
+        return true;
+    }
+
+    public static boolean equals(char[] a1, char[] a2, @NotNull BiCharPredicate predicate) {
+        if(a1 == a2) return true;
+        if((a1 == null) || (a2 == null) || (a1.length != a2.length)) return false;
+        for(int i = 0; i < a1.length; ++i) if(!predicate.test(a1[i], a2[i])) return false;
+        return true;
+    }
+
+    public static boolean equals(byte[] a1, byte[] a2, @NotNull BiBytePredicate predicate) {
+        if(a1 == a2) return true;
+        if((a1 == null) || (a2 == null) || (a1.length != a2.length)) return false;
+        for(int i = 0; i < a1.length; ++i) if(!predicate.test(a1[i], a2[i])) return false;
+        return true;
+    }
+
+    public static boolean equals(short[] a1, short[] a2, @NotNull BiShortPredicate predicate) {
+        if(a1 == a2) return true;
+        if((a1 == null) || (a2 == null) || (a1.length != a2.length)) return false;
+        for(int i = 0; i < a1.length; ++i) if(!predicate.test(a1[i], a2[i])) return false;
+        return true;
+    }
+
+    public static boolean equals(int[] a1, int[] a2, @NotNull BiIntPredicate predicate) {
+        if(a1 == a2) return true;
+        if((a1 == null) || (a2 == null) || (a1.length != a2.length)) return false;
+        for(int i = 0; i < a1.length; ++i) if(!predicate.test(a1[i], a2[i])) return false;
+        return true;
+    }
+
+    public static boolean equals(long[] a1, long[] a2, @NotNull BiLongPredicate predicate) {
+        if(a1 == a2) return true;
+        if((a1 == null) || (a2 == null) || (a1.length != a2.length)) return false;
+        for(int i = 0; i < a1.length; ++i) if(!predicate.test(a1[i], a2[i])) return false;
+        return true;
+    }
+
+    public static boolean equals(float[] a1, float[] a2, @NotNull BiFloatPredicate predicate) {
+        if(a1 == a2) return true;
+        if((a1 == null) || (a2 == null) || (a1.length != a2.length)) return false;
+        for(int i = 0; i < a1.length; ++i) if(!predicate.test(a1[i], a2[i])) return false;
+        return true;
+    }
+
+    public static boolean equals(double[] a1, double[] a2, @NotNull BiDoublePredicate predicate) {
+        if(a1 == a2) return true;
+        if((a1 == null) || (a2 == null) || (a1.length != a2.length)) return false;
+        for(int i = 0; i < a1.length; ++i) if(!predicate.test(a1[i], a2[i])) return false;
+        return true;
     }
 
     public static <T> @NotNull Optional<T> get(T @NotNull [] array, @Range(from = 0, to = Integer.MAX_VALUE) int index) {
@@ -345,5 +411,86 @@ public final class PGArrays {
         double[] cp = new double[dest.length + 1];
         cp[0] = src;
         return copy(dest, 0, cp, 1, dest.length);
+    }
+
+    public static <T> T @NotNull [] setAll(T @NotNull [] dest, @NotNull IntFunction<? extends T> generator) {
+        for(int i = 0; i < dest.length; ++i) dest[i] = generator.apply(i);
+        return dest;
+    }
+
+    public static boolean @NotNull [] setAll(boolean @NotNull [] dest, @NotNull IntToBooleanFunction generator) {
+        for(int i = 0; i < dest.length; ++i) dest[i] = generator.applyAsBoolean(i);
+        return dest;
+    }
+
+    public static char @NotNull [] setAll(char @NotNull [] dest, @NotNull IntToCharFunction generator) {
+        for(int i = 0; i < dest.length; ++i) dest[i] = generator.applyAsChar(i);
+        return dest;
+    }
+
+    public static byte @NotNull [] setAll(byte @NotNull [] dest, @NotNull IntToByteFunction generator) {
+        for(int i = 0; i < dest.length; ++i) dest[i] = generator.applyAsByte(i);
+        return dest;
+    }
+
+    public static short @NotNull [] setAll(short @NotNull [] dest, @NotNull IntToShortFunction generator) {
+        for(int i = 0; i < dest.length; ++i) dest[i] = generator.applyAsShort(i);
+        return dest;
+    }
+
+    public static int @NotNull [] setAll(int @NotNull [] dest, @NotNull IntUnaryOperator generator) {
+        for(int i = 0; i < dest.length; ++i) dest[i] = generator.applyAsInt(i);
+        return dest;
+    }
+
+    public static long @NotNull [] setAll(long @NotNull [] dest, @NotNull IntToLongFunction generator) {
+        for(int i = 0; i < dest.length; ++i) dest[i] = generator.applyAsLong(i);
+        return dest;
+    }
+
+    public static float @NotNull [] setAll(float @NotNull [] dest, @NotNull IntToFloatFunction generator) {
+        for(int i = 0; i < dest.length; ++i) dest[i] = generator.applyAsFloat(i);
+        return dest;
+    }
+
+    public static double @NotNull [] setAll(double @NotNull [] dest, @NotNull IntToDoubleFunction generator) {
+        for(int i = 0; i < dest.length; ++i) dest[i] = generator.applyAsDouble(i);
+        return dest;
+    }
+
+    @Contract(value = "_ -> new", pure = true) public static <T> T @NotNull [] wrap(T... items) {
+        return Arrays.copyOf(items, items.length);
+    }
+
+    @Contract(value = "_ -> new", pure = true) public static boolean @NotNull [] wrap(boolean... items) {
+        return Arrays.copyOf(items, items.length);
+    }
+
+    @Contract(value = "_ -> new", pure = true) public static char @NotNull [] wrap(char... items) {
+        return Arrays.copyOf(items, items.length);
+    }
+
+    @Contract(value = "_ -> new", pure = true) public static byte @NotNull [] wrap(byte... items) {
+        return Arrays.copyOf(items, items.length);
+    }
+
+    @Contract(value = "_ -> new", pure = true) public static short @NotNull [] wrap(short... items) {
+        return Arrays.copyOf(items, items.length);
+    }
+
+    @Contract(value = "_ -> new", pure = true) public static int @NotNull [] wrap(int... items) {
+        return Arrays.copyOf(items, items.length);
+    }
+
+    @Contract(value = "_ -> new", pure = true) public static long @NotNull [] wrap(long... items) {
+        return Arrays.copyOf(items, items.length);
+    }
+
+    @Contract(value = "_ -> new", pure = true) public static float @NotNull [] wrap(float... items) {
+        return Arrays.copyOf(items, items.length);
+    }
+
+    @Contract(value = "_ -> new", pure = true) public static double @NotNull [] wrap(double... items) {
+        return Arrays.copyOf(items, items.length);
     }
 }

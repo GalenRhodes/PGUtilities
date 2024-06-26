@@ -49,6 +49,15 @@ public final class Obj {
         return false;
     }
 
+    public static @NotNull Class<?> classForname(@NotNull String name) {
+        try {
+            return Class.forName(name);
+        }
+        catch(ClassNotFoundException e) {
+            throw new RuntimeException(e.toString(), e);
+        }
+    }
+
     public static <T> int compare(T a, T b, Comparator<T> comparator) {
         return ((a == b) ? 0 : ((a == null) ? -1 : ((b == null) ? 1 : comparator.compare(a, b))));
     }
