@@ -21,6 +21,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Function;
 
+@FunctionalInterface
 public interface QuadFunctionEx<T, U, V, W, R, E extends Exception> {
 
     default <R2> QuadFunctionEx<T, U, V, W, R2, E> andThen(@NotNull Function<? super R, ? extends R2> function) {

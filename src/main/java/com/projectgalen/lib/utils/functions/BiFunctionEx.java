@@ -19,6 +19,7 @@ package com.projectgalen.lib.utils.functions;
 
 import org.jetbrains.annotations.NotNull;
 
+@FunctionalInterface
 public interface BiFunctionEx<T, U, R, E extends Exception> {
 
     default <V> BiFunctionEx<T, U, V, E> andThen(@NotNull FunctionEx<? super R, ? extends V, ? extends E> after) {

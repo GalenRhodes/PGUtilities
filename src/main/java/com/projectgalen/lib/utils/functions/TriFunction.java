@@ -21,6 +21,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Function;
 
+@FunctionalInterface
 public interface TriFunction<T, U, V, R> {
 
     default <R2> TriFunction<T, U, V, R2> andThen(@NotNull Function<? super R, ? extends R2> after) {

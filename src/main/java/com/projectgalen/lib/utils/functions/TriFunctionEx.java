@@ -19,6 +19,7 @@ package com.projectgalen.lib.utils.functions;
 
 import org.jetbrains.annotations.NotNull;
 
+@FunctionalInterface
 public interface TriFunctionEx<T, U, V, R, E extends Exception> {
 
     default <R2> TriFunctionEx<T, U, V, R2, E> andThen(@NotNull FunctionEx<? super R, ? extends R2, ? extends E> after) {

@@ -21,6 +21,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Function;
 
+@FunctionalInterface
 public interface QuadFunction<T, U, V, W, R> {
 
     default <R2> QuadFunction<T, U, V, W, R2> andThen(@NotNull Function<? super R, ? extends R2> function) {

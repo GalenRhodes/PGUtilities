@@ -17,6 +17,7 @@ package com.projectgalen.lib.utils.functions;
 // NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 // ================================================================================================================================
 
+@FunctionalInterface
 public interface QuadConsumer<T, U, V, W> {
 
     void accept(T t, U u, V v, W w);

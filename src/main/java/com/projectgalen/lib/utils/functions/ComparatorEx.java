@@ -1,10 +1,10 @@
 package com.projectgalen.lib.utils.functions;
 // ================================================================================================================================
 //     PROJECT: PGUtilities
-//    FILENAME: CharConsumerEx.java
+//    FILENAME: ComparatorEx.java
 //         IDE: IntelliJ IDEA
 //      AUTHOR: Galen Rhodes
-//        DATE: June 04, 2024
+//        DATE: June 26, 2024
 //
 // Copyright © 2024 Project Galen. All rights reserved.
 //
@@ -17,15 +17,8 @@ package com.projectgalen.lib.utils.functions;
 // NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 // ================================================================================================================================
 
-import org.jetbrains.annotations.NotNull;
+@FunctionalInterface
+public interface ComparatorEx<T, E extends Exception> {
 
-public interface CharConsumerEx<E extends Exception> {
-    void acceptAsChar(char c) throws E;
-
-    default CharConsumerEx<E> andThen(@NotNull CharConsumerEx<? extends E> after) {
-        return (c) -> {
-            acceptAsChar(c);
-            after.acceptAsChar(c);
-        };
-    }
+    int compare(T o1, T o2) throws E;
 }

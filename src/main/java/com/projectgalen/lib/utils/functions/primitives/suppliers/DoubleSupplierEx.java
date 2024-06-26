@@ -1,7 +1,7 @@
-package com.projectgalen.lib.utils.functions;
+package com.projectgalen.lib.utils.functions.primitives.suppliers;
 // ================================================================================================================================
 //     PROJECT: PGUtilities
-//    FILENAME: CharConsumer.java
+//    FILENAME: DoubleSupplierEx.java
 //         IDE: IntelliJ IDEA
 //      AUTHOR: Galen Rhodes
 //        DATE: June 04, 2024
@@ -17,15 +17,7 @@ package com.projectgalen.lib.utils.functions;
 // NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 // ================================================================================================================================
 
-import org.jetbrains.annotations.NotNull;
-
-public interface CharConsumer {
-    void acceptAsChar(char c);
-
-    default CharConsumer andThen(@NotNull CharConsumer after) {
-        return (c) -> {
-            acceptAsChar(c);
-            after.acceptAsChar(c);
-        };
-    }
+@FunctionalInterface
+public interface DoubleSupplierEx<E extends Exception> {
+    double getAsDouble() throws E;
 }

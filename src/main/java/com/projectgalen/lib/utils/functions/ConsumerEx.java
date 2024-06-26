@@ -19,6 +19,7 @@ package com.projectgalen.lib.utils.functions;
 
 import org.jetbrains.annotations.NotNull;
 
+@FunctionalInterface
 public interface ConsumerEx<T, E extends Exception> {
 
     void accept(T t) throws E;

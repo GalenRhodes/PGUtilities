@@ -1,7 +1,7 @@
-package com.projectgalen.lib.utils.functions;
+package com.projectgalen.lib.utils.functions.primitives.suppliers;
 // ================================================================================================================================
 //     PROJECT: PGUtilities
-//    FILENAME: DoubleConsumerEx.java
+//    FILENAME: LongSupplierEx.java
 //         IDE: IntelliJ IDEA
 //      AUTHOR: Galen Rhodes
 //        DATE: June 04, 2024
@@ -17,13 +17,7 @@ package com.projectgalen.lib.utils.functions;
 // NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 // ================================================================================================================================
 
-public interface DoubleConsumerEx<E extends Exception> {
-    void acceptAsDouble(double d) throws E;
-
-    default DoubleConsumerEx<E> andThen(DoubleConsumerEx<? extends E> after) {
-        return (d) -> {
-            acceptAsDouble(d);
-            after.acceptAsDouble(d);
-        };
-    }
+@FunctionalInterface
+public interface LongSupplierEx<E extends Exception> {
+    long getAsLong() throws E;
 }

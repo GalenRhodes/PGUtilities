@@ -17,6 +17,7 @@ package com.projectgalen.lib.utils.functions;
 // NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 // ================================================================================================================================
 
+@FunctionalInterface
 public interface TriConsumer<T, U, V> {
 
     void accept(T t, U u, V v);

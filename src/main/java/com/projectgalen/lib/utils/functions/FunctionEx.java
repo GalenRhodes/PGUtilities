@@ -20,6 +20,7 @@ package com.projectgalen.lib.utils.functions;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
+@FunctionalInterface
 public interface FunctionEx<T, R, E extends Exception> {
 
     default <V> @NotNull FunctionEx<T, V, E> andThen(@NotNull FunctionEx<R, V, E> after) {

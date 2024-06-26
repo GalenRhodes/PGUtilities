@@ -1,7 +1,7 @@
-package com.projectgalen.lib.utils.functions;
+package com.projectgalen.lib.utils.functions.primitives.suppliers;
 // ================================================================================================================================
 //     PROJECT: PGUtilities
-//    FILENAME: LongConsumerEx.java
+//    FILENAME: IntSupplierEx.java
 //         IDE: IntelliJ IDEA
 //      AUTHOR: Galen Rhodes
 //        DATE: June 04, 2024
@@ -17,13 +17,7 @@ package com.projectgalen.lib.utils.functions;
 // NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 // ================================================================================================================================
 
-public interface LongConsumerEx<E extends Exception> {
-    void acceptAsLong(long l) throws E;
-
-    default LongConsumerEx<E> andThen(LongConsumerEx<? extends E> after) {
-        return (l) -> {
-            acceptAsLong(l);
-            after.acceptAsLong(l);
-        };
-    }
+@FunctionalInterface
+public interface IntSupplierEx<E extends Exception> {
+    int getAsInt() throws E;
 }
