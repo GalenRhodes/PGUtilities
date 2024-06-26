@@ -270,39 +270,75 @@ public final class PGArrays {
     }
 
     public static <T> @NotNull Optional<T> getFirst(T @NotNull [] array) {
-        return get(array, 0);
+        return ((array.length == 0) ? Optional.empty() : Optional.of(array[0]));
     }
 
     public static @NotNull Optional<Boolean> getFirst(boolean @NotNull [] array) {
-        return get(array, 0);
+        return ((array.length == 0) ? Optional.empty() : Optional.of(array[0]));
     }
 
     public static @NotNull Optional<Character> getFirst(char @NotNull [] array) {
-        return get(array, 0);
+        return ((array.length == 0) ? Optional.empty() : Optional.of(array[0]));
     }
 
     public static @NotNull Optional<Byte> getFirst(byte @NotNull [] array) {
-        return get(array, 0);
+        return ((array.length == 0) ? Optional.empty() : Optional.of(array[0]));
     }
 
     public static @NotNull Optional<Short> getFirst(short @NotNull [] array) {
-        return get(array, 0);
+        return ((array.length == 0) ? Optional.empty() : Optional.of(array[0]));
     }
 
     public static @NotNull Optional<Integer> getFirst(int @NotNull [] array) {
-        return get(array, 0);
+        return ((array.length == 0) ? Optional.empty() : Optional.of(array[0]));
     }
 
     public static @NotNull Optional<Long> getFirst(long @NotNull [] array) {
-        return get(array, 0);
+        return ((array.length == 0) ? Optional.empty() : Optional.of(array[0]));
     }
 
     public static @NotNull Optional<Float> getFirst(float @NotNull [] array) {
-        return get(array, 0);
+        return ((array.length == 0) ? Optional.empty() : Optional.of(array[0]));
     }
 
     public static @NotNull Optional<Double> getFirst(double @NotNull [] array) {
-        return get(array, 0);
+        return ((array.length == 0) ? Optional.empty() : Optional.of(array[0]));
+    }
+
+    public static @NotNull <T> Optional<T> getLast(T @NotNull [] array) {
+        return ((array.length == 0) ? Optional.empty() : Optional.of(array[array.length - 1]));
+    }
+
+    public static @NotNull Optional<Boolean> getLast(boolean @NotNull [] array) {
+        return ((array.length == 0) ? Optional.empty() : Optional.of(array[array.length - 1]));
+    }
+
+    public static @NotNull Optional<Character> getLast(char @NotNull [] array) {
+        return ((array.length == 0) ? Optional.empty() : Optional.of(array[array.length - 1]));
+    }
+
+    public static @NotNull Optional<Byte> getLast(byte @NotNull [] array) {
+        return ((array.length == 0) ? Optional.empty() : Optional.of(array[array.length - 1]));
+    }
+
+    public static @NotNull Optional<Short> getLast(short @NotNull [] array) {
+        return ((array.length == 0) ? Optional.empty() : Optional.of(array[array.length - 1]));
+    }
+
+    public static @NotNull Optional<Integer> getLast(int @NotNull [] array) {
+        return ((array.length == 0) ? Optional.empty() : Optional.of(array[array.length - 1]));
+    }
+
+    public static @NotNull Optional<Long> getLast(long @NotNull [] array) {
+        return ((array.length == 0) ? Optional.empty() : Optional.of(array[array.length - 1]));
+    }
+
+    public static @NotNull Optional<Float> getLast(float @NotNull [] array) {
+        return ((array.length == 0) ? Optional.empty() : Optional.of(array[array.length - 1]));
+    }
+
+    public static @NotNull Optional<Double> getLast(double @NotNull [] array) {
+        return ((array.length == 0) ? Optional.empty() : Optional.of(array[array.length - 1]));
     }
 
     public static <T> T[] newFilled(@NotNull Class<T> componentType, int length, T fill) {

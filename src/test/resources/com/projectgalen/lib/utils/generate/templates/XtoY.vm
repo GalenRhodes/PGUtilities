@@ -22,7 +22,7 @@ package ${package};
  * ${toType}-valued result.  This is the {@code ${fromType}}-to-{@code ${toType}} primitive
  * specialization for {@link java.util.function.Function}.
  *
- * <p>This is a functional interface whose functional method is {@link #applyAs${toTypeCap}(${fromType})}.
+ * <p>This is a functional interface whose functional method is {@link #[[#applyAs]]#${toTypeCap}(${fromType})}.
  *
  * @see java.util.function.Function
  */

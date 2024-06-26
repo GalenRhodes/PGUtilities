@@ -18,7 +18,9 @@ package com.projectgalen.lib.utils.functions.primitives.toxbi;
 // ================================================================================================================================
 
 /**
- * Represents a function that accepts two arguments and produces an byte-valued result.  This is the {@code byte}-producing primitive specialization for {@link java.util.function.BiFunction}.
+ * Represents a function that accepts two arguments and produces an byte-valued
+ * result.  This is the {@code byte}-producing primitive specialization for
+ * {@link java.util.function.BiFunction}.
  *
  * <p>This is a whose functional method is {@link #applyAsByte(Object, Object)}.
  *
@@ -35,8 +37,7 @@ public interface ToByteBiFunction<T, U> {
      *
      * @param t the first function argument
      * @param u the second function argument
-     *
      * @return the function result
      */
-    byte applyAsByte(T t, U u);
+     byte applyAsByte(T t, U u);
 }

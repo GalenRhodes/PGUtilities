@@ -1,12 +1,12 @@
-package ${package};
+package com.projectgalen.lib.utils.functions.primitives.xbinaryop;
 // ================================================================================================================================
-//     PROJECT: ${project}
-//    FILENAME: ${filename}
-//         IDE: ${ide}
-//      AUTHOR: ${author}
-//        DATE: ${date}
+//     PROJECT: PGUtilities
+//    FILENAME: ByteBinaryOperator.java
+//         IDE: IntelliJ IDEA
+//      AUTHOR: Galen Rhodes
+//        DATE: June 26, 2024
 //
-// Copyright © ${year} Project Galen. All rights reserved.
+// Copyright © 2024 Project Galen. All rights reserved.
 //
 // Permission to use, copy, modify, and distribute this software for any purpose with or without fee is hereby granted, provided
 // that the above copyright notice and this permission notice appear in all copies.
@@ -18,26 +18,23 @@ package ${package};
 // ================================================================================================================================
 
 /**
- * Represents a function that accepts two arguments and produces an ${type}-valued
- * result.  This is the {@code ${type}}-producing primitive specialization for
- * {@link java.util.function.BiFunction}.
+ * Represents an operation upon two {@code byte}-valued operands and producing an
+ * {@code byte}-valued result.   This is the primitive type specialization of
+ * {@link java.util.function.BinaryOperator} for {@code byte}.
  *
- * <p>This is a whose functional method is {@link #applyAs${typeCap}(Object, Object)}.
+ * <p>This is a functional interface whose functional method is {@link #applyAsByte(byte, byte)}.
  *
- * @param <T> the type of the first argument to the function
- * @param <U> the type of the second argument to the function
- *
- * @see java.util.function.BiFunction
+ * @see java.util.function.BinaryOperator
  */
 @FunctionalInterface
-public interface ${className}<T, U> {
+public interface ByteBinaryOperator {
 
     /**
-     * Applies this function to the given arguments.
+     * Applies this operator to the given operands.
      *
-     * @param t the first function argument
-     * @param u the second function argument
-     * @return the function result
+     * @param left the first operand
+     * @param right the second operand
+     * @return the operator result
      */
-     ${type} applyAs${typeCap}(T t, U u);
+    byte applyAsByte(byte left, byte right);
 }

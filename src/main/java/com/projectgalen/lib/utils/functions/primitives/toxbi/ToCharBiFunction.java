@@ -18,7 +18,9 @@ package com.projectgalen.lib.utils.functions.primitives.toxbi;
 // ================================================================================================================================
 
 /**
- * Represents a function that accepts two arguments and produces an char-valued result.  This is the {@code char}-producing primitive specialization for {@link java.util.function.BiFunction}.
+ * Represents a function that accepts two arguments and produces an char-valued
+ * result.  This is the {@code char}-producing primitive specialization for
+ * {@link java.util.function.BiFunction}.
  *
  * <p>This is a whose functional method is {@link #applyAsChar(Object, Object)}.
  *
@@ -35,8 +37,7 @@ public interface ToCharBiFunction<T, U> {
      *
      * @param t the first function argument
      * @param u the second function argument
-     *
      * @return the function result
      */
-    char applyAsChar(T t, U u);
+     char applyAsChar(T t, U u);
 }

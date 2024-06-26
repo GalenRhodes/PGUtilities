@@ -56,16 +56,17 @@ public class Functions {
         { "double",  "Double",  "Double",    "", "", "", },
     };/*@f1*/
 
-    public static final @NotNull         SimpleDateFormat SDF_DAY     = new SimpleDateFormat(props.getProperty("fmt.day"));
-    public static final @NotNull         SimpleDateFormat SDF_MONTH   = new SimpleDateFormat(props.getProperty("fmt.month"));
-    public static final @NotNull         SimpleDateFormat SDF_YEAR    = new SimpleDateFormat(props.getProperty("fmt.year"));
-    public static final @NotNull         SimpleDateFormat SDF_DATE    = new SimpleDateFormat(props.getProperty("fmt.date"));
-    public static final @NotNull @NonNls String           KEY_DATE    = props.getProperty("velocity.key.date");
-    public static final @NotNull @NonNls String           KEY_DAY     = props.getProperty("velocity.key.day");
-    public static final @NotNull @NonNls String           KEY_MONTH   = props.getProperty("velocity.key.month");
-    public static final @NotNull @NonNls String           KEY_YEAR    = props.getProperty("velocity.key.year");
-    public static final @NotNull @NonNls String           KEY_PACKAGE = props.getProperty("velocity.key.package");
-    public static final @NotNull @NonNls String           PATH        = "com/projectgalen/lib/utils/functions/primitives";
+    public static final @NotNull         SimpleDateFormat SDF_DAY          = new SimpleDateFormat(props.getProperty("fmt.day"));
+    public static final @NotNull         SimpleDateFormat SDF_MONTH        = new SimpleDateFormat(props.getProperty("fmt.month"));
+    public static final @NotNull         SimpleDateFormat SDF_YEAR         = new SimpleDateFormat(props.getProperty("fmt.year"));
+    public static final @NotNull         SimpleDateFormat SDF_DATE         = new SimpleDateFormat(props.getProperty("fmt.date"));
+    public static final @NotNull @NonNls String           KEY_DATE         = props.getProperty("velocity.key.date");
+    public static final @NotNull @NonNls String           KEY_DAY          = props.getProperty("velocity.key.day");
+    public static final @NotNull @NonNls String           KEY_MONTH        = props.getProperty("velocity.key.month");
+    public static final @NotNull @NonNls String           KEY_YEAR         = props.getProperty("velocity.key.year");
+    public static final @NotNull @NonNls String           KEY_PACKAGE      = props.getProperty("velocity.key.package");
+    public static final @NotNull @NonNls String           OUTPUT_BASE_PATH = "com/projectgalen/lib/utils/functions/primitives";
+    public static final @NotNull @NonNls String           TEMPLATE_PATH    = "com/projectgalen/lib/utils/generate/templates";
 
     private final @NotNull VelocityContext _context = new VelocityContext();
 
@@ -82,9 +83,28 @@ public class Functions {
 
     public int run(String... args) throws Exception {
         x2y(getPath("x2y"));
-        toX(getPath("tox"));
-        toXbi(getPath("toxbi"));
+        foo(getPath("tox"), "toX", "To%sFunction");
+        foo(getPath("toxbi"), "toXbi", "To%sBiFunction");
+        foo(getPath("xbinaryop"), "Xbinaryop", "%sBinaryOperator");
+        foo(getPath("consumers"), "consumer", "%sConsumer");
+
         return 0;
+    }
+
+    private void foo(String path, String vmFilename, String nameTemplate) throws IOException {
+        for(int i = 0; i < data.length; ++i) {
+            if(!special[i]) {
+                String[] type      = data[i];
+                String   className = setClassName(nameTemplate.formatted(type[1]));
+                File     file      = getFile(path, className);
+
+                _context.put("type", type[0]);
+                _context.put("typeCap", type[1]);
+                _context.put("typeWrap", type[2]);
+
+                merge(file, "%s/%s.vm".formatted(TEMPLATE_PATH, vmFilename));
+            }
+        }
     }
 
     private @NotNull File getFile(@NotNull String path, @NotNull String className) {
@@ -97,50 +117,20 @@ public class Functions {
     }
 
     private @NotNull String getPath(@NotNull String subPath) {
-        String path = "%s/%s".formatted(PATH, subPath);
+        String path = "%s/%s".formatted(OUTPUT_BASE_PATH, subPath);
         _context.put(KEY_PACKAGE, path.replace("/", "."));
         return path;
+    }
+
+    private void merge(File file, String _vmFilename) throws IOException {
+        try(Writer w = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8))) {
+            Velocity.getTemplate(_vmFilename).merge(_context, w);
+        }
     }
 
     private @NotNull String setClassName(@NotNull String className) {
         _context.put("className", className);
         return className;
-    }
-
-    private void toX(String path) throws IOException {
-        for(int i = 0; i < data.length; ++i) {
-            if(!special[i]) {
-                String[] type      = data[i];
-                String   className = setClassName("To%sFunction".formatted(type[1]));
-                File     file      = getFile(path, className);
-
-                _context.put("type", type[0]);
-                _context.put("typeCap", type[1]);
-                _context.put("typeWrap", type[2]);
-
-                try(Writer w = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8))) {
-                    Velocity.getTemplate("com/projectgalen/lib/utils/generate/toX.vm").merge(_context, w);
-                }
-            }
-        }
-    }
-
-    private void toXbi(String path) throws IOException {
-        for(int i = 0; i < data.length; ++i) {
-            if(!special[i]) {
-                String[] type      = data[i];
-                String   className = setClassName("To%sBiFunction".formatted(type[1]));
-                File     file      = getFile(path, className);
-
-                _context.put("type", type[0]);
-                _context.put("typeCap", type[1]);
-                _context.put("typeWrap", type[2]);
-
-                try(Writer w = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8))) {
-                    Velocity.getTemplate("com/projectgalen/lib/utils/generate/toXbi.vm").merge(_context, w);
-                }
-            }
-        }
     }
 
     private void x2y(@NotNull String path) throws IOException {
@@ -159,9 +149,7 @@ public class Functions {
                     _context.put("toTypeWrap", to[2]);
                     _context.put("fromTypeWrap", from[2]);
 
-                    try(Writer w = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8))) {
-                        Velocity.getTemplate("com/projectgalen/lib/utils/generate/XtoY.vm").merge(_context, w);
-                    }
+                    merge(file, "%s/%s.vm".formatted(TEMPLATE_PATH, "XtoY"));
                 }
             }
         }

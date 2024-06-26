@@ -21,7 +21,7 @@ package ${package};
  * Represents a function that produces an ${type}-valued result.  This is the
  * {@code ${type}}-producing primitive specialization for {@link java.util.function.Function}.
  *
- * <p>This is a functional interface whose functional method is {@link #applyAs${typeCap}(Object)}.
+ * <p>This is a functional interface whose functional method is {@link #[[#applyAs]]#${typeCap}(Object)}.
  *
  * @param <T> the type of the input to the function
  *

@@ -18,8 +18,9 @@ package com.projectgalen.lib.utils.functions.primitives.x2y;
 // ================================================================================================================================
 
 /**
- * Represents a function that accepts an float-valued argument and produces a short-valued result.  This is the {@code float}-to-{@code short} primitive specialization for
- * {@link java.util.function.Function}.
+ * Represents a function that accepts an float-valued argument and produces a
+ * short-valued result.  This is the {@code float}-to-{@code short} primitive
+ * specialization for {@link java.util.function.Function}.
  *
  * <p>This is a functional interface whose functional method is {@link #applyAsShort(float)}.
  *
@@ -32,7 +33,6 @@ public interface FloatToShortFunction {
      * Applies this function to the given argument.
      *
      * @param value the function argument
-     *
      * @return the function result
      */
     short applyAsShort(float value);

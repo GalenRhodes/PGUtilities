@@ -18,8 +18,9 @@ package com.projectgalen.lib.utils.functions.primitives.x2y;
 // ================================================================================================================================
 
 /**
- * Represents a function that accepts an char-valued argument and produces a int-valued result.  This is the {@code char}-to-{@code int} primitive specialization for
- * {@link java.util.function.Function}.
+ * Represents a function that accepts an char-valued argument and produces a
+ * int-valued result.  This is the {@code char}-to-{@code int} primitive
+ * specialization for {@link java.util.function.Function}.
  *
  * <p>This is a functional interface whose functional method is {@link #applyAsInt(char)}.
  *
@@ -32,7 +33,6 @@ public interface CharToIntFunction {
      * Applies this function to the given argument.
      *
      * @param value the function argument
-     *
      * @return the function result
      */
     int applyAsInt(char value);

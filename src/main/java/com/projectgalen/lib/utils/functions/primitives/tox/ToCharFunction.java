@@ -18,7 +18,8 @@ package com.projectgalen.lib.utils.functions.primitives.tox;
 // ================================================================================================================================
 
 /**
- * Represents a function that produces an char-valued result.  This is the {@code char}-producing primitive specialization for {@link java.util.function.Function}.
+ * Represents a function that produces an char-valued result.  This is the
+ * {@code char}-producing primitive specialization for {@link java.util.function.Function}.
  *
  * <p>This is a functional interface whose functional method is {@link #applyAsChar(Object)}.
  *
@@ -33,8 +34,7 @@ public interface ToCharFunction<T> {
      * Applies this function to the given argument.
      *
      * @param value the function argument
-     *
      * @return the function result
      */
-    char applyAsChar(T value);
+   char applyAsChar(T value);
 }

@@ -18,7 +18,8 @@ package com.projectgalen.lib.utils.functions.primitives.tox;
 // ================================================================================================================================
 
 /**
- * Represents a function that produces an float-valued result.  This is the {@code float}-producing primitive specialization for {@link java.util.function.Function}.
+ * Represents a function that produces an float-valued result.  This is the
+ * {@code float}-producing primitive specialization for {@link java.util.function.Function}.
  *
  * <p>This is a functional interface whose functional method is {@link #applyAsFloat(Object)}.
  *
@@ -33,8 +34,7 @@ public interface ToFloatFunction<T> {
      * Applies this function to the given argument.
      *
      * @param value the function argument
-     *
      * @return the function result
      */
-    float applyAsFloat(T value);
+   float applyAsFloat(T value);
 }
