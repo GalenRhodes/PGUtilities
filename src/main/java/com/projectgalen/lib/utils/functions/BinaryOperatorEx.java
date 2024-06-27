@@ -19,7 +19,6 @@ package com.projectgalen.lib.utils.functions;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Comparator;
 import java.util.function.BinaryOperator;
 
 @FunctionalInterface
@@ -34,8 +33,8 @@ public interface BinaryOperatorEx<T, E extends Exception> extends BiFunctionEx<T
      *
      * @throws NullPointerException if the argument is null
      */
-    public static <T, E extends Exception> @NotNull BinaryOperatorEx<T, E> maxBy(Comparator<? super T> comparator) {
-        return (a, b) -> comparator.compare(a, b) >= 0 ? a : b;
+    static <T, E extends Exception> @NotNull BinaryOperatorEx<T, E> maxBy(@NotNull ComparatorEx<? super T, ? extends E> comparator) {
+        return (a, b) -> ((comparator.compare(a, b) >= 0) ? a : b);
     }
 
     /**
@@ -48,7 +47,7 @@ public interface BinaryOperatorEx<T, E extends Exception> extends BiFunctionEx<T
      *
      * @throws NullPointerException if the argument is null
      */
-    public static <T, E extends Exception> @NotNull BinaryOperatorEx<T, E> minBy(Comparator<? super T> comparator) {
-        return (a, b) -> comparator.compare(a, b) <= 0 ? a : b;
+    static <T, E extends Exception> @NotNull BinaryOperatorEx<T, E> minBy(@NotNull ComparatorEx<? super T, ? extends E> comparator) {
+        return (a, b) -> ((comparator.compare(a, b) <= 0) ? a : b);
     }
 }
