@@ -4,7 +4,7 @@ package com.projectgalen.lib.utils.functions.primitives.xbinaryop;
 //    FILENAME: FloatBinaryOperator.java
 //         IDE: IntelliJ IDEA
 //      AUTHOR: Galen Rhodes
-//        DATE: June 26, 2024
+//        DATE: June 27, 2024
 //
 // Copyright © 2024 Project Galen. All rights reserved.
 //
@@ -18,8 +18,9 @@ package com.projectgalen.lib.utils.functions.primitives.xbinaryop;
 // ================================================================================================================================
 
 /**
- * Represents an operation upon two {@code float}-valued operands and producing an {@code float}-valued result.   This is the primitive type specialization of {@link java.util.function.BinaryOperator}
- * for {@code float}.
+ * Represents an operation upon two {@code float}-valued operands and producing an
+ * {@code float}-valued result.   This is the primitive type specialization of
+ * {@link java.util.function.BinaryOperator} for {@code float}.
  *
  * <p>This is a functional interface whose functional method is {@link #applyAsFloat(float, float)}.
  *
@@ -31,9 +32,8 @@ public interface FloatBinaryOperator {
     /**
      * Applies this operator to the given operands.
      *
-     * @param left  the first operand
+     * @param left the first operand
      * @param right the second operand
-     *
      * @return the operator result
      */
     float applyAsFloat(float left, float right);

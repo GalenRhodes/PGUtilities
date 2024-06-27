@@ -4,7 +4,7 @@ package com.projectgalen.lib.utils.functions.primitives.consumers;
 //    FILENAME: ObjShortConsumer.java
 //         IDE: IntelliJ IDEA
 //      AUTHOR: Galen Rhodes
-//        DATE: June 26, 2024
+//        DATE: June 27, 2024
 //
 // Copyright © 2024 Project Galen. All rights reserved.
 //
@@ -18,8 +18,11 @@ package com.projectgalen.lib.utils.functions.primitives.consumers;
 // ================================================================================================================================
 
 /**
- * Represents an operation that accepts an object-valued and a {@code short}-valued argument, and returns no result.  This is the {@code (reference, short)} specialization of
- * {@link java.util.function.BiConsumer}. Unlike most other functional interfaces, {@code ObjShortConsumer} is expected to operate via side-effects.
+ * Represents an operation that accepts an object-valued and a
+ * {@code short}-valued argument, and returns no result.  This is the
+ * {@code (reference, short)} specialization of {@link java.util.function.BiConsumer}.
+ * Unlike most other functional interfaces, {@code ObjShortConsumer} is
+ * expected to operate via side-effects.
  *
  * <p>This is a functional interface whose functional method is {@link #accept(Object, short)}.
  *
@@ -33,7 +36,7 @@ public interface ObjShortConsumer<T> {
     /**
      * Performs this operation on the given arguments.
      *
-     * @param t     the first input argument
+     * @param t the first input argument
      * @param value the second input argument
      */
     void accept(T t, short value);

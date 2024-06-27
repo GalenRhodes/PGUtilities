@@ -4,7 +4,7 @@ package com.projectgalen.lib.utils.functions.primitives.x2y;
 //    FILENAME: LongToByteFunction.java
 //         IDE: IntelliJ IDEA
 //      AUTHOR: Galen Rhodes
-//        DATE: June 26, 2024
+//        DATE: June 27, 2024
 //
 // Copyright © 2024 Project Galen. All rights reserved.
 //
@@ -18,8 +18,9 @@ package com.projectgalen.lib.utils.functions.primitives.x2y;
 // ================================================================================================================================
 
 /**
- * Represents a function that accepts an long-valued argument and produces a byte-valued result.  This is the {@code long}-to-{@code byte} primitive specialization for
- * {@link java.util.function.Function}.
+ * Represents a function that accepts an long-valued argument and produces a
+ * byte-valued result.  This is the {@code long}-to-{@code byte} primitive
+ * specialization for {@link java.util.function.Function}.
  *
  * <p>This is a functional interface whose functional method is {@link #applyAsByte(long)}.
  *
@@ -32,7 +33,6 @@ public interface LongToByteFunction {
      * Applies this function to the given argument.
      *
      * @param value the function argument
-     *
      * @return the function result
      */
     byte applyAsByte(long value);

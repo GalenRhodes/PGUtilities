@@ -4,7 +4,7 @@ package com.projectgalen.lib.utils.functions.primitives.xbinaryop;
 //    FILENAME: ShortBinaryOperator.java
 //         IDE: IntelliJ IDEA
 //      AUTHOR: Galen Rhodes
-//        DATE: June 26, 2024
+//        DATE: June 27, 2024
 //
 // Copyright © 2024 Project Galen. All rights reserved.
 //
@@ -18,8 +18,9 @@ package com.projectgalen.lib.utils.functions.primitives.xbinaryop;
 // ================================================================================================================================
 
 /**
- * Represents an operation upon two {@code short}-valued operands and producing an {@code short}-valued result.   This is the primitive type specialization of {@link java.util.function.BinaryOperator}
- * for {@code short}.
+ * Represents an operation upon two {@code short}-valued operands and producing an
+ * {@code short}-valued result.   This is the primitive type specialization of
+ * {@link java.util.function.BinaryOperator} for {@code short}.
  *
  * <p>This is a functional interface whose functional method is {@link #applyAsShort(short, short)}.
  *
@@ -31,9 +32,8 @@ public interface ShortBinaryOperator {
     /**
      * Applies this operator to the given operands.
      *
-     * @param left  the first operand
+     * @param left the first operand
      * @param right the second operand
-     *
      * @return the operator result
      */
     short applyAsShort(short left, short right);

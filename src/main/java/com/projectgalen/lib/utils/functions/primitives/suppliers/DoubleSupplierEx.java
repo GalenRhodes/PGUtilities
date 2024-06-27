@@ -4,7 +4,7 @@ package com.projectgalen.lib.utils.functions.primitives.suppliers;
 //    FILENAME: DoubleSupplierEx.java
 //         IDE: IntelliJ IDEA
 //      AUTHOR: Galen Rhodes
-//        DATE: June 04, 2024
+//        DATE: June 27, 2024
 //
 // Copyright © 2024 Project Galen. All rights reserved.
 //
@@ -17,7 +17,23 @@ package com.projectgalen.lib.utils.functions.primitives.suppliers;
 // NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 // ================================================================================================================================
 
+/**
+ * Represents a supplier of {@code double}-valued results.  This is the
+ * {@code double}-producing primitive specialization of {@link com.projectgalen.lib.utils.functions.SupplierEx}.
+ *
+ * <p>There is no requirement that a distinct result be returned each time the supplier is invoked.
+ *
+ * <p>This is a functional interface whose functional method is {@link #getAsDouble()}.
+ *
+ * @see com.projectgalen.lib.utils.functions.SupplierEx
+ */
 @FunctionalInterface
 public interface DoubleSupplierEx<E extends Exception> {
+
+    /**
+     * Gets a result.
+     *
+     * @return a result
+     */
     double getAsDouble() throws E;
 }

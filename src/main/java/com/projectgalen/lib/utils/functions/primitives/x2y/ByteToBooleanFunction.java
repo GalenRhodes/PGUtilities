@@ -4,7 +4,7 @@ package com.projectgalen.lib.utils.functions.primitives.x2y;
 //    FILENAME: ByteToBooleanFunction.java
 //         IDE: IntelliJ IDEA
 //      AUTHOR: Galen Rhodes
-//        DATE: June 26, 2024
+//        DATE: June 27, 2024
 //
 // Copyright © 2024 Project Galen. All rights reserved.
 //
@@ -18,8 +18,9 @@ package com.projectgalen.lib.utils.functions.primitives.x2y;
 // ================================================================================================================================
 
 /**
- * Represents a function that accepts an byte-valued argument and produces a boolean-valued result.  This is the {@code byte}-to-{@code boolean} primitive specialization for
- * {@link java.util.function.Function}.
+ * Represents a function that accepts an byte-valued argument and produces a
+ * boolean-valued result.  This is the {@code byte}-to-{@code boolean} primitive
+ * specialization for {@link java.util.function.Function}.
  *
  * <p>This is a functional interface whose functional method is {@link #applyAsBoolean(byte)}.
  *
@@ -32,7 +33,6 @@ public interface ByteToBooleanFunction {
      * Applies this function to the given argument.
      *
      * @param value the function argument
-     *
      * @return the function result
      */
     boolean applyAsBoolean(byte value);

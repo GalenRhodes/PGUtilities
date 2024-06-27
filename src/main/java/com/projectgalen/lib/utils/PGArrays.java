@@ -17,7 +17,7 @@ package com.projectgalen.lib.utils;
 // NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 // ================================================================================================================================
 
-import com.projectgalen.lib.utils.functions.predicates.*;
+import com.projectgalen.lib.utils.functions.primitives.predicates.*;
 import com.projectgalen.lib.utils.functions.primitives.x2y.*;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;

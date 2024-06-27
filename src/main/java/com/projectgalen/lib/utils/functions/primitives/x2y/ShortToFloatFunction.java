@@ -4,7 +4,7 @@ package com.projectgalen.lib.utils.functions.primitives.x2y;
 //    FILENAME: ShortToFloatFunction.java
 //         IDE: IntelliJ IDEA
 //      AUTHOR: Galen Rhodes
-//        DATE: June 26, 2024
+//        DATE: June 27, 2024
 //
 // Copyright © 2024 Project Galen. All rights reserved.
 //
@@ -18,8 +18,9 @@ package com.projectgalen.lib.utils.functions.primitives.x2y;
 // ================================================================================================================================
 
 /**
- * Represents a function that accepts an short-valued argument and produces a float-valued result.  This is the {@code short}-to-{@code float} primitive specialization for
- * {@link java.util.function.Function}.
+ * Represents a function that accepts an short-valued argument and produces a
+ * float-valued result.  This is the {@code short}-to-{@code float} primitive
+ * specialization for {@link java.util.function.Function}.
  *
  * <p>This is a functional interface whose functional method is {@link #applyAsFloat(short)}.
  *
@@ -32,7 +33,6 @@ public interface ShortToFloatFunction {
      * Applies this function to the given argument.
      *
      * @param value the function argument
-     *
      * @return the function result
      */
     float applyAsFloat(short value);

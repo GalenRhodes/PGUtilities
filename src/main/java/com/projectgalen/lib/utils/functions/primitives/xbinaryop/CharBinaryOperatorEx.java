@@ -4,7 +4,7 @@ package com.projectgalen.lib.utils.functions.primitives.xbinaryop;
 //    FILENAME: CharBinaryOperatorEx.java
 //         IDE: IntelliJ IDEA
 //      AUTHOR: Galen Rhodes
-//        DATE: June 26, 2024
+//        DATE: June 27, 2024
 //
 // Copyright © 2024 Project Galen. All rights reserved.
 //
@@ -18,7 +18,8 @@ package com.projectgalen.lib.utils.functions.primitives.xbinaryop;
 // ================================================================================================================================
 
 /**
- * Represents an operation upon two {@code char}-valued operands and producing an {@code char}-valued result.   This is the primitive type specialization of
+ * Represents an operation upon two {@code char}-valued operands and producing an
+ * {@code char}-valued result.   This is the primitive type specialization of
  * {@link com.projectgalen.lib.utils.functions.BinaryOperatorEx} for {@code char}.
  *
  * <p>This is a functional interface whose functional method is {@link #applyAsChar(char, char)}.
@@ -31,9 +32,8 @@ public interface CharBinaryOperatorEx<E extends Exception> {
     /**
      * Applies this operator to the given operands.
      *
-     * @param left  the first operand
+     * @param left the first operand
      * @param right the second operand
-     *
      * @return the operator result
      */
     char applyAsChar(char left, char right) throws E;

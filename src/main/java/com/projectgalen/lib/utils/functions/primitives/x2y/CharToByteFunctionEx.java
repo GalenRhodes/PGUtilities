@@ -4,7 +4,7 @@ package com.projectgalen.lib.utils.functions.primitives.x2y;
 //    FILENAME: CharToByteFunctionEx.java
 //         IDE: IntelliJ IDEA
 //      AUTHOR: Galen Rhodes
-//        DATE: June 26, 2024
+//        DATE: June 27, 2024
 //
 // Copyright © 2024 Project Galen. All rights reserved.
 //
@@ -18,8 +18,9 @@ package com.projectgalen.lib.utils.functions.primitives.x2y;
 // ================================================================================================================================
 
 /**
- * Represents a function that accepts an char-valued argument and produces a byte-valued result.  This is the {@code char}-to-{@code byte} primitive specialization for
- * {@link com.projectgalen.lib.utils.functions.FunctionEx}.
+ * Represents a function that accepts an char-valued argument and produces a
+ * byte-valued result.  This is the {@code char}-to-{@code byte} primitive
+ * specialization for {@link com.projectgalen.lib.utils.functions.FunctionEx}.
  *
  * <p>This is a functional interface whose functional method is {@link #applyAsByte(char)}.
  *
@@ -32,7 +33,6 @@ public interface CharToByteFunctionEx<E extends Exception> {
      * Applies this function to the given argument.
      *
      * @param value the function argument
-     *
      * @return the function result
      */
     byte applyAsByte(char value) throws E;
