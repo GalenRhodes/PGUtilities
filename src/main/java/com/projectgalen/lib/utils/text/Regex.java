@@ -28,11 +28,20 @@ import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@SuppressWarnings("unused")
 public final class Regex {
 
     private static final Map<CacheKey, Pattern> CACHE = new TreeMap<>();
 
     private Regex() { }
+
+    public static @NotNull Matcher getMatcher(@NotNull @NonNls @RegExp @Language("RegExp") String regex, @MagicConstant(flagsFromClass = Pattern.class) int flags, @NotNull CharSequence input) {
+        return getPattern(regex, flags).matcher(input);
+    }
+
+    public static @NotNull Matcher getMatcher(@NotNull @NonNls @RegExp @Language("RegExp") String regex, @NotNull CharSequence input) {
+        return getPattern(regex, 0).matcher(input);
+    }
 
     public static @NotNull Pattern getPattern(@NotNull @NonNls @RegExp @Language("RegExp") String regex) {
         return getPattern(regex, 0);
@@ -42,14 +51,6 @@ public final class Regex {
         synchronized(CACHE) {
             return CACHE.computeIfAbsent(new CacheKey(regex, flags), k -> Pattern.compile(regex, flags));
         }
-    }
-
-    public static @NotNull Matcher getMatcher(@NotNull @NonNls @RegExp @Language("RegExp") String regex, @MagicConstant(flagsFromClass = Pattern.class) int flags, @NotNull CharSequence input) {
-        return getPattern(regex, flags).matcher(input);
-    }
-
-    public static @NotNull Matcher getMatcher(@NotNull @NonNls @RegExp @Language("RegExp") String regex, @NotNull CharSequence input) {
-        return getPattern(regex, 0).matcher(input);
     }
 
     private record CacheKey(@NotNull @NonNls @RegExp @Language("RegExp") String regex, @MagicConstant(flagsFromClass = Pattern.class) int flags) implements Comparable<CacheKey> {

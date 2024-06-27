@@ -35,6 +35,7 @@ public interface ByteFunctionEx<R, E extends Exception> {
      * Applies this function to the given argument.
      *
      * @param value the function argument
+     *
      * @return the function result
      */
     R apply(byte value) throws E;

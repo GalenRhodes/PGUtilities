@@ -18,6 +18,7 @@ package com.projectgalen.lib.apple.eawt;
 // ================================================================================================================================
 
 import com.projectgalen.lib.apple.eawt.event.FullScreenEvent;
+import com.projectgalen.lib.utils.Obj;
 import com.projectgalen.lib.utils.errors.WrapEx;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -32,6 +33,7 @@ public class FullScreenAdapter implements FullScreenListener {
     private static final @NotNull Class<?>[]          _INTERFACES_   = { FullScreenListener._CLS_ };
     private static final @NotNull ClassLoader         _LOADER_       = FullScreenAdapter.class.getClassLoader();
     private static final @NotNull Map<String, Method> _METHOD_CACHE_ = Collections.synchronizedMap(new TreeMap<>());
+    private static final @NotNull Class<?>            _EVENT_CLS_    = Obj.classForname("com.apple.eawt.event.FullScreenEvent");
 
     private final @NotNull Object proxy;
 
@@ -56,17 +58,17 @@ public class FullScreenAdapter implements FullScreenListener {
         }
     }
 
+    private static @Nullable Object xlateArg(Object arg) {
+        return (_EVENT_CLS_.isInstance(arg) ? new FullScreenEvent((EventObject)_EVENT_CLS_.cast(arg)) : arg);
+    }
+
     private static Object @NotNull [] xlateArgs(Object @NotNull [] args) {
         Object[] parameters = new Object[args.length];
         Arrays.setAll(parameters, i -> xlateArg(args[i]));
         return parameters;
     }
 
-    private static @Nullable Object xlateArg(Object arg) {
-        return FullScreenEvent._CLS_.isInstance(arg) ? new FullScreenEvent((EventObject)arg) : arg;
-    }
-
     private static Class<?> @NotNull [] xlateTypes(@NotNull Method m) {
-        return Arrays.stream(m.getParameterTypes()).map(t -> (t == FullScreenEvent._CLS_) ? FullScreenEvent.class : t).toArray(Class[]::new);
+        return Arrays.stream(m.getParameterTypes()).map(t -> (t == _EVENT_CLS_) ? FullScreenEvent.class : t).toArray(Class[]::new);
     }
 }

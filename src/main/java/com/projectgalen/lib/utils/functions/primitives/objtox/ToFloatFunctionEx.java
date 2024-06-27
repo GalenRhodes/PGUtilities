@@ -18,8 +18,7 @@ package com.projectgalen.lib.utils.functions.primitives.objtox;
 // ================================================================================================================================
 
 /**
- * Represents a function that produces an float-valued result.  This is the
- * {@code float}-producing primitive specialization for {@link com.projectgalen.lib.utils.functions.FunctionEx}.
+ * Represents a function that produces an float-valued result.  This is the {@code float}-producing primitive specialization for {@link com.projectgalen.lib.utils.functions.FunctionEx}.
  *
  * <p>This is a functional interface whose functional method is {@link #applyAsFloat(Object)}.
  *
@@ -34,7 +33,8 @@ public interface ToFloatFunctionEx<T, E extends Exception> {
      * Applies this function to the given argument.
      *
      * @param value the function argument
+     *
      * @return the function result
      */
-   float applyAsFloat(T value) throws E;
+    float applyAsFloat(T value) throws E;
 }

@@ -88,7 +88,8 @@ public class WrapEx extends RuntimeException {
 
     /**
      * Creates and returns an instance of {@link Consumer} based on the provided instance of {@link ConsumerEx} passed in the parameter {@code consumer}. Any checked exception that is throw in the
-     * method {@link ConsumerEx#accept(Object)} will be wrapped in an instance of the unchecked exception returned by the method {@link Function#apply(Object)} passed in the parameter {@code wrapper}.
+     * method {@link ConsumerEx#accept(Object)} will be wrapped in an instance of the unchecked exception returned by the method {@link Function#apply(Object)} passed in the parameter
+     * {@code wrapper}.
      *
      * @param consumer A function the might throw a checked exception.
      * @param wrapper  A function that will wrap any caught exception in an instance of {@link RuntimeException} or one of it's subclasses.
@@ -118,8 +119,8 @@ public class WrapEx extends RuntimeException {
     }
 
     /**
-     * Creates and returns an instance of {@link Consumer} based on the provided instance of {@link ConsumerEx} passed in the parameter {@code consumer}. Any checked exception that is throw in
-     * the method {@link ConsumerEx#accept(Object)} will be wrapped in an instance of the unchecked exception {@link WrapEx}.
+     * Creates and returns an instance of {@link Consumer} based on the provided instance of {@link ConsumerEx} passed in the parameter {@code consumer}. Any checked exception that is throw in the
+     * method {@link ConsumerEx#accept(Object)} will be wrapped in an instance of the unchecked exception {@link WrapEx}.
      *
      * @param consumer A function the might throw a checked exception.
      * @param fin      An instance of {@link Runnable} that will be run before the execution of {@code consumer} returns.
@@ -133,8 +134,8 @@ public class WrapEx extends RuntimeException {
     }
 
     /**
-     * Creates and returns an instance of {@link Consumer} based on the provided instance of {@link ConsumerEx} passed in the parameter {@code consumer}. Any checked exception that is throw in
-     * the method {@link ConsumerEx#accept(Object)} will be wrapped in an instance of the unchecked exception {@link WrapEx}.
+     * Creates and returns an instance of {@link Consumer} based on the provided instance of {@link ConsumerEx} passed in the parameter {@code consumer}. Any checked exception that is throw in the
+     * method {@link ConsumerEx#accept(Object)} will be wrapped in an instance of the unchecked exception {@link WrapEx}.
      *
      * @param consumer A function the might throw a checked exception.
      * @param <T>      The type of the parameter that will be passed to {@code consumer}.
@@ -148,7 +149,8 @@ public class WrapEx extends RuntimeException {
 
     /**
      * Creates and returns an instance of {@link Consumer} based on the provided instance of {@link ConsumerEx} passed in the parameter {@code consumer}. Any checked exception that is throw in the
-     * method {@link ConsumerEx#accept(Object)} will be wrapped in an instance of the unchecked exception returned by the method {@link Function#apply(Object)} passed in the parameter {@code wrapper}.
+     * method {@link ConsumerEx#accept(Object)} will be wrapped in an instance of the unchecked exception returned by the method {@link Function#apply(Object)} passed in the parameter
+     * {@code wrapper}.
      *
      * @param consumer A function the might throw a checked exception.
      * @param wrapper  A function that will wrap any caught exception in an instance of {@link RuntimeException} or one of it's subclasses.
@@ -262,8 +264,8 @@ public class WrapEx extends RuntimeException {
     }
 
     /**
-     * Creates and returns an instance of {@link Runnable} that wraps the execution of an instance {@link RunnableEx} catching any thrown checked exception and wrapping them into an
-     * instance of {@link WrapEx}.
+     * Creates and returns an instance of {@link Runnable} that wraps the execution of an instance {@link RunnableEx} catching any thrown checked exception and wrapping them into an instance of
+     * {@link WrapEx}.
      *
      * @param runner The instance of {@link RunnableEx}.
      *
@@ -274,8 +276,8 @@ public class WrapEx extends RuntimeException {
     }
 
     /**
-     * Creates and returns an instance of {@link Runnable} that wraps the execution of an instance {@link RunnableEx} catching any thrown checked exception and wrapping them into an
-     * instance of {@link WrapEx}.
+     * Creates and returns an instance of {@link Runnable} that wraps the execution of an instance {@link RunnableEx} catching any thrown checked exception and wrapping them into an instance of
+     * {@link WrapEx}.
      *
      * @param runner The instance of {@link RunnableEx}.
      * @param fin    An instance of {@link Runnable} that will always be executed before {@link RunnableEx#run()} finishes.
@@ -287,8 +289,8 @@ public class WrapEx extends RuntimeException {
     }
 
     /**
-     * Creates and returns an instance of {@link Runnable} that wraps the execution of an instance {@link RunnableEx} catching any thrown checked exception and wrapping them into an
-     * instance of the unchecked exception returned by the method {@link Function#apply(Object)} passed in the parameter {@code wrapper}.
+     * Creates and returns an instance of {@link Runnable} that wraps the execution of an instance {@link RunnableEx} catching any thrown checked exception and wrapping them into an instance of the
+     * unchecked exception returned by the method {@link Function#apply(Object)} passed in the parameter {@code wrapper}.
      *
      * @param runner  The instance of {@link RunnableEx}.
      * @param wrapper A function that will wrap any caught exception in an instance of {@link RuntimeException} or one of it's subclasses.
@@ -301,8 +303,8 @@ public class WrapEx extends RuntimeException {
     }
 
     /**
-     * Creates and returns an instance of {@link Runnable} that wraps the execution of an instance {@link RunnableEx} catching any thrown checked exception and wrapping them into an
-     * instance of the unchecked exception returned by the method {@link Function#apply(Object)} passed in the parameter {@code wrapper}.
+     * Creates and returns an instance of {@link Runnable} that wraps the execution of an instance {@link RunnableEx} catching any thrown checked exception and wrapping them into an instance of the
+     * unchecked exception returned by the method {@link Function#apply(Object)} passed in the parameter {@code wrapper}.
      *
      * @param runner  The instance of {@link RunnableEx}.
      * @param fin     An instance of {@link Runnable} that will always be executed before {@link RunnableEx#run()} finishes.

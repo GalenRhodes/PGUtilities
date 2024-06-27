@@ -18,8 +18,7 @@ package com.projectgalen.lib.utils.functions.primitives.objtox;
 // ================================================================================================================================
 
 /**
- * Represents a function that produces an double-valued result.  This is the
- * {@code double}-producing primitive specialization for {@link com.projectgalen.lib.utils.functions.FunctionEx}.
+ * Represents a function that produces an double-valued result.  This is the {@code double}-producing primitive specialization for {@link com.projectgalen.lib.utils.functions.FunctionEx}.
  *
  * <p>This is a functional interface whose functional method is {@link #applyAsDouble(Object)}.
  *
@@ -34,7 +33,8 @@ public interface ToDoubleFunctionEx<T, E extends Exception> {
      * Applies this function to the given argument.
      *
      * @param value the function argument
+     *
      * @return the function result
      */
-   double applyAsDouble(T value) throws E;
+    double applyAsDouble(T value) throws E;
 }

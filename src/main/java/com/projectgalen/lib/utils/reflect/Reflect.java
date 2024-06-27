@@ -153,7 +153,7 @@ public final class Reflect {
      * method is not found that matches then this method simply returns {@code null} rather than throwing a {@link NoSuchMethodException}.
      *
      * @param cls        The class to search for the method.
-     * @param isStatic If {@code true}, only static methods will be searched for.
+     * @param isStatic   If {@code true}, only static methods will be searched for.
      * @param name       The name of the method to search for.
      * @param paramTypes The parameters types.
      *

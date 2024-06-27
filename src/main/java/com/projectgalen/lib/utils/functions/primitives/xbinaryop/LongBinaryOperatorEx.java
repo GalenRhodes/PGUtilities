@@ -18,8 +18,7 @@ package com.projectgalen.lib.utils.functions.primitives.xbinaryop;
 // ================================================================================================================================
 
 /**
- * Represents an operation upon two {@code long}-valued operands and producing an
- * {@code long}-valued result.   This is the primitive type specialization of
+ * Represents an operation upon two {@code long}-valued operands and producing an {@code long}-valued result.   This is the primitive type specialization of
  * {@link com.projectgalen.lib.utils.functions.BinaryOperatorEx} for {@code long}.
  *
  * <p>This is a functional interface whose functional method is {@link #applyAsLong(long, long)}.
@@ -32,8 +31,9 @@ public interface LongBinaryOperatorEx<E extends Exception> {
     /**
      * Applies this operator to the given operands.
      *
-     * @param left the first operand
+     * @param left  the first operand
      * @param right the second operand
+     *
      * @return the operator result
      */
     long applyAsLong(long left, long right) throws E;

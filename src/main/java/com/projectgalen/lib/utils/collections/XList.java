@@ -25,6 +25,7 @@ import java.util.SequencedCollection;
 import java.util.function.BooleanSupplier;
 import java.util.function.Predicate;
 
+@SuppressWarnings("unused")
 public interface XList<E> extends List<E>, SequencedCollection<E>, Collection<E>, Iterable<E> {
 
     @NotNull XList<E> addIf(@NotNull E e, @NotNull BooleanSupplier predicate);

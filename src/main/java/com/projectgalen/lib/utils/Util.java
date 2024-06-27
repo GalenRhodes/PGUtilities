@@ -23,11 +23,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
+@SuppressWarnings("unused")
 public final class Util {
 
     private Util() { }
 
-    public static <E extends Exception> void andFinallyEx(@NotNull Runnable before, @NotNull RunnableEx<? extends E> runnable, @NotNull Runnable then) throws E {
+    public static void andFinally(@NotNull Runnable before, @NotNull Runnable runnable, @NotNull Runnable then) {
         before.run();
         try {
             runnable.run();
@@ -37,7 +38,7 @@ public final class Util {
         }
     }
 
-    public static void andFinally(@NotNull Runnable before, @NotNull Runnable runnable, @NotNull Runnable then) {
+    public static <E extends Exception> void andFinallyEx(@NotNull Runnable before, @NotNull RunnableEx<? extends E> runnable, @NotNull Runnable then) throws E {
         before.run();
         try {
             runnable.run();

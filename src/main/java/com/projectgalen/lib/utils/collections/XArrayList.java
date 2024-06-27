@@ -24,6 +24,7 @@ import java.util.Collection;
 import java.util.function.BooleanSupplier;
 import java.util.function.Predicate;
 
+@SuppressWarnings("unused")
 public class XArrayList<E> extends ArrayList<E> implements XList<E> {
 
     public XArrayList() {
@@ -38,13 +39,13 @@ public class XArrayList<E> extends ArrayList<E> implements XList<E> {
         super(initialCapacity);
     }
 
-    public @Override @NotNull XArrayList<E> addThen(@NotNull E e) {
-        add(e);
+    public @Override @NotNull XArrayList<E> addIf(@NotNull E e, @NotNull BooleanSupplier predicate) {
+        if(predicate.getAsBoolean()) add(e);
         return this;
     }
 
-    public @Override @NotNull XArrayList<E> addIf(@NotNull E e, @NotNull BooleanSupplier predicate) {
-        if(predicate.getAsBoolean()) add(e);
+    public @Override @NotNull XArrayList<E> addThen(@NotNull E e) {
+        add(e);
         return this;
     }
 

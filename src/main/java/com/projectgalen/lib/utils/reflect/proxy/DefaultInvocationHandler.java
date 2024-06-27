@@ -27,6 +27,7 @@ import java.lang.reflect.Method;
 import static com.projectgalen.lib.utils.reflect.Reflect.getMethod;
 import static java.util.Optional.ofNullable;
 
+@SuppressWarnings("unused")
 public final class DefaultInvocationHandler implements InvocationHandler {
 
     private static final PGResourceBundle msgs = new PGResourceBundle("com.projectgalen.lib.utils.messages");

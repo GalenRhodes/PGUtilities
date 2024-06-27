@@ -19,6 +19,7 @@ package com.projectgalen.lib.crypto;
 
 import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings("unused")
 public record PublicKeyInfo(@NotNull String publicKey, @NotNull String iv) {
     public @NotNull String toString() {
         return "PublicKey: \"%s\"; IV: \"%s\"".formatted(publicKey, iv);

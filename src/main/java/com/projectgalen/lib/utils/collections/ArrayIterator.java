@@ -27,6 +27,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+@SuppressWarnings("unused")
 public class ArrayIterator<T> implements Markable<T[]>, Peekable<T>, Iterator<T> {
     private static final PGResourceBundle msgs = new PGResourceBundle("com.projectgalen.lib.utils.messages");
 

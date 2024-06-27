@@ -18,9 +18,8 @@ package com.projectgalen.lib.utils.functions.primitives.x2y;
 // ================================================================================================================================
 
 /**
- * Represents a function that accepts an float-valued argument and produces a
- * long-valued result.  This is the {@code float}-to-{@code long} primitive
- * specialization for {@link com.projectgalen.lib.utils.functions.FunctionEx}.
+ * Represents a function that accepts an float-valued argument and produces a long-valued result.  This is the {@code float}-to-{@code long} primitive specialization for
+ * {@link com.projectgalen.lib.utils.functions.FunctionEx}.
  *
  * <p>This is a functional interface whose functional method is {@link #applyAsLong(float)}.
  *
@@ -33,6 +32,7 @@ public interface FloatToLongFunctionEx<E extends Exception> {
      * Applies this function to the given argument.
      *
      * @param value the function argument
+     *
      * @return the function result
      */
     long applyAsLong(float value) throws E;

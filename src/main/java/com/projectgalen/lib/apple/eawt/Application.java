@@ -27,6 +27,7 @@ import java.awt.desktop.*;
 import static com.projectgalen.lib.utils.reflect.Reflect.getMethod;
 import static com.projectgalen.lib.utils.reflect.Reflect.invoke;
 
+@SuppressWarnings("unused")
 public final class Application {
 
     private static final @NotNull Class<?> _CLS_ = Obj.classForname("com.apple.eawt.Application");

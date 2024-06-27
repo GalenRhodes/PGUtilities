@@ -20,10 +20,8 @@ package com.projectgalen.lib.utils.functions.primitives.consumers;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Represents an operation that accepts a single {@code short}-valued argument and
- * returns no result.  This is the primitive type specialization of
- * {@link com.projectgalen.lib.utils.functions.ConsumerEx} for {@code short}.  Unlike most other functional interfaces,
- * {@code ShortConsumerEx} is expected to operate via side-effects.
+ * Represents an operation that accepts a single {@code short}-valued argument and returns no result.  This is the primitive type specialization of
+ * {@link com.projectgalen.lib.utils.functions.ConsumerEx} for {@code short}.  Unlike most other functional interfaces, {@code ShortConsumerEx} is expected to operate via side-effects.
  *
  * <p>This is a functional interface whose functional method is {@link #accept(short)}.
  *
@@ -40,18 +38,19 @@ public interface ShortConsumerEx<E extends Exception> {
     void accept(short value) throws E;
 
     /**
-     * Returns a composed {@code ShortConsumerEx} that performs, in sequence, this
-     * operation followed by the {@code after} operation. If performing either
-     * operation throws an exception, it is relayed to the caller of the
-     * composed operation.  If performing this operation throws an exception,
-     * the {@code after} operation will not be performed.
+     * Returns a composed {@code ShortConsumerEx} that performs, in sequence, this operation followed by the {@code after} operation. If performing either operation throws an exception, it is relayed
+     * to the caller of the composed operation.  If performing this operation throws an exception, the {@code after} operation will not be performed.
      *
      * @param after the operation to perform after this operation
-     * @return a composed {@code ShortConsumerEx} that performs in sequence this
-     * operation followed by the {@code after} operation
+     *
+     * @return a composed {@code ShortConsumerEx} that performs in sequence this operation followed by the {@code after} operation
+     *
      * @throws NullPointerException if {@code after} is null
      */
     default @NotNull ShortConsumerEx<? extends E> andThen(@NotNull ShortConsumerEx<? extends E> after) {
-        return (short t) -> { accept(t); after.accept(t); };
+        return (short t) -> {
+            accept(t);
+            after.accept(t);
+        };
     }
 }

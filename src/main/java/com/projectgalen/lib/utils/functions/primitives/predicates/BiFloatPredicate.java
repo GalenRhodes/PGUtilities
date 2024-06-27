@@ -19,6 +19,7 @@ package com.projectgalen.lib.utils.functions.primitives.predicates;
 
 import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings("unused")
 public interface BiFloatPredicate {
     default @NotNull BiFloatPredicate and(@NotNull BiFloatPredicate other) {
         return (t, u) -> test(t, u) && other.test(t, u);

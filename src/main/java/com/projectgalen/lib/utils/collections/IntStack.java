@@ -22,6 +22,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 
+@SuppressWarnings("unused")
 public class IntStack {
     private       int[]  stack;
     private       int    top;

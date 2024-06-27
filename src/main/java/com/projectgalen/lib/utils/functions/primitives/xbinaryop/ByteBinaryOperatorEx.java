@@ -18,8 +18,7 @@ package com.projectgalen.lib.utils.functions.primitives.xbinaryop;
 // ================================================================================================================================
 
 /**
- * Represents an operation upon two {@code byte}-valued operands and producing an
- * {@code byte}-valued result.   This is the primitive type specialization of
+ * Represents an operation upon two {@code byte}-valued operands and producing an {@code byte}-valued result.   This is the primitive type specialization of
  * {@link com.projectgalen.lib.utils.functions.BinaryOperatorEx} for {@code byte}.
  *
  * <p>This is a functional interface whose functional method is {@link #applyAsByte(byte, byte)}.
@@ -32,8 +31,9 @@ public interface ByteBinaryOperatorEx<E extends Exception> {
     /**
      * Applies this operator to the given operands.
      *
-     * @param left the first operand
+     * @param left  the first operand
      * @param right the second operand
+     *
      * @return the operator result
      */
     byte applyAsByte(byte left, byte right) throws E;

@@ -25,6 +25,7 @@ import org.jetbrains.annotations.NotNull;
 
 import static com.projectgalen.lib.json.JSON.Options.*;
 
+@SuppressWarnings("unused")
 public final class JSON {
     private static final Options[] DEFAULT_OPTIONS = { EnumsUsingToString, Formatted, IncludeNonNull, AutoClose, IgnoreUnknownProps, UnwrapSingleElementArrays };
 
@@ -58,6 +59,6 @@ public final class JSON {
     }
 
     public enum Options {
-        EnumsUsingToString, Formatted, IncludeNonNull, AutoClose, IgnoreUnknownProps, UnwrapSingleElementArrays;
+        EnumsUsingToString, Formatted, IncludeNonNull, AutoClose, IgnoreUnknownProps, UnwrapSingleElementArrays
     }
 }

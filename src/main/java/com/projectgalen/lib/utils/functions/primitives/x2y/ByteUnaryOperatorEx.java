@@ -18,9 +18,8 @@ package com.projectgalen.lib.utils.functions.primitives.x2y;
 // ================================================================================================================================
 
 /**
- * Represents a function that accepts an byte-valued argument and produces a
- * byte-valued result.  This is the {@code byte}-to-{@code byte} primitive
- * specialization for {@link com.projectgalen.lib.utils.functions.FunctionEx}.
+ * Represents a function that accepts an byte-valued argument and produces a byte-valued result.  This is the {@code byte}-to-{@code byte} primitive specialization for
+ * {@link com.projectgalen.lib.utils.functions.FunctionEx}.
  *
  * <p>This is a functional interface whose functional method is {@link #applyAsByte(byte)}.
  *
@@ -33,6 +32,7 @@ public interface ByteUnaryOperatorEx<E extends Exception> {
      * Applies this function to the given argument.
      *
      * @param value the function argument
+     *
      * @return the function result
      */
     byte applyAsByte(byte value) throws E;

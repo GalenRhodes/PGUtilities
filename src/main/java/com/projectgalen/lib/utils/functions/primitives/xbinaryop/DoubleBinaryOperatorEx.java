@@ -18,8 +18,7 @@ package com.projectgalen.lib.utils.functions.primitives.xbinaryop;
 // ================================================================================================================================
 
 /**
- * Represents an operation upon two {@code double}-valued operands and producing an
- * {@code double}-valued result.   This is the primitive type specialization of
+ * Represents an operation upon two {@code double}-valued operands and producing an {@code double}-valued result.   This is the primitive type specialization of
  * {@link com.projectgalen.lib.utils.functions.BinaryOperatorEx} for {@code double}.
  *
  * <p>This is a functional interface whose functional method is {@link #applyAsDouble(double, double)}.
@@ -32,8 +31,9 @@ public interface DoubleBinaryOperatorEx<E extends Exception> {
     /**
      * Applies this operator to the given operands.
      *
-     * @param left the first operand
+     * @param left  the first operand
      * @param right the second operand
+     *
      * @return the operator result
      */
     double applyAsDouble(double left, double right) throws E;

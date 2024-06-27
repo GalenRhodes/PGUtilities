@@ -99,7 +99,7 @@ public class PGProperties extends Properties {
     }
 
     public double getDouble(@NotNull @NonNls String key) {
-        return getDouble(key, (double)0);
+        return getDouble(key, 0);
     }
 
     public float getFloat(@NotNull @NonNls String key, float defaultValue) {
@@ -117,7 +117,7 @@ public class PGProperties extends Properties {
     }
 
     public int getInt(@NotNull @NonNls String key) {
-        return getInt(key, (int)0);
+        return getInt(key, 0);
     }
 
     public long getLong(@NotNull @NonNls String key, long defaultValue) {
@@ -126,7 +126,7 @@ public class PGProperties extends Properties {
     }
 
     public long getLong(@NotNull @NonNls String key) {
-        return getLong(key, (long)0);
+        return getLong(key, 0);
     }
 
     public long getReloadPeriod() {

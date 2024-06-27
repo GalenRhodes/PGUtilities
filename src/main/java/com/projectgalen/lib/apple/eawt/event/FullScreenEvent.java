@@ -24,19 +24,21 @@ import org.jetbrains.annotations.NotNull;
 import java.awt.*;
 import java.util.EventObject;
 
+import static com.projectgalen.lib.utils.Obj.requireNonNull;
 import static com.projectgalen.lib.utils.reflect.Reflect.getMethod;
 import static com.projectgalen.lib.utils.reflect.Reflect.invoke;
 
-public class FullScreenEvent extends EventObject {
+@SuppressWarnings("unused")
+public final class FullScreenEvent extends EventObject {
 
-    public static final  Class<?>         _CLS_ = Obj.classForname("com.apple.eawt.event.FullScreenEvent");
+    private static final Class<?>         _CLS_ = Obj.classForname("com.apple.eawt.event.FullScreenEvent");
     private static final PGResourceBundle msgs  = new PGResourceBundle("com.projectgalen.lib.utils.messages");
 
     private final Window window;
 
     public FullScreenEvent(@NotNull EventObject event) {
         super(((EventObject)_CLS_.cast(event)).getSource());
-        this.window = invoke(Obj.requireNonNull(getMethod(_CLS_, "getWindow"), () -> new RuntimeException(msgs.getString("msg.err.no_such_method").formatted("getWindow()"))), event);
+        this.window = invoke(requireNonNull(getMethod(_CLS_, "getWindow"), () -> new RuntimeException(msgs.getString("msg.err.no_such_method").formatted("getWindow()"))), event);
     }
 
     public Window getWindow() {

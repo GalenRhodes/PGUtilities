@@ -1,4 +1,5 @@
 package com.projectgalen.lib.utils;
+
 // ================================================================================================================================
 //     PROJECT: PGUtilities
 //    FILENAME: Peekable.java
@@ -16,7 +17,7 @@ package com.projectgalen.lib.utils;
 // CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT,
 // NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 // ================================================================================================================================
-
+@SuppressWarnings("unused")
 public interface Peekable<T> {
     T peek();
 }

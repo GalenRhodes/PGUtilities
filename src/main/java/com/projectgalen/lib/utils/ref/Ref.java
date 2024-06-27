@@ -19,6 +19,7 @@ package com.projectgalen.lib.utils.ref;
 
 import java.util.Objects;
 
+@SuppressWarnings("unused")
 public class Ref<T> {
 
     public T value = null;

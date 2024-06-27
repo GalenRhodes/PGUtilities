@@ -19,6 +19,7 @@ package com.projectgalen.lib.crypto;
 
 import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings("unused")
 public interface DiffieHellmanHandshakeDelegate {
     @NotNull PublicKeyInfo getPublicKeyInfo(@NotNull String strPublicKey) throws Exception;
 }

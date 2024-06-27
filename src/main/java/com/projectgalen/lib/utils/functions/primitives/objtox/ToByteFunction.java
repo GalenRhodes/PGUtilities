@@ -18,8 +18,7 @@ package com.projectgalen.lib.utils.functions.primitives.objtox;
 // ================================================================================================================================
 
 /**
- * Represents a function that produces an byte-valued result.  This is the
- * {@code byte}-producing primitive specialization for {@link java.util.function.Function}.
+ * Represents a function that produces an byte-valued result.  This is the {@code byte}-producing primitive specialization for {@link java.util.function.Function}.
  *
  * <p>This is a functional interface whose functional method is {@link #applyAsByte(Object)}.
  *
@@ -34,7 +33,8 @@ public interface ToByteFunction<T> {
      * Applies this function to the given argument.
      *
      * @param value the function argument
+     *
      * @return the function result
      */
-   byte applyAsByte(T value);
+    byte applyAsByte(T value);
 }

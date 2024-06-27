@@ -22,6 +22,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Supplier;
 
+@SuppressWarnings("unused")
 public class RLock extends ReentrantLock {
     public RLock() { }
 

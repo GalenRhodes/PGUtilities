@@ -18,8 +18,7 @@ package com.projectgalen.lib.utils.functions.primitives.objtox;
 // ================================================================================================================================
 
 /**
- * Represents a function that produces an byte-valued result.  This is the
- * {@code byte}-producing primitive specialization for {@link com.projectgalen.lib.utils.functions.FunctionEx}.
+ * Represents a function that produces an byte-valued result.  This is the {@code byte}-producing primitive specialization for {@link com.projectgalen.lib.utils.functions.FunctionEx}.
  *
  * <p>This is a functional interface whose functional method is {@link #applyAsByte(Object)}.
  *
@@ -34,7 +33,8 @@ public interface ToByteFunctionEx<T, E extends Exception> {
      * Applies this function to the given argument.
      *
      * @param value the function argument
+     *
      * @return the function result
      */
-   byte applyAsByte(T value) throws E;
+    byte applyAsByte(T value) throws E;
 }

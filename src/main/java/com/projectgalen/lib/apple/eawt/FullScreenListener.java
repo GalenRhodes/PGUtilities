@@ -23,6 +23,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.EventListener;
 
+@SuppressWarnings("unused")
 public interface FullScreenListener extends EventListener {
 
     @NotNull Class<?> _CLS_ = Obj.classForname("com.apple.eawt.FullScreenListener");

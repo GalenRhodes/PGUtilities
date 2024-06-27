@@ -19,6 +19,7 @@ package com.projectgalen.lib.utils.functions.primitives.predicates;
 
 import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings("unused")
 public interface BiIntPredicate {
     default @NotNull BiIntPredicate and(@NotNull BiIntPredicate other) {
         return (t, u) -> test(t, u) && other.test(t, u);

@@ -23,6 +23,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+@SuppressWarnings("unused")
 public class CharArrayIterator implements Iterator<CharArrayIterator.Item> {
     private static final PGResourceBundle msgs = new PGResourceBundle("com.projectgalen.lib.utils.messages");
 

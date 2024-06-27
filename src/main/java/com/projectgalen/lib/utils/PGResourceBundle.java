@@ -22,6 +22,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
+@SuppressWarnings("unused")
 public class PGResourceBundle extends ResourceBundle {
 
     private final Map<String, String> cache = Collections.synchronizedMap(new TreeMap<>());

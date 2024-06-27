@@ -18,8 +18,7 @@ package com.projectgalen.lib.utils.functions.primitives.objtox;
 // ================================================================================================================================
 
 /**
- * Represents a function that accepts two arguments and produces an char-valued
- * result.  This is the {@code char}-producing primitive specialization for
+ * Represents a function that accepts two arguments and produces an char-valued result.  This is the {@code char}-producing primitive specialization for
  * {@link com.projectgalen.lib.utils.functions.BiFunctionEx}.
  *
  * <p>This is a whose functional method is {@link #applyAsChar(Object, Object)}.
@@ -37,7 +36,8 @@ public interface ToCharBiFunctionEx<T, U, E extends Exception> {
      *
      * @param t the first function argument
      * @param u the second function argument
+     *
      * @return the function result
      */
-     char applyAsChar(T t, U u) throws E;
+    char applyAsChar(T t, U u) throws E;
 }

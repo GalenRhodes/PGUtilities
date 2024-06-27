@@ -18,9 +18,8 @@ package com.projectgalen.lib.utils.functions.primitives.x2y;
 // ================================================================================================================================
 
 /**
- * Represents a function that accepts an long-valued argument and produces a
- * short-valued result.  This is the {@code long}-to-{@code short} primitive
- * specialization for {@link com.projectgalen.lib.utils.functions.FunctionEx}.
+ * Represents a function that accepts an long-valued argument and produces a short-valued result.  This is the {@code long}-to-{@code short} primitive specialization for
+ * {@link com.projectgalen.lib.utils.functions.FunctionEx}.
  *
  * <p>This is a functional interface whose functional method is {@link #applyAsShort(long)}.
  *
@@ -33,6 +32,7 @@ public interface LongToShortFunctionEx<E extends Exception> {
      * Applies this function to the given argument.
      *
      * @param value the function argument
+     *
      * @return the function result
      */
     short applyAsShort(long value) throws E;

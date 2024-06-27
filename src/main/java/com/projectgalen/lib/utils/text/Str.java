@@ -23,6 +23,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Base64;
 
+@SuppressWarnings("unused")
 public final class Str {
     private Str() { }
 

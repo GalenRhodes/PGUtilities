@@ -21,6 +21,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
+@SuppressWarnings("unused")
 public class BooleanRef implements Comparable<BooleanRef> {
     public boolean value;
 

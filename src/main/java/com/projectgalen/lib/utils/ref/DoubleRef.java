@@ -21,6 +21,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
+@SuppressWarnings("unused")
 public class DoubleRef implements Comparable<DoubleRef> {
     public double value;
 

@@ -26,6 +26,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+@SuppressWarnings("unused")
 public class CodePointIterator implements Iterator<CodePointIterator.CodePoint>, Markable<String>, Peekable<CodePointIterator.CodePoint> {
 
     private static final PGResourceBundle msgs = new PGResourceBundle("com.projectgalen.lib.utils.messages");

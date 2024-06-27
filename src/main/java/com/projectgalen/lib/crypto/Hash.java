@@ -27,6 +27,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
+@SuppressWarnings("unused")
 public final class Hash {
 
     private Hash() { }

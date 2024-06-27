@@ -26,6 +26,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+@SuppressWarnings("unused")
 public final class SimpleCodePointIterator implements Iterator<Integer>, Markable<String>, Peekable<Integer> {
 
     private static final PGResourceBundle msgs = new PGResourceBundle("com.projectgalen.lib.utils.messages");
@@ -66,10 +67,6 @@ public final class SimpleCodePointIterator implements Iterator<Integer>, Markabl
         return count;
     }
 
-    public int length() {
-        return len;
-    }
-
     public @NotNull CharSequence getInput() {
         return input.subSequence(start, end);
     }
@@ -82,13 +79,13 @@ public final class SimpleCodePointIterator implements Iterator<Integer>, Markabl
         return input.subSequence((start + startIndex), end);
     }
 
+    public @Override @NotNull String getMarked() {
+        return getMarkedSubSequence().toString();
+    }
+
     public int getMarkedLength() {
         if(markIdx == 0) throw new NoSuchElementException(msgs.getString("msg.err.no_mark_found"));
         return (idx - marks[markIdx - 1]);
-    }
-
-    public @Override @NotNull String getMarked() {
-        return getMarkedSubSequence().toString();
     }
 
     public @NotNull CharSequence getMarkedSubSequence() {
@@ -98,6 +95,10 @@ public final class SimpleCodePointIterator implements Iterator<Integer>, Markabl
 
     public @Override boolean hasNext() {
         return (idx < end);
+    }
+
+    public int length() {
+        return len;
     }
 
     public @Override void mark() {

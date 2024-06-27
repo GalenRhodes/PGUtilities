@@ -19,6 +19,7 @@ package com.projectgalen.lib.utils.collections;
 
 import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings("unused")
 public class CKV<K extends Comparable<K>, V> extends KV<K, V> implements Comparable<CKV<K, V>> {
     public CKV(@NotNull K key, V value) {
         super(key, value);

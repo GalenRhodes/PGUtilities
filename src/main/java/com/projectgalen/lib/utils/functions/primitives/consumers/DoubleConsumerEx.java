@@ -20,10 +20,8 @@ package com.projectgalen.lib.utils.functions.primitives.consumers;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Represents an operation that accepts a single {@code double}-valued argument and
- * returns no result.  This is the primitive type specialization of
- * {@link com.projectgalen.lib.utils.functions.ConsumerEx} for {@code double}.  Unlike most other functional interfaces,
- * {@code DoubleConsumerEx} is expected to operate via side-effects.
+ * Represents an operation that accepts a single {@code double}-valued argument and returns no result.  This is the primitive type specialization of
+ * {@link com.projectgalen.lib.utils.functions.ConsumerEx} for {@code double}.  Unlike most other functional interfaces, {@code DoubleConsumerEx} is expected to operate via side-effects.
  *
  * <p>This is a functional interface whose functional method is {@link #accept(double)}.
  *
@@ -40,18 +38,19 @@ public interface DoubleConsumerEx<E extends Exception> {
     void accept(double value) throws E;
 
     /**
-     * Returns a composed {@code DoubleConsumerEx} that performs, in sequence, this
-     * operation followed by the {@code after} operation. If performing either
-     * operation throws an exception, it is relayed to the caller of the
-     * composed operation.  If performing this operation throws an exception,
-     * the {@code after} operation will not be performed.
+     * Returns a composed {@code DoubleConsumerEx} that performs, in sequence, this operation followed by the {@code after} operation. If performing either operation throws an exception, it is relayed
+     * to the caller of the composed operation.  If performing this operation throws an exception, the {@code after} operation will not be performed.
      *
      * @param after the operation to perform after this operation
-     * @return a composed {@code DoubleConsumerEx} that performs in sequence this
-     * operation followed by the {@code after} operation
+     *
+     * @return a composed {@code DoubleConsumerEx} that performs in sequence this operation followed by the {@code after} operation
+     *
      * @throws NullPointerException if {@code after} is null
      */
     default @NotNull DoubleConsumerEx<? extends E> andThen(@NotNull DoubleConsumerEx<? extends E> after) {
-        return (double t) -> { accept(t); after.accept(t); };
+        return (double t) -> {
+            accept(t);
+            after.accept(t);
+        };
     }
 }

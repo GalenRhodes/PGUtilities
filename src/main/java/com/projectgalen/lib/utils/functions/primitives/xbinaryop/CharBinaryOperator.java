@@ -18,9 +18,8 @@ package com.projectgalen.lib.utils.functions.primitives.xbinaryop;
 // ================================================================================================================================
 
 /**
- * Represents an operation upon two {@code char}-valued operands and producing an
- * {@code char}-valued result.   This is the primitive type specialization of
- * {@link java.util.function.BinaryOperator} for {@code char}.
+ * Represents an operation upon two {@code char}-valued operands and producing an {@code char}-valued result.   This is the primitive type specialization of {@link java.util.function.BinaryOperator}
+ * for {@code char}.
  *
  * <p>This is a functional interface whose functional method is {@link #applyAsChar(char, char)}.
  *
@@ -32,8 +31,9 @@ public interface CharBinaryOperator {
     /**
      * Applies this operator to the given operands.
      *
-     * @param left the first operand
+     * @param left  the first operand
      * @param right the second operand
+     *
      * @return the operator result
      */
     char applyAsChar(char left, char right);

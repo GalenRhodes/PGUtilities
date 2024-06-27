@@ -26,6 +26,7 @@ import java.util.function.Function;
 
 import static java.util.Optional.ofNullable;
 
+@SuppressWarnings("unused")
 public final class Macros {
 
     private static final   String                             VALID = " 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ._-";

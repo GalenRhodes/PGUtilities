@@ -26,6 +26,7 @@ import static com.projectgalen.lib.utils.reflect.Reflect.getMethod;
 import static com.projectgalen.lib.utils.reflect.Reflect.invoke;
 import static java.util.Objects.requireNonNull;
 
+@SuppressWarnings("unused")
 public final class FullScreenUtilities {
 
     public static final Class<?> _CLS_ = Obj.classForname("com.apple.eawt.FullScreenUtilities");

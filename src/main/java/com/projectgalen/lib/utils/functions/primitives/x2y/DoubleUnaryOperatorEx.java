@@ -18,9 +18,8 @@ package com.projectgalen.lib.utils.functions.primitives.x2y;
 // ================================================================================================================================
 
 /**
- * Represents a function that accepts an double-valued argument and produces a
- * double-valued result.  This is the {@code double}-to-{@code double} primitive
- * specialization for {@link com.projectgalen.lib.utils.functions.FunctionEx}.
+ * Represents a function that accepts an double-valued argument and produces a double-valued result.  This is the {@code double}-to-{@code double} primitive specialization for
+ * {@link com.projectgalen.lib.utils.functions.FunctionEx}.
  *
  * <p>This is a functional interface whose functional method is {@link #applyAsDouble(double)}.
  *
@@ -33,6 +32,7 @@ public interface DoubleUnaryOperatorEx<E extends Exception> {
      * Applies this function to the given argument.
      *
      * @param value the function argument
+     *
      * @return the function result
      */
     double applyAsDouble(double value) throws E;

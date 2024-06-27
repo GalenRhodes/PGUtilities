@@ -18,8 +18,7 @@ package com.projectgalen.lib.utils.functions.primitives.xtoobj;
 // ================================================================================================================================
 
 /**
- * Represents a function that accepts an char-valued argument and produces a result.  This is the {@code char}-consuming primitive specialization for
- * {@link java.util.function.Function}.
+ * Represents a function that accepts an char-valued argument and produces a result.  This is the {@code char}-consuming primitive specialization for {@link java.util.function.Function}.
  *
  * <p>This is a functional interface whose functional method is {@link #apply(char)}.
  *
@@ -34,6 +33,7 @@ public interface CharFunction<R> {
      * Applies this function to the given argument.
      *
      * @param value the function argument
+     *
      * @return the function result
      */
     R apply(char value);

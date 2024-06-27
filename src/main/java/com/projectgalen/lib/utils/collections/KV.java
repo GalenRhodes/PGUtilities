@@ -22,6 +22,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Map;
 import java.util.Objects;
 
+@SuppressWarnings("unused")
 public class KV<K, V> implements Map.Entry<K, V> {
 
     protected final @NotNull K key;

@@ -34,6 +34,7 @@ import java.security.*;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 
+@SuppressWarnings("unused")
 public final class Crypto {
 
     private static final PGResourceBundle msgs  = new PGResourceBundle("com.projectgalen.lib.crypto.crypto_messages");

@@ -19,6 +19,7 @@ package com.projectgalen.lib.utils.reflect.proxy;
 
 import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings("unused")
 public interface Proxied {
 
     @NotNull Object getProxy();
