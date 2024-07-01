@@ -17,6 +17,7 @@ package com.projectgalen.lib.apple.eawt;
 // NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 // ================================================================================================================================
 
+import com.formdev.flatlaf.util.SystemInfo;
 import com.projectgalen.lib.utils.Obj;
 import com.projectgalen.lib.utils.reflect.MethodInfo;
 import org.jetbrains.annotations.NotNull;
@@ -26,22 +27,22 @@ import java.awt.*;
 @SuppressWarnings("unused")
 public final class FullScreenUtilities {
 
-    private static final Class<?>     _CLS_   = Obj.classForname("com.apple.eawt.FullScreenUtilities");
-    private static final MethodInfo[] METHODS = { new MethodInfo(_CLS_, "addFullScreenListenerTo", true, Window.class, FullScreenListener._CLS_),
-                                                  new MethodInfo(_CLS_, "removeFullScreenListenerFrom", true, Window.class, FullScreenListener._CLS_),
-                                                  new MethodInfo(_CLS_, "setWindowCanFullScreen", true, Window.class, boolean.class), };
+    private static final Class<?>   _CLS_                         = (SystemInfo.isMacOS ? Obj.classForname("com.apple.eawt.FullScreenUtilities") : FullScreenUtilities.class);
+    private static final MethodInfo _addFullScreenListenerTo      = new MethodInfo(_CLS_, "addFullScreenListenerTo", true, Window.class, FullScreenListener._CLS_);
+    private static final MethodInfo _removeFullScreenListenerFrom = new MethodInfo(_CLS_, "removeFullScreenListenerFrom", true, Window.class, FullScreenListener._CLS_);
+    private static final MethodInfo _setWindowCanFullScreen       = new MethodInfo(_CLS_, "setWindowCanFullScreen", true, Window.class, boolean.class);
 
     private FullScreenUtilities() { }
 
     public static void addFullScreenListenerTo(@NotNull Window window, @NotNull FullScreenListener fullScreenListener) {
-        METHODS[0].invoke(null, window, fullScreenListener.getProxy());
+        if(SystemInfo.isMacOS) _addFullScreenListenerTo.invoke(null, window, fullScreenListener.getProxy());
     }
 
     public static void removeFullScreenListenerFrom(@NotNull Window window, @NotNull FullScreenListener fullScreenListener) {
-        METHODS[1].invoke(null, window, fullScreenListener.getProxy());
+        if(SystemInfo.isMacOS) _removeFullScreenListenerFrom.invoke(null, window, fullScreenListener.getProxy());
     }
 
     public static void setWindowCanFullScreen(@NotNull Window window, boolean flag) {
-        METHODS[2].invoke(null, window, flag);
+        if(SystemInfo.isMacOS) _setWindowCanFullScreen.invoke(null, window, flag);
     }
 }

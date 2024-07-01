@@ -17,6 +17,7 @@ package com.projectgalen.lib.apple.eawt;
 // NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 // ================================================================================================================================
 
+import com.formdev.flatlaf.util.SystemInfo;
 import com.projectgalen.lib.apple.eawt.event.FullScreenEvent;
 import com.projectgalen.lib.utils.Obj;
 import org.jetbrains.annotations.NotNull;
@@ -26,7 +27,7 @@ import java.util.EventListener;
 @SuppressWarnings("unused")
 public interface FullScreenListener extends EventListener {
 
-    @NotNull Class<?> _CLS_ = Obj.classForname("com.apple.eawt.FullScreenListener");
+    @NotNull Class<?> _CLS_ = (SystemInfo.isMacOS ? Obj.classForname("com.apple.eawt.FullScreenListener") : FullScreenListener.class);
 
     @NotNull Object getProxy();
 

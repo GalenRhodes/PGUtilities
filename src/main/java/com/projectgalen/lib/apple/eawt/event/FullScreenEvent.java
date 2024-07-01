@@ -17,6 +17,8 @@ package com.projectgalen.lib.apple.eawt.event;
 // NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 // ================================================================================================================================
 
+import com.formdev.flatlaf.util.SystemInfo;
+import com.projectgalen.lib.apple.eawt.Application;
 import com.projectgalen.lib.utils.Obj;
 import com.projectgalen.lib.utils.reflect.MethodInfo;
 import org.jetbrains.annotations.NotNull;
@@ -27,13 +29,13 @@ import java.util.EventObject;
 @SuppressWarnings("unused")
 public final class FullScreenEvent extends EventObject {
 
-    public static final  Class<?>   _CLS_      = Obj.classForname("com.apple.eawt.event.FullScreenEvent");
+    public static final  Class<?>   _CLS_      = (SystemInfo.isMacOS ? Obj.classForname("com.apple.eawt.event.FullScreenEvent") : FullScreenEvent.class);
     private static final MethodInfo GET_WINDOW = new MethodInfo(_CLS_, "getWindow", false);
 
     private final Window window;
 
     public FullScreenEvent(@NotNull EventObject event) {
-        super(((EventObject)_CLS_.cast(event)).getSource());
+        super(SystemInfo.isMacOS ? (((EventObject)_CLS_.cast(event)).getSource()) : Application.getApplication());
         this.window = GET_WINDOW.invoke(event);
     }
 

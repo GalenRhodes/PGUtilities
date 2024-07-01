@@ -17,6 +17,7 @@ package com.projectgalen.lib.apple.eawt;
 // NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 // ================================================================================================================================
 
+import com.formdev.flatlaf.util.SystemInfo;
 import com.projectgalen.lib.utils.Obj;
 import com.projectgalen.lib.utils.reflect.MethodInfo;
 import org.jetbrains.annotations.NotNull;
@@ -28,84 +29,107 @@ import java.awt.desktop.*;
 @SuppressWarnings("unused")
 public final class Application {
 
+    private static final Class<?> CLS = (SystemInfo.isMacOS ? Obj.classForname("com.apple.eawt.Application") : Application.class);
+
     private final @NotNull Object instance;
 
-    private Application()                                                       { this.instance = MethodHolder.METHODS[0].invoke(null); }
-
-    public void addAppEventListener(SystemEventListener systemEventListener)    { MethodHolder.METHODS[1].invoke(instance, systemEventListener); }
-
-    public void disableSuddenTermination()                                      { MethodHolder.METHODS[2].invoke(instance); }
-
-    public void enableSuddenTermination()                                       { MethodHolder.METHODS[3].invoke(instance); }
-
-    public Image getDockIconImage()                                             { return MethodHolder.METHODS[4].invoke(instance, new Object[] {}); }
-
-    public PopupMenu getDockMenu()                                              { return MethodHolder.METHODS[5].invoke(instance, new Object[] {}); }
-
-    public void openHelpViewer()                                                { MethodHolder.METHODS[6].invoke(instance); }
-
-    public void removeAppEventListener(SystemEventListener systemEventListener) { MethodHolder.METHODS[7].invoke(instance, systemEventListener); }
-
-    public void requestForeground(boolean value)                                { MethodHolder.METHODS[8].invoke(instance, value); }
-
-    public void requestToggleFullScreen(Window window)                          { MethodHolder.METHODS[9].invoke(instance, window); }
-
-    public void requestUserAttention(boolean requiresUserAttention)             { MethodHolder.METHODS[10].invoke(instance, requiresUserAttention); }
-
-    public void setAboutHandler(AboutHandler aboutHandler)                      { MethodHolder.METHODS[11].invoke(instance, aboutHandler); }
-
-    public void setDefaultMenuBar(JMenuBar menuBar)                             { MethodHolder.METHODS[12].invoke(instance, menuBar); }
-
-    public void setDockIconBadge(String badge)                                  { MethodHolder.METHODS[13].invoke(instance, badge); }
-
-    public void setDockIconImage(Image image)                                   { MethodHolder.METHODS[14].invoke(instance, image); }
-
-    public void setDockIconProgress(int value)                                  { MethodHolder.METHODS[15].invoke(instance, value); }
-
-    public void setDockMenu(PopupMenu popupMenu)                                { MethodHolder.METHODS[16].invoke(instance, popupMenu); }
-
-    public void setOpenFileHandler(OpenFilesHandler openFilesHandler)           { MethodHolder.METHODS[17].invoke(instance, openFilesHandler); }
-
-    public void setOpenURIHandler(OpenURIHandler openURIHandler)                { MethodHolder.METHODS[18].invoke(instance, openURIHandler); }
-
-    public void setPreferencesHandler(PreferencesHandler preferencesHandler)    { MethodHolder.METHODS[19].invoke(instance, preferencesHandler); }
-
-    public void setPrintFileHandler(PrintFilesHandler printFilesHandler)        { MethodHolder.METHODS[20].invoke(instance, printFilesHandler); }
-
-    public void setQuitHandler(QuitHandler quitHandler)                         { MethodHolder.METHODS[21].invoke(instance, quitHandler); }
-
-    public void setQuitStrategy(QuitStrategy quitStrategy)                      { MethodHolder.METHODS[22].invoke(instance, quitStrategy); }
-
-    public static Application getApplication()                                  { return ApplicationHolder.INSTANCE; }
-
-    static final class ApplicationHolder {
-        private static final Application INSTANCE = new Application();
+    private Application() {
+        this.instance = (SystemInfo.isMacOS ? new MethodInfo(CLS, "getApplication", true).invoke(null) : this);
     }
 
-    static final class MethodHolder {
-        private static final          Class<?>     CLS     = Obj.classForname("com.apple.eawt.Application");
-        private static final @NotNull MethodInfo[] METHODS = { new MethodInfo(CLS, "getApplication", true),
-                                                               new MethodInfo(CLS, "addAppEventListener", false, SystemEventListener.class),
-                                                               new MethodInfo(CLS, "disableSuddenTermination", false),
-                                                               new MethodInfo(CLS, "enableSuddenTermination", false),
-                                                               new MethodInfo(CLS, "getDockIconImage", false),
-                                                               new MethodInfo(CLS, "getDockMenu", false),
-                                                               new MethodInfo(CLS, "openHelpViewer", false),
-                                                               new MethodInfo(CLS, "removeAppEventListener", false, SystemEventListener.class),
-                                                               new MethodInfo(CLS, "requestForeground", false, boolean.class),
-                                                               new MethodInfo(CLS, "requestToggleFullScreen", false, Window.class),
-                                                               new MethodInfo(CLS, "requestUserAttention", false, boolean.class),
-                                                               new MethodInfo(CLS, "setAboutHandler", false, AboutHandler.class),
-                                                               new MethodInfo(CLS, "setDefaultMenuBar", false, JMenuBar.class),
-                                                               new MethodInfo(CLS, "setDockIconBadge", false, String.class),
-                                                               new MethodInfo(CLS, "setDockIconImage", false, Image.class),
-                                                               new MethodInfo(CLS, "setDockIconProgress", false, int.class),
-                                                               new MethodInfo(CLS, "setDockMenu", false, PopupMenu.class),
-                                                               new MethodInfo(CLS, "setOpenFileHandler", false, OpenFilesHandler.class),
-                                                               new MethodInfo(CLS, "setOpenURIHandler", false, OpenURIHandler.class),
-                                                               new MethodInfo(CLS, "setPreferencesHandler", false, PreferencesHandler.class),
-                                                               new MethodInfo(CLS, "setPrintFileHandler", false, PrintFilesHandler.class),
-                                                               new MethodInfo(CLS, "setQuitHandler", false, QuitHandler.class),
-                                                               new MethodInfo(CLS, "setQuitStrategy", false, QuitStrategy.class) };
+    public void addAppEventListener(SystemEventListener systemEventListener) {
+        if(SystemInfo.isMacOS) new MethodInfo(CLS, "addAppEventListener", false, SystemEventListener.class).invoke(instance, systemEventListener);
+    }
+
+    public void disableSuddenTermination() {
+        if(SystemInfo.isMacOS) new MethodInfo(CLS, "disableSuddenTermination", false).invoke(instance);
+    }
+
+    public void enableSuddenTermination() {
+        if(SystemInfo.isMacOS) new MethodInfo(CLS, "enableSuddenTermination", false).invoke(instance);
+    }
+
+    public Image getDockIconImage() {
+        return (SystemInfo.isMacOS ? new MethodInfo(CLS, "getDockIconImage", false).invoke(instance) : null);
+    }
+
+    public PopupMenu getDockMenu() {
+        return (SystemInfo.isMacOS ? new MethodInfo(CLS, "getDockMenu", false).invoke(instance) : null);
+    }
+
+    public void openHelpViewer() {
+        if(SystemInfo.isMacOS) new MethodInfo(CLS, "openHelpViewer", false).invoke(instance);
+    }
+
+    public void removeAppEventListener(SystemEventListener systemEventListener) {
+        if(SystemInfo.isMacOS) new MethodInfo(CLS, "removeAppEventListener", false, SystemEventListener.class).invoke(instance, systemEventListener);
+    }
+
+    public void requestForeground(boolean value) {
+        if(SystemInfo.isMacOS) new MethodInfo(CLS, "requestForeground", false, boolean.class).invoke(instance, value);
+    }
+
+    public void requestToggleFullScreen(@NotNull Window window) {
+        if(SystemInfo.isMacOS) new MethodInfo(CLS, "requestToggleFullScreen", false, Window.class).invoke(instance, window);
+    }
+
+    public void requestUserAttention(boolean requiresUserAttention) {
+        if(SystemInfo.isMacOS) new MethodInfo(CLS, "requestUserAttention", false, boolean.class).invoke(instance, requiresUserAttention);
+    }
+
+    public void setAboutHandler(AboutHandler aboutHandler) {
+        if(SystemInfo.isMacOS) new MethodInfo(CLS, "setAboutHandler", false, AboutHandler.class).invoke(instance, aboutHandler);
+    }
+
+    public void setDefaultMenuBar(JMenuBar menuBar) {
+        if(SystemInfo.isMacOS) new MethodInfo(CLS, "setDefaultMenuBar", false, JMenuBar.class).invoke(instance, menuBar);
+    }
+
+    public void setDockIconBadge(String badge) {
+        if(SystemInfo.isMacOS) new MethodInfo(CLS, "setDockIconBadge", false, String.class).invoke(instance, badge);
+    }
+
+    public void setDockIconImage(Image image) {
+        if(SystemInfo.isMacOS) new MethodInfo(CLS, "setDockIconImage", false, Image.class).invoke(instance, image);
+    }
+
+    public void setDockIconProgress(int value) {
+        if(SystemInfo.isMacOS) new MethodInfo(CLS, "setDockIconProgress", false, int.class).invoke(instance, value);
+    }
+
+    public void setDockMenu(PopupMenu popupMenu) {
+        if(SystemInfo.isMacOS) new MethodInfo(CLS, "setDockMenu", false, PopupMenu.class).invoke(instance, popupMenu);
+    }
+
+    public void setOpenFileHandler(OpenFilesHandler openFilesHandler) {
+        if(SystemInfo.isMacOS) new MethodInfo(CLS, "setOpenFileHandler", false, OpenFilesHandler.class).invoke(instance, openFilesHandler);
+    }
+
+    public void setOpenURIHandler(OpenURIHandler openURIHandler) {
+        if(SystemInfo.isMacOS) new MethodInfo(CLS, "setOpenURIHandler", false, OpenURIHandler.class).invoke(instance, openURIHandler);
+    }
+
+    public void setPreferencesHandler(PreferencesHandler preferencesHandler) {
+        if(SystemInfo.isMacOS) new MethodInfo(CLS, "setPreferencesHandler", false, PreferencesHandler.class).invoke(instance, preferencesHandler);
+    }
+
+    public void setPrintFileHandler(PrintFilesHandler printFilesHandler) {
+        if(SystemInfo.isMacOS) new MethodInfo(CLS, "setPrintFileHandler", false, PrintFilesHandler.class).invoke(instance, printFilesHandler);
+    }
+
+    public void setQuitHandler(QuitHandler quitHandler) {
+        if(SystemInfo.isMacOS) new MethodInfo(CLS, "setQuitHandler", false, QuitHandler.class).invoke(instance, quitHandler);
+    }
+
+    public void setQuitStrategy(QuitStrategy quitStrategy) {
+        if(SystemInfo.isMacOS) new MethodInfo(CLS, "setQuitStrategy", false, QuitStrategy.class).invoke(instance, quitStrategy);
+    }
+
+    public static Application getApplication() {
+        return ApplicationHolder.INSTANCE;
+    }
+
+    private static final class ApplicationHolder {
+        private static final Application INSTANCE = new Application();
     }
 }

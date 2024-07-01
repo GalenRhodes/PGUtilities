@@ -143,6 +143,12 @@
             <artifactId>velocity-engine-core</artifactId>
             <version>2.3</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.formdev</groupId>
+            <artifactId>flatlaf</artifactId>
+            <version>3.4.1</version>
+        </dependency>
     </dependencies>
 
     <packaging>jar</packaging>
@@ -170,6 +176,10 @@
                     <compilerArgs>
                         <arg>--add-exports</arg>
                         <arg>java.desktop/com.apple.eawt=ALL-UNNAMED</arg>
+                        <arg>--add-exports</arg>
+                        <arg>java.desktop/com.apple.eawt.event=ALL-UNNAMED</arg>
+                        <arg>--add-exports</arg>
+                        <arg>java.desktop/com.apple.eio=ALL-UNNAMED</arg>
                     </compilerArgs>
                 </configuration>
             </plugin>
@@ -256,6 +266,8 @@
                 <configuration>
                     <additionalJOptions>
                         <additionalJOption>-J--add-exports=java.desktop/com.apple.eawt=ALL-UNNAMED</additionalJOption>
+                        <additionalJOption>-J--add-exports=java.desktop/com.apple.eawt.event=ALL-UNNAMED</additionalJOption>
+                        <additionalJOption>-J--add-exports=java.desktop/com.apple.eio=ALL-UNNAMED</additionalJOption>
                     </additionalJOptions>
                     <links>
                         <link>https://javadoc.io/doc/org.jetbrains/annotations/${intellij.annotations.version}/index.html</link>
