@@ -20,7 +20,7 @@ package com.projectgalen.lib.utils.reflect;
 import com.projectgalen.lib.utils.Obj;
 import com.projectgalen.lib.utils.PGResourceBundle;
 import com.projectgalen.lib.utils.errors.MethodInvocationException;
-import com.projectgalen.lib.utils.errors.MethodNotFound;
+import com.projectgalen.lib.utils.errors.MethodNotFoundException;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.InvocationTargetException;
@@ -133,10 +133,10 @@ public class MethodInfo implements Comparable<MethodInfo> {
     /**
      * @return The {@link Method} represented by this object.
      *
-     * @throws MethodNotFound if the method cannot be found in the associated {@link Class} or one of it's {@link Class#getSuperclass() superclasses}.
+     * @throws MethodNotFoundException if the method cannot be found in the associated {@link Class} or one of it's {@link Class#getSuperclass() superclasses}.
      */
     public @NotNull Method getMethod() {
-        return Obj.requireNonNull(Reflect.getMethod(cls, isStatic, name, types), () -> new MethodNotFound(msgs.getString("msg.err.no_such_method").formatted(key)));
+        return Obj.requireNonNull(Reflect.getMethod(cls, isStatic, name, types), () -> new MethodNotFoundException(msgs.getString("msg.err.no_such_method").formatted(key)));
     }
 
     /**

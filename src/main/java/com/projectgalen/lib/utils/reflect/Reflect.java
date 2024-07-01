@@ -21,6 +21,9 @@ import com.projectgalen.lib.utils.PGArrays;
 import com.projectgalen.lib.utils.PGResourceBundle;
 import com.projectgalen.lib.utils.annotations.Equals;
 import com.projectgalen.lib.utils.annotations.Hash;
+import com.projectgalen.lib.utils.errors.FieldAccessException;
+import com.projectgalen.lib.utils.errors.MethodInvocationException;
+import com.projectgalen.lib.utils.errors.MethodNotFoundException;
 import com.projectgalen.lib.utils.functions.BiConsumerEx;
 import com.projectgalen.lib.utils.ref.BooleanRef;
 import com.projectgalen.lib.utils.stream.Streams;
@@ -116,7 +119,7 @@ public final class Reflect {
             return f.get(obj);
         }
         catch(IllegalAccessException e) {
-            throw new RuntimeException(e.toString(), e);
+            throw new MethodInvocationException(e.toString(), e);
         }
     }
 
@@ -131,11 +134,27 @@ public final class Reflect {
 
     public static <T> @NotNull T getInstance(@NotNull Class<T> cls, Class<?>[] paramTypes, Object... params) {
         try {
-            return ofNullable(getConstructor(cls, ofNullable(paramTypes).orElse(NO_PARAMS))).map(Reflect::makeAccessible).orElseThrow(RuntimeException::new).newInstance(params);
+            return ofNullable(getConstructor(cls, ofNullable(paramTypes).orElse(NO_PARAMS))).map(Reflect::makeAccessible).orElseThrow(MethodNotFoundException::new).newInstance(params);
         }
         catch(InvocationTargetException | InstantiationException | IllegalAccessException e) {
-            throw new RuntimeException(e);
+            throw new MethodInvocationException(e);
         }
+    }
+
+    public static @Nullable Field getField(@NotNull Class<?> cls, @NotNull String name) {
+        return streamFields(cls).filter(f -> name.equals(f.getName())).findFirst().orElse(null);
+    }
+
+    public static @Nullable Field getField(@NotNull Class<?> cls, @NotNull String name, @NotNull Class<?> type) {
+        return streamFields(cls).filter(f -> name.equals(f.getName())).filter(f -> (f.getType() == type)).findFirst().orElse(null);
+    }
+
+    public static @Nullable Field getAssignableField(@NotNull Class<?> cls, @NotNull String name, @NotNull Class<?> type) {
+        return streamFields(cls).filter(f -> name.equals(f.getName())).filter(f -> isAssignable(f.getType(), type)).findFirst().orElse(null);
+    }
+
+    public static @Nullable Field getFieldAssignable(@NotNull Class<?> cls, @NotNull String name, @NotNull Class<?> type) {
+        return streamFields(cls).filter(f -> name.equals(f.getName())).filter(f -> isAssignable(type, f.getType())).findFirst().orElse(null);
     }
 
     /**
@@ -208,7 +227,7 @@ public final class Reflect {
             return (T)method.invoke(target, params);
         }
         catch(InvocationTargetException | IllegalAccessException e) {
-            throw new RuntimeException(e.toString(), e);
+            throw new MethodInvocationException(e.toString(), e);
         }
     }
 
@@ -351,7 +370,7 @@ public final class Reflect {
             field.set(obj, value);
         }
         catch(IllegalAccessException e) {
-            throw new RuntimeException(e.toString(), e);
+            throw new FieldAccessException(e.toString(), e);
         }
     }
 

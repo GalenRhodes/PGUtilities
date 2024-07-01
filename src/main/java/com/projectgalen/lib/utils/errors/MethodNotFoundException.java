@@ -1,7 +1,7 @@
 package com.projectgalen.lib.utils.errors;
 // ================================================================================================================================
 //     PROJECT: PGUtilities
-//    FILENAME: MethodInvocationException.java
+//    FILENAME: MethodNotFoundException.java
 //         IDE: IntelliJ IDEA
 //      AUTHOR: Galen Rhodes
 //        DATE: July 01, 2024
@@ -17,24 +17,23 @@ package com.projectgalen.lib.utils.errors;
 // NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 // ================================================================================================================================
 
-public class MethodInvocationException extends RuntimeException {
-    public MethodInvocationException(Throwable cause) {
+public class MethodNotFoundException extends RuntimeException {
+    public MethodNotFoundException() {
+    }
+
+    public MethodNotFoundException(Throwable cause) {
         super(cause);
     }
 
-    public MethodInvocationException(String message) {
+    public MethodNotFoundException(String message) {
         super(message);
     }
 
-    public MethodInvocationException(String message, Throwable cause) {
+    public MethodNotFoundException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public MethodInvocationException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    public MethodNotFoundException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
-    }
-
-    public MethodInvocationException() {
-        super();
     }
 }

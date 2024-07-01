@@ -1,7 +1,7 @@
 package com.projectgalen.lib.utils.errors;
 // ================================================================================================================================
 //     PROJECT: PGUtilities
-//    FILENAME: MethodNotFound.java
+//    FILENAME: FieldNotFoundException.java
 //         IDE: IntelliJ IDEA
 //      AUTHOR: Galen Rhodes
 //        DATE: July 01, 2024
@@ -17,23 +17,24 @@ package com.projectgalen.lib.utils.errors;
 // NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 // ================================================================================================================================
 
-public class MethodNotFound extends RuntimeException {
-    public MethodNotFound() {
+public class FieldNotFoundException extends RuntimeException {
+    public FieldNotFoundException() {
+        super();
     }
 
-    public MethodNotFound(Throwable cause) {
+    public FieldNotFoundException(Throwable cause) {
         super(cause);
     }
 
-    public MethodNotFound(String message) {
+    public FieldNotFoundException(String message) {
         super(message);
     }
 
-    public MethodNotFound(String message, Throwable cause) {
+    public FieldNotFoundException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public MethodNotFound(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    public FieldNotFoundException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 }

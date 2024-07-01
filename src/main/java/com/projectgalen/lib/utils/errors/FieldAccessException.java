@@ -1,7 +1,7 @@
 package com.projectgalen.lib.utils.errors;
 // ================================================================================================================================
 //     PROJECT: PGUtilities
-//    FILENAME: MethodInvocationException.java
+//    FILENAME: FieldAccessException.java
 //         IDE: IntelliJ IDEA
 //      AUTHOR: Galen Rhodes
 //        DATE: July 01, 2024
@@ -17,24 +17,24 @@ package com.projectgalen.lib.utils.errors;
 // NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 // ================================================================================================================================
 
-public class MethodInvocationException extends RuntimeException {
-    public MethodInvocationException(Throwable cause) {
+public class FieldAccessException extends RuntimeException {
+    public FieldAccessException() {
+        super();
+    }
+
+    public FieldAccessException(Throwable cause) {
         super(cause);
     }
 
-    public MethodInvocationException(String message) {
+    public FieldAccessException(String message) {
         super(message);
     }
 
-    public MethodInvocationException(String message, Throwable cause) {
+    public FieldAccessException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public MethodInvocationException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    public FieldAccessException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
-    }
-
-    public MethodInvocationException() {
-        super();
     }
 }
