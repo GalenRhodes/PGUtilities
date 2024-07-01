@@ -4,7 +4,7 @@ package com.projectgalen.lib.utils.functions.primitives.xtoobj;
 //    FILENAME: BooleanFunction.java
 //         IDE: IntelliJ IDEA
 //      AUTHOR: Galen Rhodes
-//        DATE: June 27, 2024
+//        DATE: July 01, 2024
 //
 // Copyright © 2024 Project Galen. All rights reserved.
 //
@@ -18,7 +18,8 @@ package com.projectgalen.lib.utils.functions.primitives.xtoobj;
 // ================================================================================================================================
 
 /**
- * Represents a function that accepts an boolean-valued argument and produces a result.  This is the {@code boolean}-consuming primitive specialization for {@link java.util.function.Function}.
+ * Represents a function that accepts an boolean-valued argument and produces a result.  This is the {@code boolean}-consuming primitive specialization for
+ * {@link java.util.function.Function}.
  *
  * <p>This is a functional interface whose functional method is {@link #apply(boolean)}.
  *
@@ -33,7 +34,6 @@ public interface BooleanFunction<R> {
      * Applies this function to the given argument.
      *
      * @param value the function argument
-     *
      * @return the function result
      */
     R apply(boolean value);

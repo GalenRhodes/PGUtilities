@@ -58,6 +58,10 @@ public final class Reflect {
         return PGArrays.equals(parameterTypes, m.getParameterTypes(), (t1, t2) -> (t1 == t2));
     }
 
+    public static boolean compareTypes(Class<?> @NotNull [] left, Class<?> @NotNull [] right) {
+        return PGArrays.equals(left, right, (l, r) -> (l == r));
+    }
+
     public static boolean easyEquals(Object o1, Object o2) {
         return ((o1 == o2) || ((o1 != null) && (o2 != null) && _easyEquals(o1, o2)));
     }

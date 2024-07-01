@@ -36,6 +36,7 @@ public interface ${className}<R, E extends Exception> {
      *
      * @param value the function argument
      * @return the function result
+     * @throws E if an error ocurrs.
      */
     R apply(${type} value) throws E;
 }

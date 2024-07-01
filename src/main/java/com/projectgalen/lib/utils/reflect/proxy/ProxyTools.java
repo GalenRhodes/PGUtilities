@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
 import static com.projectgalen.lib.utils.reflect.Reflect.findMethods;
 import static java.util.Optional.ofNullable;
 
-@SuppressWarnings("UnusedReturnValue")
+@SuppressWarnings({ "unused", "UnusedReturnValue" })
 public class ProxyTools {
 
     private static final PGResourceBundle                      msgs            = new PGResourceBundle("com.projectgalen.lib.utils.messages");

@@ -341,6 +341,34 @@ public final class PGArrays {
         return ((array.length == 0) ? Optional.empty() : Optional.of(array[array.length - 1]));
     }
 
+    public static <T, U> U[] map(Class<U> cls, T[] in, Function<T, U> mapper) {
+        if(in == null) return null;
+        @SuppressWarnings("unchecked") U[] out = (U[])newInstance(cls, in.length);
+        for(int i = 0; i < in.length; ++i) out[i] = mapper.apply(in[i]);
+        return out;
+    }
+
+    public static <T> Class<?>[] map(T[] in, Function<T, Class<?>> mapper) {
+        if(in == null) return null;
+        Class<?>[] out = new Class<?>[in.length];
+        for(int i = 0; i < in.length; ++i) out[i] = mapper.apply(in[i]);
+        return out;
+    }
+
+    public static Class<?>[] map(Class<?>[] in, Function<Class<?>, Class<?>> mapper) {
+        if(in == null) return null;
+        Class<?>[] out = new Class<?>[in.length];
+        for(int i = 0; i < in.length; ++i) out[i] = mapper.apply(in[i]);
+        return out;
+    }
+
+    public static <U> U[] map(Class<U> cls, Class<?>[] in, Function<Class<?>, U> mapper) {
+        if(in == null) return null;
+        U[] out = (U[])newInstance(cls, in.length);
+        for(int i = 0; i < in.length; ++i) out[i] = mapper.apply(in[i]);
+        return out;
+    }
+
     public static <T> T[] newFilled(@NotNull Class<T> componentType, int length, T fill) {
         T[] array = (T[])newInstance(componentType, length);
         if(length > 0) Arrays.fill(array, fill);

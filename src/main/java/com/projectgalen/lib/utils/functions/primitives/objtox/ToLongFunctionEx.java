@@ -4,7 +4,7 @@ package com.projectgalen.lib.utils.functions.primitives.objtox;
 //    FILENAME: ToLongFunctionEx.java
 //         IDE: IntelliJ IDEA
 //      AUTHOR: Galen Rhodes
-//        DATE: June 27, 2024
+//        DATE: July 01, 2024
 //
 // Copyright © 2024 Project Galen. All rights reserved.
 //
@@ -18,11 +18,13 @@ package com.projectgalen.lib.utils.functions.primitives.objtox;
 // ================================================================================================================================
 
 /**
- * Represents a function that produces an long-valued result.  This is the {@code long}-producing primitive specialization for {@link com.projectgalen.lib.utils.functions.FunctionEx}.
+ * Represents a function that produces an long-valued result.  This is the
+ * {@code long}-producing primitive specialization for {@link com.projectgalen.lib.utils.functions.FunctionEx}.
  *
  * <p>This is a functional interface whose functional method is {@link #applyAsLong(Object)}.
  *
  * @param <T> the type of the input to the function
+ * @param <E> the type of the thrown exceptions
  *
  * @see com.projectgalen.lib.utils.functions.FunctionEx
  */
@@ -33,8 +35,8 @@ public interface ToLongFunctionEx<T, E extends Exception> {
      * Applies this function to the given argument.
      *
      * @param value the function argument
-     *
      * @return the function result
+     * @throws E if an error ocurrs.
      */
-    long applyAsLong(T value) throws E;
+   long applyAsLong(T value) throws E;
 }

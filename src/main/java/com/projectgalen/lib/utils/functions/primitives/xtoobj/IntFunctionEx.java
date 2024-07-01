@@ -4,7 +4,7 @@ package com.projectgalen.lib.utils.functions.primitives.xtoobj;
 //    FILENAME: IntFunctionEx.java
 //         IDE: IntelliJ IDEA
 //      AUTHOR: Galen Rhodes
-//        DATE: June 27, 2024
+//        DATE: July 01, 2024
 //
 // Copyright © 2024 Project Galen. All rights reserved.
 //
@@ -35,8 +35,8 @@ public interface IntFunctionEx<R, E extends Exception> {
      * Applies this function to the given argument.
      *
      * @param value the function argument
-     *
      * @return the function result
+     * @throws E if an error ocurrs.
      */
     R apply(int value) throws E;
 }

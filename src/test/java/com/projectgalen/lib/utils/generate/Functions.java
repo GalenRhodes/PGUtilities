@@ -83,23 +83,27 @@ public class Functions {
     }
 
     public int run(String... args) throws Exception {/*@f0*/
-        foo(getPath("x2y"),       "XtoY",            "%sTo%sFunction",     "%sUnaryOperator",   false);
-        foo(getPath("objtox"),    "toX",             "To%sFunction",                            false);
-        foo(getPath("objtox"),    "toXbi",           "To%sBiFunction",                          false);
-        foo(getPath("xbinaryop"), "Xbinaryop",       "%sBinaryOperator",                        false);
-        foo(getPath("consumers"), "consumer",        "%sConsumer",                              false);
-        foo(getPath("consumers"), "objXconsumer",    "Obj%sConsumer",                           false);
-        foo(getPath("suppliers"), "supplier",        "%sSupplier",                              false);
-        foo(getPath("xtoobj"),    "xfunction",       "%sFunction",                              false);
+        foo(getPath("x2y"),        "XtoY",            "%sTo%sFunction",     "%sUnaryOperator",   false);
+        foo(getPath("objtox"),     "toX",             "To%sFunction",                            false);
+        foo(getPath("objtox"),     "toXbi",           "To%sBiFunction",                          false);
+        foo(getPath("xbinaryop"),  "Xbinaryop",       "%sBinaryOperator",                        false);
+        foo(getPath("consumers"),  "consumer",        "%sConsumer",                              false);
+        foo(getPath("consumers"),  "objXconsumer",    "Obj%sConsumer",                           false);
+        foo(getPath("suppliers"),  "supplier",        "%sSupplier",                              false);
+        foo(getPath("xtoobj"),     "xfunction",       "%sFunction",                              false);
+        foo(getPath("predicates"), "Xpredicate",      "%sPredicate",                             false);
+        foo(getPath("predicates"), "biXpredicate",    "Bi%sPredicate",                           true);
 
-        foo(getPath("x2y"),       "XtoY-ex",         "%sTo%sFunctionEx",   "%sUnaryOperatorEx", true);
-        foo(getPath("objtox"),    "toX-ex",          "To%sFunctionEx",                          true);
-        foo(getPath("objtox"),    "toXbi-ex",        "To%sBiFunctionEx",                        true);
-        foo(getPath("xbinaryop"), "Xbinaryop-ex",    "%sBinaryOperatorEx",                      true);
-        foo(getPath("consumers"), "consumer-ex",     "%sConsumerEx",                            true);
-        foo(getPath("consumers"), "objXconsumer-ex", "Obj%sConsumerEx",                         true);
-        foo(getPath("suppliers"), "supplier-ex",     "%sSupplierEx",                            true);
-        foo(getPath("xtoobj"),    "xfunction-ex",    "%sFunctionEx",                            true);
+        foo(getPath("x2y"),        "XtoY-ex",         "%sTo%sFunctionEx",   "%sUnaryOperatorEx", true);
+        foo(getPath("objtox"),     "toX-ex",          "To%sFunctionEx",                          true);
+        foo(getPath("objtox"),     "toXbi-ex",        "To%sBiFunctionEx",                        true);
+        foo(getPath("xbinaryop"),  "Xbinaryop-ex",    "%sBinaryOperatorEx",                      true);
+        foo(getPath("consumers"),  "consumer-ex",     "%sConsumerEx",                            true);
+        foo(getPath("consumers"),  "objXconsumer-ex", "Obj%sConsumerEx",                         true);
+        foo(getPath("suppliers"),  "supplier-ex",     "%sSupplierEx",                            true);
+        foo(getPath("xtoobj"),     "xfunction-ex",    "%sFunctionEx",                            true);
+        foo(getPath("predicates"), "Xpredicate-ex",   "%sPredicateEx",                           true);
+        foo(getPath("predicates"), "biXpredicate-ex", "Bi%sPredicateEx",                         true);
 /*@f1*/
         return 0;
     }

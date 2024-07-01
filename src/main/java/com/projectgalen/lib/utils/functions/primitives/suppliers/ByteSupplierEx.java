@@ -4,7 +4,7 @@ package com.projectgalen.lib.utils.functions.primitives.suppliers;
 //    FILENAME: ByteSupplierEx.java
 //         IDE: IntelliJ IDEA
 //      AUTHOR: Galen Rhodes
-//        DATE: June 27, 2024
+//        DATE: July 01, 2024
 //
 // Copyright © 2024 Project Galen. All rights reserved.
 //
@@ -18,11 +18,14 @@ package com.projectgalen.lib.utils.functions.primitives.suppliers;
 // ================================================================================================================================
 
 /**
- * Represents a supplier of {@code byte}-valued results.  This is the {@code byte}-producing primitive specialization of {@link com.projectgalen.lib.utils.functions.SupplierEx}.
+ * Represents a supplier of {@code byte}-valued results.  This is the
+ * {@code byte}-producing primitive specialization of {@link com.projectgalen.lib.utils.functions.SupplierEx}.
  *
  * <p>There is no requirement that a distinct result be returned each time the supplier is invoked.
  *
  * <p>This is a functional interface whose functional method is {@link #getAsByte()}.
+ *
+ * @param <E> the type of the thrown exceptions
  *
  * @see com.projectgalen.lib.utils.functions.SupplierEx
  */
@@ -33,6 +36,7 @@ public interface ByteSupplierEx<E extends Exception> {
      * Gets a result.
      *
      * @return a result
+     * @throws E if an error ocurrs.
      */
     byte getAsByte() throws E;
 }

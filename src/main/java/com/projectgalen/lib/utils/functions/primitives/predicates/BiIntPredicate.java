@@ -4,7 +4,7 @@ package com.projectgalen.lib.utils.functions.primitives.predicates;
 //    FILENAME: BiIntPredicate.java
 //         IDE: IntelliJ IDEA
 //      AUTHOR: Galen Rhodes
-//        DATE: June 25, 2024
+//        DATE: July 01, 2024
 //
 // Copyright © 2024 Project Galen. All rights reserved.
 //
@@ -19,19 +19,64 @@ package com.projectgalen.lib.utils.functions.primitives.predicates;
 
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Represents a predicate (boolean-valued function) of two {@code int}-valued arguments.  This is the int-consuming primitive type specialization of {@link java.util.function.BiPredicate}.
+ *
+ * <p>This is a functional interface whose functional method is {@link #test(int, int)}.
+ *
+ * @see java.util.function.BiPredicate
+ */
 @SuppressWarnings("unused")
+@FunctionalInterface
 public interface BiIntPredicate {
-    default @NotNull BiIntPredicate and(@NotNull BiIntPredicate other) {
-        return (t, u) -> test(t, u) && other.test(t, u);
-    }
 
-    default BiIntPredicate negate() {
-        return (t, u) -> !test(t, u);
-    }
-
-    default @NotNull BiIntPredicate or(@NotNull BiIntPredicate other) {
-        return (t, u) -> test(t, u) || other.test(t, u);
-    }
-
+    /**
+     * Evaluates this predicate on the given arguments.
+     *
+     * @param t the first input argument
+     * @param u the second input argument
+     * @return {@code true} if the input arguments match the predicate, otherwise {@code false}
+     */
     boolean test(int t, int u);
+
+    /**
+     * Returns a composed predicate that represents a short-circuiting logical AND of this predicate and another.  When evaluating the composed predicate, if this predicate is {@code false}, then
+     * the {@code other} predicate is not evaluated.
+     *
+     * <p>Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this predicate throws an exception, the {@code other} predicate will not be
+     * evaluated.</p>
+     *
+     * @param other a predicate that will be logically-ANDed with this predicate
+
+     * @return a composed predicate that represents the short-circuiting logical AND of this predicate and the {@code other} predicate
+     * @throws NullPointerException if other is null
+     */
+    default @NotNull BiIntPredicate and(@NotNull BiIntPredicate other) {
+        return (int t, int u) -> (test(t, u) && other.test(t, u));
+    }
+
+    /**
+     * Returns a predicate that represents the logical negation of this predicate.
+     *
+     * @return a predicate that represents the logical negation of this predicate
+     */
+    default @NotNull BiIntPredicate negate() {
+        return (int t, int u) -> (!test(t, u));
+    }
+
+    /**
+     * Returns a composed predicate that represents a short-circuiting logical OR of this predicate and another.  When evaluating the composed predicate, if this predicate is {@code true}, then the
+     * {@code other} predicate is not evaluated.
+     *
+     * <p>Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this predicate throws an exception, the {@code other} predicate will not be
+     * evaluated.</p>
+     *
+     * @param other a predicate that will be logically-ORed with this predicate
+
+     * @return a composed predicate that represents the short-circuiting logical OR of this predicate and the {@code other} predicate
+     * @throws NullPointerException if other is null
+     */
+    default @NotNull BiIntPredicate or(@NotNull BiIntPredicate other) {
+        return (int t, int u) -> (test(t, u) || other.test(t, u));
+    }
 }

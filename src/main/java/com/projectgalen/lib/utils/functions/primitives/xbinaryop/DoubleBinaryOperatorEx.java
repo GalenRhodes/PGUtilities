@@ -4,7 +4,7 @@ package com.projectgalen.lib.utils.functions.primitives.xbinaryop;
 //    FILENAME: DoubleBinaryOperatorEx.java
 //         IDE: IntelliJ IDEA
 //      AUTHOR: Galen Rhodes
-//        DATE: June 27, 2024
+//        DATE: July 01, 2024
 //
 // Copyright © 2024 Project Galen. All rights reserved.
 //
@@ -18,10 +18,13 @@ package com.projectgalen.lib.utils.functions.primitives.xbinaryop;
 // ================================================================================================================================
 
 /**
- * Represents an operation upon two {@code double}-valued operands and producing an {@code double}-valued result.   This is the primitive type specialization of
+ * Represents an operation upon two {@code double}-valued operands and producing an
+ * {@code double}-valued result.   This is the primitive type specialization of
  * {@link com.projectgalen.lib.utils.functions.BinaryOperatorEx} for {@code double}.
  *
  * <p>This is a functional interface whose functional method is {@link #applyAsDouble(double, double)}.
+ *
+ * @param <E> the type of the thrown exceptions
  *
  * @see com.projectgalen.lib.utils.functions.BinaryOperatorEx
  */
@@ -31,10 +34,10 @@ public interface DoubleBinaryOperatorEx<E extends Exception> {
     /**
      * Applies this operator to the given operands.
      *
-     * @param left  the first operand
+     * @param left the first operand
      * @param right the second operand
-     *
      * @return the operator result
+     * @throws E if an error occurs.
      */
     double applyAsDouble(double left, double right) throws E;
 }

@@ -18,27 +18,23 @@ package com.projectgalen.lib.apple.eawt.event;
 // ================================================================================================================================
 
 import com.projectgalen.lib.utils.Obj;
-import com.projectgalen.lib.utils.PGResourceBundle;
+import com.projectgalen.lib.utils.reflect.MethodInfo;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 import java.util.EventObject;
 
-import static com.projectgalen.lib.utils.Obj.requireNonNull;
-import static com.projectgalen.lib.utils.reflect.Reflect.getMethod;
-import static com.projectgalen.lib.utils.reflect.Reflect.invoke;
-
 @SuppressWarnings("unused")
 public final class FullScreenEvent extends EventObject {
 
-    private static final Class<?>         _CLS_ = Obj.classForname("com.apple.eawt.event.FullScreenEvent");
-    private static final PGResourceBundle msgs  = new PGResourceBundle("com.projectgalen.lib.utils.messages");
+    public static final  Class<?>   _CLS_      = Obj.classForname("com.apple.eawt.event.FullScreenEvent");
+    private static final MethodInfo GET_WINDOW = new MethodInfo(_CLS_, "getWindow", false);
 
     private final Window window;
 
     public FullScreenEvent(@NotNull EventObject event) {
         super(((EventObject)_CLS_.cast(event)).getSource());
-        this.window = invoke(requireNonNull(getMethod(_CLS_, "getWindow"), () -> new RuntimeException(msgs.getString("msg.err.no_such_method").formatted("getWindow()"))), event);
+        this.window = GET_WINDOW.invoke(event);
     }
 
     public Window getWindow() {

@@ -18,30 +18,30 @@ package com.projectgalen.lib.apple.eawt;
 // ================================================================================================================================
 
 import com.projectgalen.lib.utils.Obj;
+import com.projectgalen.lib.utils.reflect.MethodInfo;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 
-import static com.projectgalen.lib.utils.reflect.Reflect.getMethod;
-import static com.projectgalen.lib.utils.reflect.Reflect.invoke;
-import static java.util.Objects.requireNonNull;
-
 @SuppressWarnings("unused")
 public final class FullScreenUtilities {
 
-    public static final Class<?> _CLS_ = Obj.classForname("com.apple.eawt.FullScreenUtilities");
+    private static final Class<?>     _CLS_   = Obj.classForname("com.apple.eawt.FullScreenUtilities");
+    private static final MethodInfo[] METHODS = { new MethodInfo(_CLS_, "addFullScreenListenerTo", true, Window.class, FullScreenListener._CLS_),
+                                                  new MethodInfo(_CLS_, "removeFullScreenListenerFrom", true, Window.class, FullScreenListener._CLS_),
+                                                  new MethodInfo(_CLS_, "setWindowCanFullScreen", true, Window.class, boolean.class), };
 
     private FullScreenUtilities() { }
 
     public static void addFullScreenListenerTo(@NotNull Window window, @NotNull FullScreenListener fullScreenListener) {
-        invoke(requireNonNull(getMethod(_CLS_, true, "addFullScreenListenerTo", Window.class, FullScreenListener._CLS_)), null, window, fullScreenListener.getProxy());
+        METHODS[0].invoke(null, window, fullScreenListener.getProxy());
     }
 
     public static void removeFullScreenListenerFrom(@NotNull Window window, @NotNull FullScreenListener fullScreenListener) {
-        invoke(requireNonNull(getMethod(_CLS_, true, "removeFullScreenListenerFrom", Window.class, FullScreenListener._CLS_)), null, window, fullScreenListener.getProxy());
+        METHODS[1].invoke(null, window, fullScreenListener.getProxy());
     }
 
     public static void setWindowCanFullScreen(@NotNull Window window, boolean flag) {
-        invoke(requireNonNull(getMethod(_CLS_, true, "setWindowCanFullScreen", Window.class, boolean.class)), null, window, flag);
+        METHODS[2].invoke(null, window, flag);
     }
 }

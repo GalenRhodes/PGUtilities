@@ -4,7 +4,7 @@ package com.projectgalen.lib.utils.functions.primitives.objtox;
 //    FILENAME: ToBooleanBiFunction.java
 //         IDE: IntelliJ IDEA
 //      AUTHOR: Galen Rhodes
-//        DATE: June 27, 2024
+//        DATE: July 01, 2024
 //
 // Copyright © 2024 Project Galen. All rights reserved.
 //
@@ -18,7 +18,9 @@ package com.projectgalen.lib.utils.functions.primitives.objtox;
 // ================================================================================================================================
 
 /**
- * Represents a function that accepts two arguments and produces an boolean-valued result.  This is the {@code boolean}-producing primitive specialization for {@link java.util.function.BiFunction}.
+ * Represents a function that accepts two arguments and produces an boolean-valued
+ * result.  This is the {@code boolean}-producing primitive specialization for
+ * {@link java.util.function.BiFunction}.
  *
  * <p>This is a whose functional method is {@link #applyAsBoolean(Object, Object)}.
  *
@@ -35,8 +37,7 @@ public interface ToBooleanBiFunction<T, U> {
      *
      * @param t the first function argument
      * @param u the second function argument
-     *
      * @return the function result
      */
-    boolean applyAsBoolean(T t, U u);
+     boolean applyAsBoolean(T t, U u);
 }

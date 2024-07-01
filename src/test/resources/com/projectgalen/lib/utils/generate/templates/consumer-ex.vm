@@ -27,8 +27,11 @@ import org.jetbrains.annotations.NotNull;
  *
  * <p>This is a functional interface whose functional method is {@link #[[#accept]]#(${type})}.
  *
+ * @param <E> the type of the thrown exceptions
+ *
  * @see com.projectgalen.lib.utils.functions.ConsumerEx
  */
+@SuppressWarnings("unused")
 @FunctionalInterface
 public interface ${className}<E extends Exception> {
 
@@ -36,6 +39,7 @@ public interface ${className}<E extends Exception> {
      * Performs this operation on the given argument.
      *
      * @param value the input argument
+     * @throws E if an error ocurrs.
      */
     void accept(${type} value) throws E;
 

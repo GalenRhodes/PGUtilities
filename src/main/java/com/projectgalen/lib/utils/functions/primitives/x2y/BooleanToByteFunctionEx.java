@@ -4,7 +4,7 @@ package com.projectgalen.lib.utils.functions.primitives.x2y;
 //    FILENAME: BooleanToByteFunctionEx.java
 //         IDE: IntelliJ IDEA
 //      AUTHOR: Galen Rhodes
-//        DATE: June 27, 2024
+//        DATE: July 01, 2024
 //
 // Copyright © 2024 Project Galen. All rights reserved.
 //
@@ -18,10 +18,13 @@ package com.projectgalen.lib.utils.functions.primitives.x2y;
 // ================================================================================================================================
 
 /**
- * Represents a function that accepts an boolean-valued argument and produces a byte-valued result.  This is the {@code boolean}-to-{@code byte} primitive specialization for
- * {@link com.projectgalen.lib.utils.functions.FunctionEx}.
+ * Represents a function that accepts an boolean-valued argument and produces a
+ * byte-valued result.  This is the {@code boolean}-to-{@code byte} primitive
+ * specialization for {@link com.projectgalen.lib.utils.functions.FunctionEx}.
  *
  * <p>This is a functional interface whose functional method is {@link #applyAsByte(boolean)}.
+ *
+ * @param <E> the type of the thrown exceptions
  *
  * @see com.projectgalen.lib.utils.functions.FunctionEx
  */
@@ -32,8 +35,8 @@ public interface BooleanToByteFunctionEx<E extends Exception> {
      * Applies this function to the given argument.
      *
      * @param value the function argument
-     *
      * @return the function result
+     * @throws E if an error ocurrs.
      */
     byte applyAsByte(boolean value) throws E;
 }

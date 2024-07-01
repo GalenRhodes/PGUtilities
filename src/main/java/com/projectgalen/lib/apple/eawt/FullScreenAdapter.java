@@ -18,28 +18,41 @@ package com.projectgalen.lib.apple.eawt;
 // ================================================================================================================================
 
 import com.projectgalen.lib.apple.eawt.event.FullScreenEvent;
-import com.projectgalen.lib.utils.Obj;
-import com.projectgalen.lib.utils.errors.WrapEx;
+import com.projectgalen.lib.utils.PGArrays;
+import com.projectgalen.lib.utils.reflect.MethodInfo;
+import com.projectgalen.lib.utils.reflect.Reflect;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
-import java.util.*;
+import java.util.Arrays;
+import java.util.EventObject;
+import java.util.function.Function;
 
 @SuppressWarnings({ "unused", "FieldCanBeLocal" })
 public class FullScreenAdapter implements FullScreenListener {
 
-    private static final @NotNull Class<?>[]          _INTERFACES_   = { FullScreenListener._CLS_ };
-    private static final @NotNull ClassLoader         _LOADER_       = FullScreenAdapter.class.getClassLoader();
-    private static final @NotNull Map<String, Method> _METHOD_CACHE_ = Collections.synchronizedMap(new TreeMap<>());
-    private static final @NotNull Class<?>            _EVENT_CLS_    = Obj.classForname("com.apple.eawt.event.FullScreenEvent");
+    private static final Function<Class<?>, Class<?>> TYPE_MAPPER = t -> ((t == FullScreenEvent._CLS_) ? FullScreenEvent.class : t);
+    private static final Function<Object, Object>     ARG_MAPPER  = o -> (FullScreenEvent._CLS_.isInstance(o) ? new FullScreenEvent((EventObject)FullScreenEvent._CLS_.cast(o)) : o);
+    private static final MethodInfo[]                 METHODS     = { new MethodInfo(_CLS_, "windowEnteredFullScreen", false, FullScreenEvent.class),
+                                                                      new MethodInfo(_CLS_, "windowEnteringFullScreen", false, FullScreenEvent.class),
+                                                                      new MethodInfo(_CLS_, "windowExitedFullScreen", false, FullScreenEvent.class),
+                                                                      new MethodInfo(_CLS_, "windowExitingFullScreen", false, FullScreenEvent.class),
+                                                                      new MethodInfo(_CLS_, "equals", false, Object.class),
+                                                                      new MethodInfo(_CLS_, "toString", false),
+                                                                      new MethodInfo(_CLS_, "hashCode", false),
+                                                                      new MethodInfo(_CLS_, "clone", false) };
 
     private final @NotNull Object proxy;
 
-    public FullScreenAdapter()                                                               { proxy = Proxy.newProxyInstance(_LOADER_, _INTERFACES_, (__, m, a) -> invoke(m, a)); }
+    public FullScreenAdapter() {
+        proxy = Proxy.newProxyInstance(getClass().getClassLoader(), new Class<?>[] { _CLS_ }, (__, m, a) -> invoke(m, a));
+    }
 
-    public final @Override @NotNull Object getProxy()                                        { return proxy; }
+    public final @Override @NotNull Object getProxy() {
+        return proxy;
+    }
 
     public @Override void windowEnteredFullScreen(@NotNull FullScreenEvent fullScreenEvent)  { }
 
@@ -50,25 +63,11 @@ public class FullScreenAdapter implements FullScreenListener {
     public @Override void windowExitingFullScreen(@NotNull FullScreenEvent fullScreenEvent)  { }
 
     private @Nullable Object invoke(@NotNull Method m, Object @NotNull [] a) throws Throwable {
-        try {
-            return _METHOD_CACHE_.computeIfAbsent(m.toString(), WrapEx.apply(k -> getClass().getMethod(m.getName(), xlateTypes(m)))).invoke(this, xlateArgs(a));
-        }
-        catch(WrapEx e) {
-            throw e.getCause();
-        }
+        Class<?>[] mt = PGArrays.map(m.getParameterTypes(), TYPE_MAPPER);
+        return Arrays.stream(METHODS).filter(info -> test(info, m, mt)).findFirst().orElseThrow(NoSuchMethodException::new).invoke(this, PGArrays.map(Object.class, a, ARG_MAPPER));
     }
 
-    private static @Nullable Object xlateArg(Object arg) {
-        return (_EVENT_CLS_.isInstance(arg) ? new FullScreenEvent((EventObject)_EVENT_CLS_.cast(arg)) : arg);
-    }
-
-    private static Object @NotNull [] xlateArgs(Object @NotNull [] args) {
-        Object[] parameters = new Object[args.length];
-        Arrays.setAll(parameters, i -> xlateArg(args[i]));
-        return parameters;
-    }
-
-    private static Class<?> @NotNull [] xlateTypes(@NotNull Method m) {
-        return Arrays.stream(m.getParameterTypes()).map(t -> (t == _EVENT_CLS_) ? FullScreenEvent.class : t).toArray(Class[]::new);
+    private boolean test(@NotNull MethodInfo methodInfo, @NotNull Method method, Class<?> @NotNull [] methodParamTypes) {
+        return ((methodInfo.isStatic() == Reflect.isStatic(method)) && methodInfo.getName().equals(method.getName()) && Reflect.compareTypes(methodInfo.getTypes(), methodParamTypes));
     }
 }

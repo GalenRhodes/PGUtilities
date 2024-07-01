@@ -4,7 +4,7 @@ package com.projectgalen.lib.utils.functions.primitives.x2y;
 //    FILENAME: LongToCharFunctionEx.java
 //         IDE: IntelliJ IDEA
 //      AUTHOR: Galen Rhodes
-//        DATE: June 27, 2024
+//        DATE: July 01, 2024
 //
 // Copyright © 2024 Project Galen. All rights reserved.
 //
@@ -18,10 +18,13 @@ package com.projectgalen.lib.utils.functions.primitives.x2y;
 // ================================================================================================================================
 
 /**
- * Represents a function that accepts an long-valued argument and produces a char-valued result.  This is the {@code long}-to-{@code char} primitive specialization for
- * {@link com.projectgalen.lib.utils.functions.FunctionEx}.
+ * Represents a function that accepts an long-valued argument and produces a
+ * char-valued result.  This is the {@code long}-to-{@code char} primitive
+ * specialization for {@link com.projectgalen.lib.utils.functions.FunctionEx}.
  *
  * <p>This is a functional interface whose functional method is {@link #applyAsChar(long)}.
+ *
+ * @param <E> the type of the thrown exceptions
  *
  * @see com.projectgalen.lib.utils.functions.FunctionEx
  */
@@ -32,8 +35,8 @@ public interface LongToCharFunctionEx<E extends Exception> {
      * Applies this function to the given argument.
      *
      * @param value the function argument
-     *
      * @return the function result
+     * @throws E if an error ocurrs.
      */
     char applyAsChar(long value) throws E;
 }

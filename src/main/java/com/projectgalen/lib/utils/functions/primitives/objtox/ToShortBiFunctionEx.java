@@ -4,7 +4,7 @@ package com.projectgalen.lib.utils.functions.primitives.objtox;
 //    FILENAME: ToShortBiFunctionEx.java
 //         IDE: IntelliJ IDEA
 //      AUTHOR: Galen Rhodes
-//        DATE: June 27, 2024
+//        DATE: July 01, 2024
 //
 // Copyright © 2024 Project Galen. All rights reserved.
 //
@@ -18,13 +18,15 @@ package com.projectgalen.lib.utils.functions.primitives.objtox;
 // ================================================================================================================================
 
 /**
- * Represents a function that accepts two arguments and produces an short-valued result.  This is the {@code short}-producing primitive specialization for
+ * Represents a function that accepts two arguments and produces an short-valued
+ * result.  This is the {@code short}-producing primitive specialization for
  * {@link com.projectgalen.lib.utils.functions.BiFunctionEx}.
  *
  * <p>This is a whose functional method is {@link #applyAsShort(Object, Object)}.
  *
  * @param <T> the type of the first argument to the function
  * @param <U> the type of the second argument to the function
+ * @param <E> the type of the thrown exceptions
  *
  * @see com.projectgalen.lib.utils.functions.BiFunctionEx
  */
@@ -36,8 +38,8 @@ public interface ToShortBiFunctionEx<T, U, E extends Exception> {
      *
      * @param t the first function argument
      * @param u the second function argument
-     *
      * @return the function result
+     * @throws E if an error ocurrs.
      */
-    short applyAsShort(T t, U u) throws E;
+     short applyAsShort(T t, U u) throws E;
 }

@@ -4,7 +4,7 @@ package com.projectgalen.lib.utils.functions.primitives.consumers;
 //    FILENAME: ObjBooleanConsumer.java
 //         IDE: IntelliJ IDEA
 //      AUTHOR: Galen Rhodes
-//        DATE: June 27, 2024
+//        DATE: July 01, 2024
 //
 // Copyright © 2024 Project Galen. All rights reserved.
 //
@@ -18,8 +18,11 @@ package com.projectgalen.lib.utils.functions.primitives.consumers;
 // ================================================================================================================================
 
 /**
- * Represents an operation that accepts an object-valued and a {@code boolean}-valued argument, and returns no result.  This is the {@code (reference, boolean)} specialization of
- * {@link java.util.function.BiConsumer}. Unlike most other functional interfaces, {@code ObjBooleanConsumer} is expected to operate via side-effects.
+ * Represents an operation that accepts an object-valued and a
+ * {@code boolean}-valued argument, and returns no result.  This is the
+ * {@code (reference, boolean)} specialization of {@link java.util.function.BiConsumer}.
+ * Unlike most other functional interfaces, {@code ObjBooleanConsumer} is
+ * expected to operate via side-effects.
  *
  * <p>This is a functional interface whose functional method is {@link #accept(Object, boolean)}.
  *
@@ -33,7 +36,7 @@ public interface ObjBooleanConsumer<T> {
     /**
      * Performs this operation on the given arguments.
      *
-     * @param t     the first input argument
+     * @param t the first input argument
      * @param value the second input argument
      */
     void accept(T t, boolean value);

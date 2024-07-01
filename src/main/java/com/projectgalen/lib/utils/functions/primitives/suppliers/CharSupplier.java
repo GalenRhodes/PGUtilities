@@ -4,7 +4,7 @@ package com.projectgalen.lib.utils.functions.primitives.suppliers;
 //    FILENAME: CharSupplier.java
 //         IDE: IntelliJ IDEA
 //      AUTHOR: Galen Rhodes
-//        DATE: June 27, 2024
+//        DATE: July 01, 2024
 //
 // Copyright © 2024 Project Galen. All rights reserved.
 //
@@ -18,7 +18,8 @@ package com.projectgalen.lib.utils.functions.primitives.suppliers;
 // ================================================================================================================================
 
 /**
- * Represents a supplier of {@code char}-valued results.  This is the {@code char}-producing primitive specialization of {@link java.util.function.Supplier}.
+ * Represents a supplier of {@code char}-valued results.  This is the
+ * {@code char}-producing primitive specialization of {@link java.util.function.Supplier}.
  *
  * <p>There is no requirement that a distinct result be returned each time the supplier is invoked.
  *

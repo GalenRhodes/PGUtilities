@@ -25,6 +25,8 @@ package ${package};
  *
  * <p>This is a functional interface whose functional method is {@link #[[#getAs]]#${typeCap}()}.
  *
+ * @param <E> the type of the thrown exceptions
+ *
  * @see com.projectgalen.lib.utils.functions.SupplierEx
  */
 @FunctionalInterface
@@ -34,6 +36,7 @@ public interface ${className}<E extends Exception> {
      * Gets a result.
      *
      * @return a result
+     * @throws E if an error ocurrs.
      */
     ${type} getAs${typeCap}() throws E;
 }

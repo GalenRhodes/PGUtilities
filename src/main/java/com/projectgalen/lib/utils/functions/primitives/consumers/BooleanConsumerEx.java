@@ -4,7 +4,7 @@ package com.projectgalen.lib.utils.functions.primitives.consumers;
 //    FILENAME: BooleanConsumerEx.java
 //         IDE: IntelliJ IDEA
 //      AUTHOR: Galen Rhodes
-//        DATE: June 27, 2024
+//        DATE: July 01, 2024
 //
 // Copyright © 2024 Project Galen. All rights reserved.
 //
@@ -20,13 +20,18 @@ package com.projectgalen.lib.utils.functions.primitives.consumers;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Represents an operation that accepts a single {@code boolean}-valued argument and returns no result.  This is the primitive type specialization of
- * {@link com.projectgalen.lib.utils.functions.ConsumerEx} for {@code boolean}.  Unlike most other functional interfaces, {@code BooleanConsumerEx} is expected to operate via side-effects.
+ * Represents an operation that accepts a single {@code boolean}-valued argument and
+ * returns no result.  This is the primitive type specialization of
+ * {@link com.projectgalen.lib.utils.functions.ConsumerEx} for {@code boolean}.  Unlike most other functional interfaces,
+ * {@code BooleanConsumerEx} is expected to operate via side-effects.
  *
  * <p>This is a functional interface whose functional method is {@link #accept(boolean)}.
  *
+ * @param <E> the type of the thrown exceptions
+ *
  * @see com.projectgalen.lib.utils.functions.ConsumerEx
  */
+@SuppressWarnings("unused")
 @FunctionalInterface
 public interface BooleanConsumerEx<E extends Exception> {
 
@@ -34,23 +39,23 @@ public interface BooleanConsumerEx<E extends Exception> {
      * Performs this operation on the given argument.
      *
      * @param value the input argument
+     * @throws E if an error ocurrs.
      */
     void accept(boolean value) throws E;
 
     /**
-     * Returns a composed {@code BooleanConsumerEx} that performs, in sequence, this operation followed by the {@code after} operation. If performing either operation throws an exception, it is
-     * relayed to the caller of the composed operation.  If performing this operation throws an exception, the {@code after} operation will not be performed.
+     * Returns a composed {@code BooleanConsumerEx} that performs, in sequence, this
+     * operation followed by the {@code after} operation. If performing either
+     * operation throws an exception, it is relayed to the caller of the
+     * composed operation.  If performing this operation throws an exception,
+     * the {@code after} operation will not be performed.
      *
      * @param after the operation to perform after this operation
-     *
-     * @return a composed {@code BooleanConsumerEx} that performs in sequence this operation followed by the {@code after} operation
-     *
+     * @return a composed {@code BooleanConsumerEx} that performs in sequence this
+     * operation followed by the {@code after} operation
      * @throws NullPointerException if {@code after} is null
      */
     default @NotNull BooleanConsumerEx<? extends E> andThen(@NotNull BooleanConsumerEx<? extends E> after) {
-        return (boolean t) -> {
-            accept(t);
-            after.accept(t);
-        };
+        return (boolean t) -> { accept(t); after.accept(t); };
     }
 }

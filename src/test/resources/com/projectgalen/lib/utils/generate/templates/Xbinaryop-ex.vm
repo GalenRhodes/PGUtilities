@@ -24,6 +24,8 @@ package ${package};
  *
  * <p>This is a functional interface whose functional method is {@link #[[#applyAs]]#${typeCap}(${type}, ${type})}.
  *
+ * @param <E> the type of the thrown exceptions
+ *
  * @see com.projectgalen.lib.utils.functions.BinaryOperatorEx
  */
 @FunctionalInterface
@@ -35,6 +37,7 @@ public interface ${className}<E extends Exception> {
      * @param left the first operand
      * @param right the second operand
      * @return the operator result
+     * @throws E if an error occurs.
      */
     ${type} applyAs${typeCap}(${type} left, ${type} right) throws E;
 }

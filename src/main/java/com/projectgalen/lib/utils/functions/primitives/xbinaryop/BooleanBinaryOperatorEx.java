@@ -4,7 +4,7 @@ package com.projectgalen.lib.utils.functions.primitives.xbinaryop;
 //    FILENAME: BooleanBinaryOperatorEx.java
 //         IDE: IntelliJ IDEA
 //      AUTHOR: Galen Rhodes
-//        DATE: June 27, 2024
+//        DATE: July 01, 2024
 //
 // Copyright © 2024 Project Galen. All rights reserved.
 //
@@ -18,10 +18,13 @@ package com.projectgalen.lib.utils.functions.primitives.xbinaryop;
 // ================================================================================================================================
 
 /**
- * Represents an operation upon two {@code boolean}-valued operands and producing an {@code boolean}-valued result.   This is the primitive type specialization of
+ * Represents an operation upon two {@code boolean}-valued operands and producing an
+ * {@code boolean}-valued result.   This is the primitive type specialization of
  * {@link com.projectgalen.lib.utils.functions.BinaryOperatorEx} for {@code boolean}.
  *
  * <p>This is a functional interface whose functional method is {@link #applyAsBoolean(boolean, boolean)}.
+ *
+ * @param <E> the type of the thrown exceptions
  *
  * @see com.projectgalen.lib.utils.functions.BinaryOperatorEx
  */
@@ -31,10 +34,10 @@ public interface BooleanBinaryOperatorEx<E extends Exception> {
     /**
      * Applies this operator to the given operands.
      *
-     * @param left  the first operand
+     * @param left the first operand
      * @param right the second operand
-     *
      * @return the operator result
+     * @throws E if an error occurs.
      */
     boolean applyAsBoolean(boolean left, boolean right) throws E;
 }

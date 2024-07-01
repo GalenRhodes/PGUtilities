@@ -4,7 +4,7 @@ package com.projectgalen.lib.utils.functions.primitives.suppliers;
 //    FILENAME: IntSupplierEx.java
 //         IDE: IntelliJ IDEA
 //      AUTHOR: Galen Rhodes
-//        DATE: June 27, 2024
+//        DATE: July 01, 2024
 //
 // Copyright © 2024 Project Galen. All rights reserved.
 //
@@ -18,11 +18,14 @@ package com.projectgalen.lib.utils.functions.primitives.suppliers;
 // ================================================================================================================================
 
 /**
- * Represents a supplier of {@code int}-valued results.  This is the {@code int}-producing primitive specialization of {@link com.projectgalen.lib.utils.functions.SupplierEx}.
+ * Represents a supplier of {@code int}-valued results.  This is the
+ * {@code int}-producing primitive specialization of {@link com.projectgalen.lib.utils.functions.SupplierEx}.
  *
  * <p>There is no requirement that a distinct result be returned each time the supplier is invoked.
  *
  * <p>This is a functional interface whose functional method is {@link #getAsInt()}.
+ *
+ * @param <E> the type of the thrown exceptions
  *
  * @see com.projectgalen.lib.utils.functions.SupplierEx
  */
@@ -33,6 +36,7 @@ public interface IntSupplierEx<E extends Exception> {
      * Gets a result.
      *
      * @return a result
+     * @throws E if an error ocurrs.
      */
     int getAsInt() throws E;
 }

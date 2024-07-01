@@ -4,7 +4,7 @@ package com.projectgalen.lib.utils.functions.primitives.consumers;
 //    FILENAME: ObjByteConsumerEx.java
 //         IDE: IntelliJ IDEA
 //      AUTHOR: Galen Rhodes
-//        DATE: June 27, 2024
+//        DATE: July 01, 2024
 //
 // Copyright © 2024 Project Galen. All rights reserved.
 //
@@ -18,12 +18,16 @@ package com.projectgalen.lib.utils.functions.primitives.consumers;
 // ================================================================================================================================
 
 /**
- * Represents an operation that accepts an object-valued and a {@code byte}-valued argument, and returns no result.  This is the {@code (reference, byte)} specialization of
- * {@link com.projectgalen.lib.utils.functions.BiConsumerEx}. Unlike most other functional interfaces, {@code ObjByteConsumerEx} is expected to operate via side-effects.
+ * Represents an operation that accepts an object-valued and a
+ * {@code byte}-valued argument, and returns no result.  This is the
+ * {@code (reference, byte)} specialization of {@link com.projectgalen.lib.utils.functions.BiConsumerEx}.
+ * Unlike most other functional interfaces, {@code ObjByteConsumerEx} is
+ * expected to operate via side-effects.
  *
  * <p>This is a functional interface whose functional method is {@link #accept(Object, byte)}.
  *
  * @param <T> the type of the object argument to the operation
+ * @param <E> the type of the thrown exceptions
  *
  * @see com.projectgalen.lib.utils.functions.BiConsumerEx
  */
@@ -33,8 +37,9 @@ public interface ObjByteConsumerEx<T, E extends Exception> {
     /**
      * Performs this operation on the given arguments.
      *
-     * @param t     the first input argument
+     * @param t the first input argument
      * @param value the second input argument
+     * @throws E if an error ocurrs.
      */
     void accept(T t, byte value) throws E;
 }

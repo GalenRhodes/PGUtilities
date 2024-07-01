@@ -4,7 +4,7 @@ package com.projectgalen.lib.utils.functions.primitives.x2y;
 //    FILENAME: ByteToCharFunction.java
 //         IDE: IntelliJ IDEA
 //      AUTHOR: Galen Rhodes
-//        DATE: June 27, 2024
+//        DATE: July 01, 2024
 //
 // Copyright © 2024 Project Galen. All rights reserved.
 //
@@ -18,8 +18,9 @@ package com.projectgalen.lib.utils.functions.primitives.x2y;
 // ================================================================================================================================
 
 /**
- * Represents a function that accepts an byte-valued argument and produces a char-valued result.  This is the {@code byte}-to-{@code char} primitive specialization for
- * {@link java.util.function.Function}.
+ * Represents a function that accepts an byte-valued argument and produces a
+ * char-valued result.  This is the {@code byte}-to-{@code char} primitive
+ * specialization for {@link java.util.function.Function}.
  *
  * <p>This is a functional interface whose functional method is {@link #applyAsChar(byte)}.
  *
@@ -32,7 +33,6 @@ public interface ByteToCharFunction {
      * Applies this function to the given argument.
      *
      * @param value the function argument
-     *
      * @return the function result
      */
     char applyAsChar(byte value);

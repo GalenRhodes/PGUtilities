@@ -27,6 +27,7 @@ package ${package};
  * <p>This is a functional interface whose functional method is {@link #[[#accept]]#(Object, ${type})}.
  *
  * @param <T> the type of the object argument to the operation
+ * @param <E> the type of the thrown exceptions
  *
  * @see com.projectgalen.lib.utils.functions.BiConsumerEx
  */
@@ -38,6 +39,7 @@ public interface ${className}<T, E extends Exception> {
      *
      * @param t the first input argument
      * @param value the second input argument
+     * @throws E if an error ocurrs.
      */
     void accept(T t, ${type} value) throws E;
 }

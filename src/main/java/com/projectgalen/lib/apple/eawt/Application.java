@@ -18,119 +18,94 @@ package com.projectgalen.lib.apple.eawt;
 // ================================================================================================================================
 
 import com.projectgalen.lib.utils.Obj;
+import com.projectgalen.lib.utils.reflect.MethodInfo;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.desktop.*;
 
-import static com.projectgalen.lib.utils.reflect.Reflect.getMethod;
-import static com.projectgalen.lib.utils.reflect.Reflect.invoke;
-
 @SuppressWarnings("unused")
 public final class Application {
 
-    private static final @NotNull Class<?> _CLS_ = Obj.classForname("com.apple.eawt.Application");
-
     private final @NotNull Object instance;
 
-    private Application() {
-        this.instance = invoke(Obj.requireNonNull(getMethod(_CLS_, true, "getApplication"), RuntimeException::new), null);
-    }
+    private Application()                                                       { this.instance = MethodHolder.METHODS[0].invoke(null); }
 
-    public void addAppEventListener(SystemEventListener systemEventListener) {
-        invoke(Obj.requireNonNull(getMethod(_CLS_, true, "getApplication", SystemEventListener.class), RuntimeException::new), instance, systemEventListener);
-    }
+    public void addAppEventListener(SystemEventListener systemEventListener)    { MethodHolder.METHODS[1].invoke(instance, systemEventListener); }
 
-    public void disableSuddenTermination() {
-        invoke(Obj.requireNonNull(getMethod(_CLS_, true, "disableSuddenTermination"), RuntimeException::new), instance);
-    }
+    public void disableSuddenTermination()                                      { MethodHolder.METHODS[2].invoke(instance); }
 
-    public void enableSuddenTermination() {
-        invoke(Obj.requireNonNull(getMethod(_CLS_, true, "enableSuddenTermination"), RuntimeException::new), instance);
-    }
+    public void enableSuddenTermination()                                       { MethodHolder.METHODS[3].invoke(instance); }
 
-    public Image getDockIconImage() {
-        return invoke(Obj.requireNonNull(getMethod(_CLS_, true, "getDockIconImage"), RuntimeException::new), instance);
-    }
+    public Image getDockIconImage()                                             { return MethodHolder.METHODS[4].invoke(instance, new Object[] {}); }
 
-    public PopupMenu getDockMenu() {
-        return invoke(Obj.requireNonNull(getMethod(_CLS_, true, "getDockMenu"), RuntimeException::new), instance);
-    }
+    public PopupMenu getDockMenu()                                              { return MethodHolder.METHODS[5].invoke(instance, new Object[] {}); }
 
-    public void openHelpViewer() {
-        invoke(Obj.requireNonNull(getMethod(_CLS_, true, "openHelpViewer"), RuntimeException::new), instance);
-    }
+    public void openHelpViewer()                                                { MethodHolder.METHODS[6].invoke(instance); }
 
-    public void removeAppEventListener(SystemEventListener systemEventListener) {
-        invoke(Obj.requireNonNull(getMethod(_CLS_, true, "removeAppEventListener", SystemEventListener.class), RuntimeException::new), instance, systemEventListener);
-    }
+    public void removeAppEventListener(SystemEventListener systemEventListener) { MethodHolder.METHODS[7].invoke(instance, systemEventListener); }
 
-    public void requestForeground(boolean value) {
-        invoke(Obj.requireNonNull(getMethod(_CLS_, true, "requestForeground", boolean.class), RuntimeException::new), instance, value);
-    }
+    public void requestForeground(boolean value)                                { MethodHolder.METHODS[8].invoke(instance, value); }
 
-    public void requestToggleFullScreen(Window window) {
-        invoke(Obj.requireNonNull(getMethod(_CLS_, true, "requestToggleFullScreen", Window.class), RuntimeException::new), instance, window);
-    }
+    public void requestToggleFullScreen(Window window)                          { MethodHolder.METHODS[9].invoke(instance, window); }
 
-    public void requestUserAttention(boolean requiresUserAttention) {
-        invoke(Obj.requireNonNull(getMethod(_CLS_, true, "requestUserAttention", boolean.class), RuntimeException::new), instance, requiresUserAttention);
-    }
+    public void requestUserAttention(boolean requiresUserAttention)             { MethodHolder.METHODS[10].invoke(instance, requiresUserAttention); }
 
-    public void setAboutHandler(AboutHandler aboutHandler) {
-        invoke(Obj.requireNonNull(getMethod(_CLS_, true, "setAboutHandler", AboutHandler.class), RuntimeException::new), instance, aboutHandler);
-    }
+    public void setAboutHandler(AboutHandler aboutHandler)                      { MethodHolder.METHODS[11].invoke(instance, aboutHandler); }
 
-    public void setDefaultMenuBar(JMenuBar menuBar) {
-        invoke(Obj.requireNonNull(getMethod(_CLS_, true, "setDefaultMenuBar", JMenuBar.class), RuntimeException::new), instance, menuBar);
-    }
+    public void setDefaultMenuBar(JMenuBar menuBar)                             { MethodHolder.METHODS[12].invoke(instance, menuBar); }
 
-    public void setDockIconBadge(String badge) {
-        invoke(Obj.requireNonNull(getMethod(_CLS_, true, "setDockIconBadge", String.class), RuntimeException::new), instance, badge);
-    }
+    public void setDockIconBadge(String badge)                                  { MethodHolder.METHODS[13].invoke(instance, badge); }
 
-    public void setDockIconImage(Image image) {
-        invoke(Obj.requireNonNull(getMethod(_CLS_, true, "setDockIconImage", Image.class), RuntimeException::new), instance, image);
-    }
+    public void setDockIconImage(Image image)                                   { MethodHolder.METHODS[14].invoke(instance, image); }
 
-    public void setDockIconProgress(int value) {
-        invoke(Obj.requireNonNull(getMethod(_CLS_, true, "setDockIconProgress", int.class), RuntimeException::new), instance, value);
-    }
+    public void setDockIconProgress(int value)                                  { MethodHolder.METHODS[15].invoke(instance, value); }
 
-    public void setDockMenu(PopupMenu popupMenu) {
-        invoke(Obj.requireNonNull(getMethod(_CLS_, true, "setDockMenu", PopupMenu.class), RuntimeException::new), instance, popupMenu);
-    }
+    public void setDockMenu(PopupMenu popupMenu)                                { MethodHolder.METHODS[16].invoke(instance, popupMenu); }
 
-    public void setOpenFileHandler(OpenFilesHandler openFilesHandler) {
-        invoke(Obj.requireNonNull(getMethod(_CLS_, true, "setOpenFileHandler", OpenFilesHandler.class), RuntimeException::new), instance, openFilesHandler);
-    }
+    public void setOpenFileHandler(OpenFilesHandler openFilesHandler)           { MethodHolder.METHODS[17].invoke(instance, openFilesHandler); }
 
-    public void setOpenURIHandler(OpenURIHandler openURIHandler) {
-        invoke(Obj.requireNonNull(getMethod(_CLS_, true, "setOpenURIHandler", OpenURIHandler.class), RuntimeException::new), instance, openURIHandler);
-    }
+    public void setOpenURIHandler(OpenURIHandler openURIHandler)                { MethodHolder.METHODS[18].invoke(instance, openURIHandler); }
 
-    public void setPreferencesHandler(PreferencesHandler preferencesHandler) {
-        invoke(Obj.requireNonNull(getMethod(_CLS_, true, "setPreferencesHandler", PreferencesHandler.class), RuntimeException::new), instance, preferencesHandler);
-    }
+    public void setPreferencesHandler(PreferencesHandler preferencesHandler)    { MethodHolder.METHODS[19].invoke(instance, preferencesHandler); }
 
-    public void setPrintFileHandler(PrintFilesHandler printFilesHandler) {
-        invoke(Obj.requireNonNull(getMethod(_CLS_, true, "setPrintFileHandler", PrintFilesHandler.class), RuntimeException::new), instance, printFilesHandler);
-    }
+    public void setPrintFileHandler(PrintFilesHandler printFilesHandler)        { MethodHolder.METHODS[20].invoke(instance, printFilesHandler); }
 
-    public void setQuitHandler(QuitHandler quitHandler) {
-        invoke(Obj.requireNonNull(getMethod(_CLS_, true, "setQuitHandler", QuitHandler.class), RuntimeException::new), instance, quitHandler);
-    }
+    public void setQuitHandler(QuitHandler quitHandler)                         { MethodHolder.METHODS[21].invoke(instance, quitHandler); }
 
-    public void setQuitStrategy(QuitStrategy quitStrategy) {
-        invoke(Obj.requireNonNull(getMethod(_CLS_, true, "setQuitStrategy", QuitStrategy.class), RuntimeException::new), instance, quitStrategy);
-    }
+    public void setQuitStrategy(QuitStrategy quitStrategy)                      { MethodHolder.METHODS[22].invoke(instance, quitStrategy); }
 
-    public static Application getApplication() {
-        return ApplicationHolder.INSTANCE;
-    }
+    public static Application getApplication()                                  { return ApplicationHolder.INSTANCE; }
 
-    private static final class ApplicationHolder {
+    static final class ApplicationHolder {
         private static final Application INSTANCE = new Application();
+    }
+
+    static final class MethodHolder {
+        private static final          Class<?>     CLS     = Obj.classForname("com.apple.eawt.Application");
+        private static final @NotNull MethodInfo[] METHODS = { new MethodInfo(CLS, "getApplication", true),
+                                                               new MethodInfo(CLS, "addAppEventListener", false, SystemEventListener.class),
+                                                               new MethodInfo(CLS, "disableSuddenTermination", false),
+                                                               new MethodInfo(CLS, "enableSuddenTermination", false),
+                                                               new MethodInfo(CLS, "getDockIconImage", false),
+                                                               new MethodInfo(CLS, "getDockMenu", false),
+                                                               new MethodInfo(CLS, "openHelpViewer", false),
+                                                               new MethodInfo(CLS, "removeAppEventListener", false, SystemEventListener.class),
+                                                               new MethodInfo(CLS, "requestForeground", false, boolean.class),
+                                                               new MethodInfo(CLS, "requestToggleFullScreen", false, Window.class),
+                                                               new MethodInfo(CLS, "requestUserAttention", false, boolean.class),
+                                                               new MethodInfo(CLS, "setAboutHandler", false, AboutHandler.class),
+                                                               new MethodInfo(CLS, "setDefaultMenuBar", false, JMenuBar.class),
+                                                               new MethodInfo(CLS, "setDockIconBadge", false, String.class),
+                                                               new MethodInfo(CLS, "setDockIconImage", false, Image.class),
+                                                               new MethodInfo(CLS, "setDockIconProgress", false, int.class),
+                                                               new MethodInfo(CLS, "setDockMenu", false, PopupMenu.class),
+                                                               new MethodInfo(CLS, "setOpenFileHandler", false, OpenFilesHandler.class),
+                                                               new MethodInfo(CLS, "setOpenURIHandler", false, OpenURIHandler.class),
+                                                               new MethodInfo(CLS, "setPreferencesHandler", false, PreferencesHandler.class),
+                                                               new MethodInfo(CLS, "setPrintFileHandler", false, PrintFilesHandler.class),
+                                                               new MethodInfo(CLS, "setQuitHandler", false, QuitHandler.class),
+                                                               new MethodInfo(CLS, "setQuitStrategy", false, QuitStrategy.class) };
     }
 }

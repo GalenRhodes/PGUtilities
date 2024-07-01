@@ -4,7 +4,7 @@ package com.projectgalen.lib.utils.functions.primitives.objtox;
 //    FILENAME: ToIntFunctionEx.java
 //         IDE: IntelliJ IDEA
 //      AUTHOR: Galen Rhodes
-//        DATE: June 27, 2024
+//        DATE: July 01, 2024
 //
 // Copyright © 2024 Project Galen. All rights reserved.
 //
@@ -18,11 +18,13 @@ package com.projectgalen.lib.utils.functions.primitives.objtox;
 // ================================================================================================================================
 
 /**
- * Represents a function that produces an int-valued result.  This is the {@code int}-producing primitive specialization for {@link com.projectgalen.lib.utils.functions.FunctionEx}.
+ * Represents a function that produces an int-valued result.  This is the
+ * {@code int}-producing primitive specialization for {@link com.projectgalen.lib.utils.functions.FunctionEx}.
  *
  * <p>This is a functional interface whose functional method is {@link #applyAsInt(Object)}.
  *
  * @param <T> the type of the input to the function
+ * @param <E> the type of the thrown exceptions
  *
  * @see com.projectgalen.lib.utils.functions.FunctionEx
  */
@@ -33,8 +35,8 @@ public interface ToIntFunctionEx<T, E extends Exception> {
      * Applies this function to the given argument.
      *
      * @param value the function argument
-     *
      * @return the function result
+     * @throws E if an error ocurrs.
      */
-    int applyAsInt(T value) throws E;
+   int applyAsInt(T value) throws E;
 }
