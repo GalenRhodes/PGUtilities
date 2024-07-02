@@ -26,6 +26,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.desktop.*;
 
+/**
+ * A proxy for the class {@code com.apple.eawt.Application}.
+ *
+ * <p>When running on Windows or Linux this class does nothing.</p>
+ *
+ * <p>In order to use this class, you must launch the Java application with the following JVM command-line parameters:</p>
+ * <blockquote><pre>--add-opens java.desktop/com.apple.eawt=ALL-UNNAMED --add-opens java.desktop/com.apple.eawt.event=ALL-UNNAMED</pre></blockquote>
+ */
 @SuppressWarnings("unused")
 public final class Application {
 

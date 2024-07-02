@@ -18,8 +18,7 @@ package com.projectgalen.lib.utils.functions.primitives.objtox;
 // ================================================================================================================================
 
 /**
- * Represents a function that accepts two arguments and produces an boolean-valued
- * result.  This is the {@code boolean}-producing primitive specialization for
+ * Represents a function that accepts two arguments and produces an boolean-valued result.  This is the {@code boolean}-producing primitive specialization for
  * {@link com.projectgalen.lib.utils.functions.BiFunctionEx}.
  *
  * <p>This is a whose functional method is {@link #applyAsBoolean(Object, Object)}.
@@ -38,8 +37,10 @@ public interface ToBooleanBiFunctionEx<T, U, E extends Exception> {
      *
      * @param t the first function argument
      * @param u the second function argument
+     *
      * @return the function result
+     *
      * @throws E if an error ocurrs.
      */
-     boolean applyAsBoolean(T t, U u) throws E;
+    boolean applyAsBoolean(T t, U u) throws E;
 }

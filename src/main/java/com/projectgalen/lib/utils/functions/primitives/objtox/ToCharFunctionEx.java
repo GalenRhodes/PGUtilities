@@ -18,8 +18,7 @@ package com.projectgalen.lib.utils.functions.primitives.objtox;
 // ================================================================================================================================
 
 /**
- * Represents a function that produces an char-valued result.  This is the
- * {@code char}-producing primitive specialization for {@link com.projectgalen.lib.utils.functions.FunctionEx}.
+ * Represents a function that produces an char-valued result.  This is the {@code char}-producing primitive specialization for {@link com.projectgalen.lib.utils.functions.FunctionEx}.
  *
  * <p>This is a functional interface whose functional method is {@link #applyAsChar(Object)}.
  *
@@ -35,8 +34,10 @@ public interface ToCharFunctionEx<T, E extends Exception> {
      * Applies this function to the given argument.
      *
      * @param value the function argument
+     *
      * @return the function result
+     *
      * @throws E if an error ocurrs.
      */
-   char applyAsChar(T value) throws E;
+    char applyAsChar(T value) throws E;
 }

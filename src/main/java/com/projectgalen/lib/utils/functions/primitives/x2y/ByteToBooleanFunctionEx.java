@@ -18,9 +18,8 @@ package com.projectgalen.lib.utils.functions.primitives.x2y;
 // ================================================================================================================================
 
 /**
- * Represents a function that accepts an byte-valued argument and produces a
- * boolean-valued result.  This is the {@code byte}-to-{@code boolean} primitive
- * specialization for {@link com.projectgalen.lib.utils.functions.FunctionEx}.
+ * Represents a function that accepts an byte-valued argument and produces a boolean-valued result.  This is the {@code byte}-to-{@code boolean} primitive specialization for
+ * {@link com.projectgalen.lib.utils.functions.FunctionEx}.
  *
  * <p>This is a functional interface whose functional method is {@link #applyAsBoolean(byte)}.
  *
@@ -35,7 +34,9 @@ public interface ByteToBooleanFunctionEx<E extends Exception> {
      * Applies this function to the given argument.
      *
      * @param value the function argument
+     *
      * @return the function result
+     *
      * @throws E if an error ocurrs.
      */
     boolean applyAsBoolean(byte value) throws E;

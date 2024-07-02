@@ -18,8 +18,7 @@ package com.projectgalen.lib.utils.functions.primitives.objtox;
 // ================================================================================================================================
 
 /**
- * Represents a function that produces an boolean-valued result.  This is the
- * {@code boolean}-producing primitive specialization for {@link java.util.function.Function}.
+ * Represents a function that produces an boolean-valued result.  This is the {@code boolean}-producing primitive specialization for {@link java.util.function.Function}.
  *
  * <p>This is a functional interface whose functional method is {@link #applyAsBoolean(Object)}.
  *
@@ -34,7 +33,8 @@ public interface ToBooleanFunction<T> {
      * Applies this function to the given argument.
      *
      * @param value the function argument
+     *
      * @return the function result
      */
-   boolean applyAsBoolean(T value);
+    boolean applyAsBoolean(T value);
 }

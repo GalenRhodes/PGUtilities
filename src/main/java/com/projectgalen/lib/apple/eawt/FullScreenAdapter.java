@@ -27,6 +27,16 @@ import java.lang.reflect.Proxy;
 import java.util.EventObject;
 import java.util.function.Function;
 
+/**
+ * A proxy for the class {@code com.apple.eawt.event.FullScreenAdapter}.
+ *
+ * <p>Extend this class rather than implementing {@link com.projectgalen.lib.apple.eawt.FullScreenListener}.</p>
+ *
+ * <p>When running on Windows or Linux this class does nothing.</p>
+ *
+ * <p>In order to use this class, you must launch the Java application with the following JVM command-line parameters:</p>
+ * <blockquote><pre>--add-opens java.desktop/com.apple.eawt=ALL-UNNAMED --add-opens java.desktop/com.apple.eawt.event=ALL-UNNAMED</pre></blockquote>
+ */
 @SuppressWarnings({ "unused", "FieldCanBeLocal" })
 public class FullScreenAdapter implements FullScreenListener {
 
@@ -43,7 +53,9 @@ public class FullScreenAdapter implements FullScreenListener {
         });
     }
 
-    public final @Override @NotNull Object getProxy()                                        { return proxy; }
+    public final @Override @NotNull Object getProxy() {
+        return proxy;
+    }
 
     public @Override void windowEnteredFullScreen(@NotNull FullScreenEvent fullScreenEvent)  { }
 

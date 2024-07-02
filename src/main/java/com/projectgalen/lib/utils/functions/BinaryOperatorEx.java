@@ -45,7 +45,7 @@ public interface BinaryOperatorEx<T, E extends Exception> extends BiFunctionEx<T
      *
      * @throws NullPointerException if the argument is null
      */
-    public static <T, E extends Exception> BinaryOperatorEx<T, E> maxBy(ComparatorEx<? super T, E> comparator) {
+    static <T, E extends Exception> BinaryOperatorEx<T, E> maxBy(ComparatorEx<? super T, E> comparator) {
         return (a, b) -> ((comparator.compare(a, b) >= 0) ? a : b);
     }
 
@@ -60,7 +60,7 @@ public interface BinaryOperatorEx<T, E extends Exception> extends BiFunctionEx<T
      *
      * @throws NullPointerException if the argument is null
      */
-    public static <T, E extends Exception> BinaryOperatorEx<T, E> minBy(ComparatorEx<? super T, E> comparator) {
+    static <T, E extends Exception> BinaryOperatorEx<T, E> minBy(ComparatorEx<? super T, E> comparator) {
         return (a, b) -> ((comparator.compare(a, b) <= 0) ? a : b);
     }
 }

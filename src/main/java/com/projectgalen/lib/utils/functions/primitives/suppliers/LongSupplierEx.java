@@ -18,8 +18,7 @@ package com.projectgalen.lib.utils.functions.primitives.suppliers;
 // ================================================================================================================================
 
 /**
- * Represents a supplier of {@code long}-valued results.  This is the
- * {@code long}-producing primitive specialization of {@link com.projectgalen.lib.utils.functions.SupplierEx}.
+ * Represents a supplier of {@code long}-valued results.  This is the {@code long}-producing primitive specialization of {@link com.projectgalen.lib.utils.functions.SupplierEx}.
  *
  * <p>There is no requirement that a distinct result be returned each time the supplier is invoked.
  *
@@ -36,6 +35,7 @@ public interface LongSupplierEx<E extends Exception> {
      * Gets a result.
      *
      * @return a result
+     *
      * @throws E if an error ocurrs.
      */
     long getAsLong() throws E;

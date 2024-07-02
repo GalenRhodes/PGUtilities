@@ -24,6 +24,17 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.EventListener;
 
+/**
+ * A proxy for the class {@code com.apple.eawt.FullScreenListener}.
+ *
+ * <p><b>NOTE:</b> Do not implement your own listener by implementing this class.  It lacks the code to be a true proxy for {@code com.apple.eawt.FullScreenListener}. Instead, extend
+ * {@link com.projectgalen.lib.apple.eawt.FullScreenAdapter} and override the needed methods.</p>
+ *
+ * <p>When running on Windows or Linux this class does nothing.</p>
+ *
+ * <p>In order to use this class, you must launch the Java application with the following JVM command-line parameters:</p>
+ * <blockquote><pre>--add-opens java.desktop/com.apple.eawt=ALL-UNNAMED --add-opens java.desktop/com.apple.eawt.event=ALL-UNNAMED</pre></blockquote>
+ */
 @SuppressWarnings("unused")
 public interface FullScreenListener extends EventListener {
 

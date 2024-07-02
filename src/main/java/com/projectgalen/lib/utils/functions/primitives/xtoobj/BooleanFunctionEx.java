@@ -35,7 +35,9 @@ public interface BooleanFunctionEx<R, E extends Exception> {
      * Applies this function to the given argument.
      *
      * @param value the function argument
+     *
      * @return the function result
+     *
      * @throws E if an error ocurrs.
      */
     R apply(boolean value) throws E;

@@ -102,8 +102,24 @@ public final class Reflect {
         return ofNullable((ao instanceof Field f) ? f.getType() : ((ao instanceof Method m) ? getFirst(m.getParameters()).map(Parameter::getType).orElse(null) : null));
     }
 
+    public static @Nullable Field getAssignableField(@NotNull Class<?> cls, @NotNull String name, @NotNull Class<?> type) {
+        return streamFields(cls).filter(f -> name.equals(f.getName())).filter(f -> isAssignable(f.getType(), type)).findFirst().orElse(null);
+    }
+
     public static @SuppressWarnings("unchecked") @Nullable <T> Constructor<T> getConstructor(@NotNull Class<T> cls, Class<?>... parameterTypes) {
         return (Constructor<T>)stream(cls.getDeclaredConstructors()).filter(c -> compareParams(parameterTypes, c)).findFirst().orElse(null);
+    }
+
+    public static @Nullable Field getField(@NotNull Class<?> cls, @NotNull String name) {
+        return streamFields(cls).filter(f -> name.equals(f.getName())).findFirst().orElse(null);
+    }
+
+    public static @Nullable Field getField(@NotNull Class<?> cls, @NotNull String name, @NotNull Class<?> type) {
+        return streamFields(cls).filter(f -> name.equals(f.getName())).filter(f -> (f.getType() == type)).findFirst().orElse(null);
+    }
+
+    public static @Nullable Field getFieldAssignable(@NotNull Class<?> cls, @NotNull String name, @NotNull Class<?> type) {
+        return streamFields(cls).filter(f -> name.equals(f.getName())).filter(f -> isAssignable(type, f.getType())).findFirst().orElse(null);
     }
 
     public static Object getFrom(@NotNull AccessibleObject ao, Object obj) {
@@ -139,22 +155,6 @@ public final class Reflect {
         catch(InvocationTargetException | InstantiationException | IllegalAccessException e) {
             throw new MethodInvocationException(e);
         }
-    }
-
-    public static @Nullable Field getField(@NotNull Class<?> cls, @NotNull String name) {
-        return streamFields(cls).filter(f -> name.equals(f.getName())).findFirst().orElse(null);
-    }
-
-    public static @Nullable Field getField(@NotNull Class<?> cls, @NotNull String name, @NotNull Class<?> type) {
-        return streamFields(cls).filter(f -> name.equals(f.getName())).filter(f -> (f.getType() == type)).findFirst().orElse(null);
-    }
-
-    public static @Nullable Field getAssignableField(@NotNull Class<?> cls, @NotNull String name, @NotNull Class<?> type) {
-        return streamFields(cls).filter(f -> name.equals(f.getName())).filter(f -> isAssignable(f.getType(), type)).findFirst().orElse(null);
-    }
-
-    public static @Nullable Field getFieldAssignable(@NotNull Class<?> cls, @NotNull String name, @NotNull Class<?> type) {
-        return streamFields(cls).filter(f -> name.equals(f.getName())).filter(f -> isAssignable(type, f.getType())).findFirst().orElse(null);
     }
 
     /**

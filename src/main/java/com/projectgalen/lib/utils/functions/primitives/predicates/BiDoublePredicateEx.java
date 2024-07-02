@@ -33,25 +33,16 @@ import org.jetbrains.annotations.NotNull;
 public interface BiDoublePredicateEx<E extends Exception> {
 
     /**
-     * Evaluates this predicate on the given arguments.
-     *
-     * @param t the first input argument
-     * @param u the second input argument
-     * @return {@code true} if the input arguments match the predicate, otherwise {@code false}
-     * @throws E if an error ocurrs.
-     */
-    boolean test(double t, double u) throws E;
-
-    /**
-     * Returns a composed predicate that represents a short-circuiting logical AND of this predicate and another.  When evaluating the composed predicate, if this predicate is {@code false}, then
-     * the {@code other} predicate is not evaluated.
+     * Returns a composed predicate that represents a short-circuiting logical AND of this predicate and another.  When evaluating the composed predicate, if this predicate is {@code false}, then the
+     * {@code other} predicate is not evaluated.
      *
      * <p>Any exceptions thrown during evaluation of either predicate are relayed to the caller; if evaluation of this predicate throws an exception, the {@code other} predicate will not be
      * evaluated.</p>
      *
      * @param other a predicate that will be logically-ANDed with this predicate
-
+     *
      * @return a composed predicate that represents the short-circuiting logical AND of this predicate and the {@code other} predicate
+     *
      * @throws NullPointerException if other is null
      */
     default @NotNull BiDoublePredicateEx<? extends E> and(@NotNull BiDoublePredicateEx<? extends E> other) {
@@ -75,11 +66,24 @@ public interface BiDoublePredicateEx<E extends Exception> {
      * evaluated.</p>
      *
      * @param other a predicate that will be logically-ORed with this predicate
-
+     *
      * @return a composed predicate that represents the short-circuiting logical OR of this predicate and the {@code other} predicate
+     *
      * @throws NullPointerException if other is null
      */
     default @NotNull BiDoublePredicateEx<? extends E> or(@NotNull BiDoublePredicateEx<? extends E> other) {
         return (double t, double u) -> (test(t, u) || other.test(t, u));
     }
+
+    /**
+     * Evaluates this predicate on the given arguments.
+     *
+     * @param t the first input argument
+     * @param u the second input argument
+     *
+     * @return {@code true} if the input arguments match the predicate, otherwise {@code false}
+     *
+     * @throws E if an error ocurrs.
+     */
+    boolean test(double t, double u) throws E;
 }

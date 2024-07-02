@@ -18,11 +18,8 @@ package com.projectgalen.lib.utils.functions.primitives.consumers;
 // ================================================================================================================================
 
 /**
- * Represents an operation that accepts an object-valued and a
- * {@code char}-valued argument, and returns no result.  This is the
- * {@code (reference, char)} specialization of {@link com.projectgalen.lib.utils.functions.BiConsumerEx}.
- * Unlike most other functional interfaces, {@code ObjCharConsumerEx} is
- * expected to operate via side-effects.
+ * Represents an operation that accepts an object-valued and a {@code char}-valued argument, and returns no result.  This is the {@code (reference, char)} specialization of
+ * {@link com.projectgalen.lib.utils.functions.BiConsumerEx}. Unlike most other functional interfaces, {@code ObjCharConsumerEx} is expected to operate via side-effects.
  *
  * <p>This is a functional interface whose functional method is {@link #accept(Object, char)}.
  *
@@ -37,8 +34,9 @@ public interface ObjCharConsumerEx<T, E extends Exception> {
     /**
      * Performs this operation on the given arguments.
      *
-     * @param t the first input argument
+     * @param t     the first input argument
      * @param value the second input argument
+     *
      * @throws E if an error ocurrs.
      */
     void accept(T t, char value) throws E;

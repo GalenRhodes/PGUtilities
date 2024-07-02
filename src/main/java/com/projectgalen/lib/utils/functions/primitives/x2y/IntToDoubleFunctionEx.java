@@ -18,9 +18,8 @@ package com.projectgalen.lib.utils.functions.primitives.x2y;
 // ================================================================================================================================
 
 /**
- * Represents a function that accepts an int-valued argument and produces a
- * double-valued result.  This is the {@code int}-to-{@code double} primitive
- * specialization for {@link com.projectgalen.lib.utils.functions.FunctionEx}.
+ * Represents a function that accepts an int-valued argument and produces a double-valued result.  This is the {@code int}-to-{@code double} primitive specialization for
+ * {@link com.projectgalen.lib.utils.functions.FunctionEx}.
  *
  * <p>This is a functional interface whose functional method is {@link #applyAsDouble(int)}.
  *
@@ -35,7 +34,9 @@ public interface IntToDoubleFunctionEx<E extends Exception> {
      * Applies this function to the given argument.
      *
      * @param value the function argument
+     *
      * @return the function result
+     *
      * @throws E if an error ocurrs.
      */
     double applyAsDouble(int value) throws E;
