@@ -17,9 +17,8 @@ package com.projectgalen.lib.crypto;
 // NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 // ================================================================================================================================
 
-import org.jetbrains.annotations.NotNull;
+import com.projectgalen.lib.utils.functions.FunctionEx;
 
 @SuppressWarnings("unused")
-public interface DiffieHellmanHandshakeDelegate {
-    @NotNull PublicKeyInfo getPublicKeyInfo(@NotNull String strPublicKey) throws Exception;
+public interface DiffieHellmanHandshakeDelegate extends FunctionEx<String, PublicKeyInfo, Exception> {
 }

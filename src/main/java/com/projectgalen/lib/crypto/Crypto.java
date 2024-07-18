@@ -26,6 +26,8 @@ import javax.crypto.spec.IvParameterSpec;
 import java.security.GeneralSecurityException;
 import java.security.KeyPair;
 
+import static com.projectgalen.lib.crypto.CryptoTools.*;
+
 @SuppressWarnings("unused")
 public final class Crypto {
     private static final PGResourceBundle msgs  = new PGResourceBundle("com.projectgalen.lib.crypto.crypto_messages");
@@ -37,9 +39,9 @@ public final class Crypto {
     private final KeyPair         keyPair;
 
     public Crypto(@NotNull DiffieHellmanHandshakeDelegate delegate) throws Exception {
-        keyPair       = CryptoTools.generateKeyPair();
-        publicKeyInfo = delegate.getPublicKeyInfo(CryptoTools.getBase64EncodedPublicKey(keyPair));
-        secretKey     = CryptoTools.createSharedSecret(keyPair.getPrivate(), publicKeyInfo.publicKey());
+        keyPair       = generateKeyPair();
+        publicKeyInfo = delegate.apply(getBase64EncodedPublicKey(keyPair));
+        secretKey     = createSharedSecret(keyPair.getPrivate(), publicKeyInfo.publicKey());
         iv            = new IvParameterSpec(CryptoTools.decryptBytes(secretKey, publicKeyInfo.iv()));
     }
 
@@ -80,15 +82,15 @@ public final class Crypto {
         String        f1 = props.getProperty("to.str.fmt1");
         String        f2 = props.getProperty("to.str.fmt2");
 
-        sb.append(String.format(f1, msgs.getString("msg.label.provider"), props.getProperty("crypto.bouncy-castle.provider"))).append("; ");
+        sb.append(String.format(f1, msgs.getString("msg.label.provider"), getProviderName())).append("; ");
         sb.append(String.format(f1, msgs.getString("msg.label.public_key_info"), publicKeyInfo)).append("; ");
         sb.append(String.format(f2, msgs.getString("msg.label.iv_length"), props.getInt("crypto.iv.length"))).append("; ");
         sb.append(String.format(f1, msgs.getString("msg.label.aes_algorithm"), props.getProperty("crypto.aes.algorithm"))).append("; ");
         sb.append(String.format(f2, msgs.getString("msg.label.aes_key_length"), props.getInt("crypto.aes.key_length"))).append("; ");
         sb.append(String.format(f1, msgs.getString("msg.label.aes_transform"), props.getProperty("crypto.aes.transformation.with_iv"))).append("; ");
         sb.append(String.format(f1, msgs.getString("msg.label.aes_transform_no_iv"), props.getProperty("crypto.aes.transformation.no_iv"))).append("; ");
-        sb.append(String.format(f1, msgs.getString("msg.label.diffie_hellman_algorithm"), props.getProperty("crypto.diffie_hellman.algorithm"))).append("; ");
-        sb.append(String.format(f2, msgs.getString("msg.label.diffie_hellman_key_length"), CryptoTools.getDefaultDHKeyLength())).append(';');
+        sb.append(String.format(f1, msgs.getString("msg.label.diffie_hellman_algorithm"), getDHAlgorithm())).append("; ");
+        sb.append(String.format(f2, msgs.getString("msg.label.diffie_hellman_key_length"), getDefaultDHKeyLength())).append(';');
 
         return sb.toString();
     }

@@ -64,7 +64,7 @@ public class PGProperties extends Properties {
      * @param timeUnit     The units for the value of <code>reloadPeriod</code>. The default is {@link TimeUnit#MILLISECONDS}.
      * @param defaults     The defaults
      */
-    private PGProperties(@NotNull Function<PGProperties, Boolean> loader, long reloadPeriod, TimeUnit timeUnit, Properties defaults) {
+    protected PGProperties(@NotNull Function<PGProperties, Boolean> loader, long reloadPeriod, TimeUnit timeUnit, Properties defaults) {
         super(defaults);
         if(!loader.apply(this)) throw new RuntimeException(msgs.getString("msg.err.prop_load_failure"));
         expandMacros();
