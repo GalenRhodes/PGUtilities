@@ -19,6 +19,10 @@ package com.projectgalen.lib.utils;
 
 import com.projectgalen.lib.utils.functions.RunnableEx;
 import com.projectgalen.lib.utils.functions.SupplierEx;
+import com.projectgalen.lib.utils.functions.primitives.consumers.IntConsumerEx;
+import com.projectgalen.lib.utils.functions.primitives.consumers.LongConsumerEx;
+import com.projectgalen.lib.utils.functions.primitives.suppliers.IntSupplierEx;
+import com.projectgalen.lib.utils.functions.primitives.suppliers.LongSupplierEx;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
@@ -38,13 +42,45 @@ public final class Util {
         }
     }
 
-    public static <E extends Exception> void andFinallyEx(@NotNull Runnable before, @NotNull RunnableEx<? extends E> runnable, @NotNull Runnable then) throws E {
+    public static <E extends Exception> void andFinallyEx(@NotNull Runnable before, @NotNull RunnableEx<E> runnable, @NotNull Runnable then) throws E {
         before.run();
         try {
             runnable.run();
         }
         finally {
             then.run();
+        }
+    }
+
+    public static <E1 extends Exception, E2 extends Exception> long doInChunks(@NotNull LongSupplierEx<E1> getter, @NotNull LongConsumerEx<E2> putter) throws E1, E2 {
+        long total = 0;
+        long cc    = getter.getAsLong();
+        while(cc > 0) {
+            putter.accept(cc);
+            total += cc;
+            cc = getter.getAsLong();
+        }
+        return total;
+    }
+
+    public static <E1 extends Exception, E2 extends Exception> long doInChunks(@NotNull IntSupplierEx<E1> getter, @NotNull IntConsumerEx<E2> putter) throws E1, E2 {
+        long total = 0;
+        int  cc    = getter.getAsInt();
+        while(cc > 0) {
+            putter.accept(cc);
+            total += cc;
+            cc = getter.getAsInt();
+        }
+        return total;
+    }
+
+    public static <E extends Exception> boolean doQuietly(@NotNull RunnableEx<E> runnable) {
+        try {
+            runnable.run();
+            return true;
+        }
+        catch(Exception ignore) {
+            return false;
         }
     }
 
@@ -58,7 +94,7 @@ public final class Util {
         }
     }
 
-    public static <R, E extends Exception> R getFinallyEx(@NotNull Runnable before, @NotNull SupplierEx<? extends R, ? extends E> supplier, @NotNull Runnable then) throws E {
+    public static <R, E extends Exception> R getFinallyEx(@NotNull Runnable before, @NotNull SupplierEx<? extends R, E> supplier, @NotNull Runnable then) throws E {
         before.run();
         try {
             return supplier.get();

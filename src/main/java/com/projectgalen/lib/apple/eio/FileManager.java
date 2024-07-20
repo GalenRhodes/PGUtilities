@@ -265,7 +265,7 @@ public final class FileManager {
      * @since 1.4
      * @deprecated this functionality has been superseded by java.awt.Desktop.browse() and java.awt.Desktop.open()
      */
-    public static void openURL(String url) throws IOException {
+    public static @Deprecated void openURL(String url) throws IOException {
         foo2(() -> _openURL.m.invoke(null, url));
     }
 

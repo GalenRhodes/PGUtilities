@@ -18,10 +18,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <github.global.server>github</github.global.server>
-        <github.owner>GalenRhodes</github.owner>
-        <github.mvn.repo>maven-repo</github.mvn.repo>
-
         <project.build.module.src.dir>${project.basedir}/src/main</project.build.module.src.dir>
         <project.build.java.dir>${project.build.module.src.dir}/java</project.build.java.dir>
         <project.build.resources.dir>${project.build.module.src.dir}/resources</project.build.resources.dir>
@@ -29,6 +25,9 @@
 
         <app.base.path>com/projectgalen/lib/utils</app.base.path>
         <app.base.package>com.projectgalen.lib.utils</app.base.package>
+
+        <github.global.server>github</github.global.server>
+        <github.mvn.repo>maven-repo</github.mvn.repo>
     </properties>
 
     <name>Project Galen Base Utilities</name>
